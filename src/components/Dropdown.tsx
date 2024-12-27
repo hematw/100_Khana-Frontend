@@ -28,8 +28,7 @@ export default function Dropdown({
     <div className="relative inline-block text-left" ref={dropdownRef}>
       <button
         type="button"
-        className={`inline-flex w-full justify-center items-center gap-x-2 bg-white px-3 py-2 text-sm font-semibold
-           text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 ${className}`}
+        className={`inline-flex w-full justify-center items-center gap-x-2 bg-white px-3 py-2 text-xl font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 hover:shadow-md transition-all duration-200 ${className}`}
         id="menu-button"
         aria-expanded={isOpen}
         aria-haspopup="true"

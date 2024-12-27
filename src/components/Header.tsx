@@ -38,10 +38,10 @@ export default function Header() {
         </div>
         <div className="flex items-center gap-4">
           <div className="flex items-center">
-            <div>Add your home</div>
-            <div className="mx-2">
+            <button className="hover:bg-gray-200 p-2 rounded-3xl ">Add your home</button>
+            <button className="hover:bg-gray-200 p-2 rounded-3xl mx-2">
               <IoGlobeOutline />
-            </div>
+            </button>
           </div>
           <Dropdown
             icon={<MdOutlineMenu />}

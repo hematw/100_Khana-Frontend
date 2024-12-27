@@ -18,25 +18,25 @@ export const Footer = () => {
               {/*  Social Media Icons  */}
               <a
                 href="https://www.x.com/_hematw"
-                className="bg-blue-400 text-white shadow-lg h-10 w-10 flex items-center justify-center rounded-full mr-2"
+                className="bg-blue-400 text-white shadow-lg h-10 w-10 flex items-center justify-center rounded-full mr-2 transition-all hover:-translate-y-1  duration-200"
               >
                 <FaXTwitter />
               </a>
               <a
                 href="https://www.facebook.com/hemat.w"
-                className="bg-blue-500 text-white shadow-lg h-10 w-10 flex items-center justify-center rounded-full mr-2"
+                className="bg-blue-500 text-white shadow-lg h-10 w-10 flex items-center justify-center rounded-full mr-2 transition-all hover:-translate-y-1  duration-200"
               >
                 <FaFacebookF />
               </a>
               <a
                 href="https://www.linkedin.com/in/hematw"
-                className="bg-sky-600 text-white shadow-lg h-10 w-10 flex items-center justify-center rounded-full mr-2"
+                className="bg-sky-600 text-white shadow-lg h-10 w-10 flex items-center justify-center rounded-full mr-2 transition-all hover:-translate-y-1 duration-200"
               >
                 <FaLinkedinIn />
               </a>
               <a
                 href="https://www.github.com/hematw"
-                className="bg-gray-800 text-white shadow-lg h-10 w-10 flex items-center justify-center rounded-full mr-2"
+                className="bg-gray-800 text-white shadow-lg h-10 w-10 flex items-center justify-center rounded-full mr-2 transition-all hover:-translate-y-1  duration-200"
               >
                 <FaGithub />
               </a>
@@ -48,7 +48,7 @@ export const Footer = () => {
             <div className="flex flex-wrap items-top mb-6">
               {/*  Useful Links  */}
               <div className="w-full lg:w-4/12 px-4 ml-auto">
-                <span className="block uppercase text-gray-500 text-sm font-semibold mb-2">
+                <span className="block uppercase text-gray-500 text-sm font-semibold mb-4">
                   Useful Links
                 </span>
                 <ul className="list-none">
@@ -89,7 +89,7 @@ export const Footer = () => {
 
               {/*  Other Resources  */}
               <div className="w-full lg:w-4/12 px-4">
-                <span className="block uppercase text-gray-500 text-sm font-semibold mb-2">
+                <span className="block uppercase text-gray-500 text-sm font-semibold mb-4">
                   Other Resources
                 </span>
                 <ul className="list-none">
