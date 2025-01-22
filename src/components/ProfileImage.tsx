@@ -18,15 +18,15 @@ export default function ProfileImage({
 }: ProfileImageProps) {
   return (
     <div>
-      <div className="w-60 h-60 relative">
+      <div className="w-44 h-44 relative">
         <img
           src={image}
           alt={`${username}'s profile`}
-          className="w-full h-full object-cover drop-shadow-2xl border-2 border-red-400 rounded-xl"
+          className="rounded-full overflow-hidden w-full h-full object-cover drop-shadow-2xl border-2 border-red-400"
         />
         {isOnEdit && (
           <div>
-            <label className="inline-flex justify-center items-center bg-black/50 text-white absolute bottom-0 right-0 w-10 h-10 rounded-ss-2xl rounded-ee-lg cursor-pointer">
+            <label className="inline-flex justify-center items-center bg-black/50 text-white absolute bottom-0 right-0 w-10 h-10 rounded-full cursor-pointer">
               <span>
                 <FaUpload />
               </span>
@@ -38,7 +38,7 @@ export default function ProfileImage({
                 onChange={onChange} // Handle file input change
               />
             </label>
-            <label className="inline-flex justify-center items-center bg-black/50 text-white absolute bottom-0 left-0 w-10 h-10 rounded-se-2xl rounded-es-lg cursor-pointer">
+            <label className="inline-flex justify-center items-center bg-black/50 text-white absolute bottom-0 left-0 w-10 h-10 rounded-full cursor-pointer">
               <span>
                 <FaCamera />
               </span>

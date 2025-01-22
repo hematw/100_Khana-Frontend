@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import axiosInstance from "../axios";
+import axiosIns from "../axios";
 import { AxiosError } from "axios";
 import Button from "../components/Button";
 import Input from "../components/Input";
@@ -32,15 +32,11 @@ const Register = () => {
 
   const onSubmit: SubmitHandler<RegisterFormData> = async (values) => {
     try {
-      const { data } = await axiosInstance.post("/auth/register", values, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      console.log(data);
+      const { data } = await axiosIns.post("/auth/register", values);
       localStorage.setItem("token", data.token);
       navigate("/");
     } catch (error) {
+      console.error("Error", error)
       if (error instanceof AxiosError) {
         if (error.response) {
           setServerError(error.response.data);
@@ -50,7 +46,6 @@ const Register = () => {
             message: "Something went wrong! please try again",
             duplicateField: "",
           });
-          console.log(error.message);
         }
       }
     }

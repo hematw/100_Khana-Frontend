@@ -1,6 +1,6 @@
-import axios from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 
-const axiosInstance = axios.create({
+const axiosIns = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
   headers: {
     Authorization: localStorage.getItem("token")
@@ -10,4 +10,16 @@ const axiosInstance = axios.create({
   withCredentials: true,
 });
 
-export default axiosInstance;
+axiosIns.interceptors.response.use(
+  (response: AxiosResponse) => {
+    if (response.status == 401) {
+      localStorage.removeItem("token");
+    }
+    return response;
+  },
+  (err: AxiosError) => {
+    return Promise.reject(err);
+  }
+);
+
+export default axiosIns;

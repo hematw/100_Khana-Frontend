@@ -3,7 +3,7 @@ import Button from "../components/Button";
 import ProfileImage from "../components/ProfileImage";
 import { FaRegSave } from "react-icons/fa";
 import { useForm, SubmitHandler } from "react-hook-form";
-import axiosInstance from "../axios";
+import axiosIns from "../axios";
 import Input from "../components/Input";
 import InputGroup from "../components/InputGroup";
 
@@ -36,11 +36,11 @@ export default function Profile() {
 
   useEffect(() => {
     async function getProfile() {
-      const { data } = await axiosInstance("/profile/me", {
+      const { data } = await axiosIns("/profile/me", {
         withCredentials: true,
       });
       console.log(data);
-      setProfileData({ ...data.profile, email: data.profile?.userId?.email });
+      setProfileData({ ...data, email: data?.userId?.email });
       reset({ ...data.profile, email: data.profile?.userId?.email });
     }
     getProfile();
@@ -51,6 +51,8 @@ export default function Profile() {
       setSelectedFile(e.target.files[0]); // Store the selected file in state
     }
   };
+
+  console.log("profileData", profileData)
 
   const onSubmit: SubmitHandler<IProfile> = async (values) => {
     setIsLoading(true);
@@ -67,12 +69,9 @@ export default function Profile() {
         console.log(selectedFile);
       }
       console.log(formData.get("profileImage"));
-      const { status, data } = await axiosInstance.patch(
+      const { status, data } = await axiosIns.patch(
         "/profile/update",
         formData,
-        {
-          withCredentials: true,
-        }
       );
       if (status == 200) {
         setProfileData({ ...data, email: data?.userId?.email });
@@ -91,12 +90,15 @@ export default function Profile() {
       <div className="flex p-10 max-w-5xl m-auto">
         <div className=" w-full">
           <div className="flex flex-col">
-            <h2 className="bg-gradient bg-clip-text text-transparent text-5xl font-semibold inline-block drop-shadow-lg">
+            {/* <h2 className="bg-gradient bg-clip-text text-transparent text-5xl font-semibold inline-block drop-shadow-lg">
               <span>My Profile</span>
               <span className="inline-block w-full h-1 bg-gradient"></span>
-            </h2>
+            </h2> */}
+            <div className="max-h-36 overflow-hidden drop-shadow-md ">
+              <img className="w-full h-full object-cover" src="/mock-background.jpg" alt={`${profileData.firstName} Background Photo`} />
+            </div>
           </div>
-          <div>
+          <div className="mx-auto flex justify-center">
             {editMode ? (
               <form
                 onSubmit={handleSubmit(onSubmit)}
@@ -224,15 +226,15 @@ export default function Profile() {
                     </div>
                     <div className="flex item-center gap-2">
                       <Button
-                        type="gradient"
-                        onClick={() => {}}
+                        variant="gradient"
+                        onClick={() => { }}
                         icon={<FaRegSave />}
                         disabled={isLoading}
                         className={isLoading ? "opacity-60" : ""}
                       >
                         {isLoading ? "Save..." : "Save"}
                       </Button>
-                      <Button type="dark" onClick={() => setEditMode(false)}>
+                      <Button variant="dark" onClick={() => setEditMode(false)}>
                         Cancel
                       </Button>
                     </div>
@@ -240,16 +242,22 @@ export default function Profile() {
                 </div>
               </form>
             ) : (
-              <div className="flex gap-12">
-                <ProfileImage
-                  image={profileData?.profileImage || "/profile-picture.png"}
-                  username={profileData.firstName || "No name"}
-                  isOnEdit={editMode}
-                />
+              <div className="flex gap-12 -mt-10">
+                <div className="flex flex-col items-center">
+                  <ProfileImage
+                    image={profileData?.profileImage || "/profile-picture.png"}
+                    username={profileData.firstName || "No name"}
+                    isOnEdit={editMode}
+                  />
+                  <div className="text-center mt-4">
+                    <h3 className="font-semibold text-xl">{profileData?.firstName + " " + profileData?.lastName}</h3>
+                    <p className="text-gray-500">The world is beautiful</p>
+                  </div>
 
-                <div className="w-full">
+                </div>
+                <div className="w-full bg-white px-4 rounded-lg z-10">
                   <ul className="w-5xl">
-                    <li className="border-b border-gray-300 py-6">
+                    <li className="flex gap-4 items center border-b border-gray-300 py-6">
                       <div className="flex justify-between">
                         <span className="font-medium text-sm">Full name</span>
                       </div>
@@ -260,7 +268,7 @@ export default function Profile() {
                       </p>
                     </li>
 
-                    <li className="border-b border-gray-300 py-6">
+                    <li className="flex gap-4 items center border-b border-gray-300 py-6">
                       <div className="flex justify-between">
                         <span className="font-medium text-sm">
                           Email address
@@ -271,7 +279,7 @@ export default function Profile() {
                       </p>
                     </li>
 
-                    <li className="border-b border-gray-300 py-6">
+                    <li className="flex gap-4 items center border-b border-gray-300 py-6">
                       <div className="flex justify-between">
                         <span className="font-medium text-sm">
                           Phone number
@@ -282,7 +290,7 @@ export default function Profile() {
                       </p>
                     </li>
 
-                    <li className="border-b border-gray-300 py-6">
+                    <li className="flex gap-4 items center border-b border-gray-300 py-6">
                       <div className="flex justify-between">
                         <span className="font-medium text-sm">
                           Government ID
@@ -294,7 +302,7 @@ export default function Profile() {
                     </li>
                   </ul>
                   <div className="flex">
-                    <Button type="dark" onClick={() => setEditMode(true)}>
+                    <Button variant="dark" onClick={() => setEditMode(true)}>
                       Edit
                     </Button>
                   </div>
