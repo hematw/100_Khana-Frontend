@@ -118,7 +118,7 @@ export default function Profile() {
                   ref={fileInputRef} // Attach the ref for file upload
                   accept="image/*"
                 /> */}
-                  <div>
+                  <div className="shadow-md">
                     <div className="w-5xl">
                       <InputGroup
                         label="Full name"
@@ -255,7 +255,7 @@ export default function Profile() {
                   </div>
 
                 </div>
-                <div className="w-full bg-white px-4 rounded-lg z-10">
+                <div className="w-full bg-white px-4 rounded-lg z-10 shadow-md pb-4">
                   <ul className="w-5xl">
                     <li className="flex gap-4 items center border-b border-gray-300 py-6">
                       <div className="flex justify-between">
