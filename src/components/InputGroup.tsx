@@ -15,8 +15,10 @@ const InputGroup: React.FC<InputGroupProps> = ({
 }) => {
   return (
     <div className={`border-b border-gray-300 py-6 ${className}`}>
-      <p className="font-medium">{label}</p>
-      <p className="text-sm mt-4">{text}</p>
+      <div>
+        <p className="font-medium">{label}</p>
+        <p className="text-sm mt-4">{text}</p>
+      </div>
       {children}
     </div>
   );

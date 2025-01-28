@@ -14,7 +14,7 @@ export default function Header() {
           </a>
         </div>
         <div
-          className="flex items-center border-2 border-gray-200 rounded-3xl shadow-md absolute top-1/2 left-1/2 overflow-hidden"
+          className="flex items-center border-2 border-gray-200 rounded-3xl shadow-md absolute top-1/2 left-1/2 overflow-hidden p-1"
           style={{ transform: `translate(-50%, -50%)` }}
         >
           <form className="hidden">

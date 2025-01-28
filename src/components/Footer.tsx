@@ -7,7 +7,7 @@ export const Footer = () => {
       <div className="container mx-auto px-4">
         <div className="flex flex-wrap text-left lg:text-left">
           {/*  Left column  */}
-          <div className="w-full lg:w-6/12 px-4">
+          <div className="w-full lg:w-6/12 md:px-4">
             <h4 className="text-3xl font-semibold text-gray-700">
               Let's keep in touch!
             </h4>
@@ -44,10 +44,10 @@ export const Footer = () => {
           </div>
 
           {/*  Right column  */}
-          <div className="w-full lg:w-6/12 px-4">
+          <div className="w-full lg:w-6/12 md:px-4">
             <div className="flex flex-wrap items-top mb-6">
               {/*  Useful Links  */}
-              <div className="w-full lg:w-4/12 px-4 ml-auto">
+              <div className="w-1/2 lg:w-4/12 px-4 flex-1">
                 <span className="block uppercase text-gray-500 text-sm font-semibold mb-4">
                   Useful Links
                 </span>
@@ -88,7 +88,7 @@ export const Footer = () => {
               </div>
 
               {/*  Other Resources  */}
-              <div className="w-full lg:w-4/12 px-4">
+              <div className="w-1/2 lg:w-4/12 px-4 flex-1">
                 <span className="block uppercase text-gray-500 text-sm font-semibold mb-4">
                   Other Resources
                 </span>

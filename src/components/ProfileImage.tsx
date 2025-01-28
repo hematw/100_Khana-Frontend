@@ -1,11 +1,11 @@
 import React from "react";
-import { FaCamera, FaUpload } from "react-icons/fa";
+import { FaCamera } from "react-icons/fa";
 
 interface ProfileImageProps {
   image: string;
   username: string;
   isOnEdit: boolean;
-  fileInputRef?: React.RefObject<HTMLInputElement>; // Optional ref passed as a prop
+  fileInputRef: React.RefObject<HTMLInputElement>; // Optional ref passed as a prop
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -25,18 +25,26 @@ export default function ProfileImage({
           className="rounded-full overflow-hidden w-full h-full object-cover drop-shadow-2xl border-2 border-red-400"
         />
         {isOnEdit && (
+          <div
+            className="absolute inset-0 bg-black bg-opacity-50 rounded-full flex items-center justify-center cursor-pointer"
+            onClick={() => fileInputRef.current?.click()}
+          >
+            <FaCamera className="text-white text-2xl" />
+            <input
+              type="file"
+              accept=".png, .jpg, .jpeg, .gif"
+              className="hidden"
+              ref={fileInputRef} // Attach the ref to the input element here
+              onChange={onChange} // Handle file input change
+            />
+          </div>
+        )}
+        {/* {isOnEdit && (
           <div>
             <label className="inline-flex justify-center items-center bg-black/50 text-white absolute bottom-0 right-0 w-10 h-10 rounded-full cursor-pointer">
               <span>
                 <FaUpload />
               </span>
-              <input
-                type="file"
-                accept=".png, .jpg, .jpeg, .gif"
-                className="hidden"
-                ref={fileInputRef} // Attach the ref to the input element here
-                onChange={onChange} // Handle file input change
-              />
             </label>
             <label className="inline-flex justify-center items-center bg-black/50 text-white absolute bottom-0 left-0 w-10 h-10 rounded-full cursor-pointer">
               <span>
@@ -52,7 +60,7 @@ export default function ProfileImage({
               />
             </label>
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );
