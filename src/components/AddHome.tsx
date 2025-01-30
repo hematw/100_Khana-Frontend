@@ -1,5 +1,7 @@
-import Input from "./Input";
+import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { motion } from "framer-motion"; // Import motion from framer-motion
+import Input from "./Input";
 import InputGroup from "./InputGroup";
 import { TbAirConditioning } from "react-icons/tb";
 import { PiElevatorLight } from "react-icons/pi";
@@ -10,196 +12,153 @@ import { FaBottleWater } from "react-icons/fa6";
 import GuardIcon from "./GuardIcon";
 
 const AddHome = () => {
+  const [step, setStep] = useState(1);
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm();
+
+  const onSubmit: SubmitHandler<any> = (data) => {
+    console.log(data);
+    reset();
+  };
+
+  const nextStep = () => setStep((prev) => Math.min(prev + 1, 3));
+  const prevStep = () => setStep((prev) => Math.max(prev - 1, 1));
+
   return (
-    <div className="p-6">
-      <div className="max-w-5xl m-auto">
-        <InputGroup
-          label="Title"
-          text="Title for your place, should be short and catchy as advertisement."
-        >
-          <Input
-            name="title"
-            label="Title"
-            register={register}
-            validation={{
-              required: true,
-            }}
-          />
-        </InputGroup>
-        <InputGroup
-          label="Address"
-          text="Address of your place, should be clear and easy to understand."
-        >
-          <Input
-            name="address"
-            label="Address"
-            register={register}
-            validation={{
-              required: true,
-            }}
-          />
-        </InputGroup>
-        <InputGroup label="Description" text="Description about your place.">
-          <div className={`flex flex-col my-2 `}>
-            <div className="block w-full border-2 border-gray-400 focus-within:ring-1 ring-black rounded-lg duration-200 py-1 px-3">
-              <textarea
-              placeholder="ex: beautiful house with big pool..."
-                {...register("desc", {})}
-                className="w-full h-24 focus:outline-none bg-transparent"
-              />
-            </div>
-            {/* {errors.desc && <p className="error">{errors.desc.message}</p>} */}
+    <div className="p-6 bg-gray-50 min-h-screen">
+      <div className="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-8">
+        <h1 className="text-3xl font-bold text-gray-800 mb-6">Add Your Home</h1>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <motion.div
+            key={step} // Use step as the key to trigger re-mounting
+            initial={{ opacity: 0, x: -100 }} // Initial state for animation
+            animate={{ opacity: 1, x: 0 }} // Target state for animation
+            exit={{ opacity: 0, x: 100 }} // Exit state for animation
+            transition={{ duration: 0.3 }} // Animation duration
+          >
+            {step === 1 && (
+              <>
+                {/* Title */}
+                <InputGroup
+                  label="Title"
+                  text="Title for your place, should be short and catchy as advertisement."
+                >
+                  <Input
+                    name="title"
+                    label="Title"
+                    register={register}
+                    validation={{ required: true }}
+                    placeholder="Enter a catchy title"
+                  />
+                </InputGroup>
+
+                {/* Address */}
+                <InputGroup
+                  label="Address"
+                  text="Address of your place, should be clear and easy to understand."
+                >
+                  <Input
+                    name="address"
+                    label="Address"
+                    register={register}
+                    validation={{ required: true }}
+                    placeholder="Enter the full address"
+                  />
+                </InputGroup>
+              </>
+            )}
+
+            {step === 2 && (
+              <>
+                {/* Description */}
+                <InputGroup label="Description" text="Description about your place.">
+                  <div className="my-2">
+                    <textarea
+                      {...register("desc", { required: true })}
+                      placeholder="Ex: Beautiful house with a big pool..."
+                      className="w-full h-32 p-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-red-400 transition-all duration-200 resize-none"
+                    />
+                    {errors.desc && (
+                      <p className="text-red-500 text-sm mt-1">Description is required.</p>
+                    )}
+                  </div>
+                </InputGroup>
+              </>
+            )}
+
+            {step === 3 && (
+              <>
+                {/* Facilities */}
+                <InputGroup
+                  label="Facilities"
+                  text="Choose your place's facilities and amenities. Click to select."
+                >
+                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 my-4">
+                    {[
+                      { id: "tv", icon: <IoTvOutline />, label: "TV" },
+                      { id: "ac", icon: <TbAirConditioning />, label: "AC" },
+                      { id: "wifi", icon: <FaWifi />, label: "WiFi" },
+                      { id: "water", icon: <FaBottleWater />, label: "Drinking Water" },
+                      { id: "parking", icon: <FaCarSide />, label: "Parking" },
+                      { id: "pool", icon: <FaSwimmingPool />, label: "Pool" },
+                      { id: "elevator", icon: <PiElevatorLight />, label: "Elevator" },
+                      { id: "guard", icon: <GuardIcon />, label: "Guard" },
+                    ].map((facility) => (
+                      <div
+                        key={facility.id}
+                        className="border-2 border-gray-300 rounded-lg p-3 flex items-center justify-center gap-2 cursor-pointer hover:border-red-400 transition-all duration-200"
+                      >
+                        <input
+                          type="checkbox"
+                          id={facility.id}
+                          {...register(facility.id)}
+                          className="hidden"
+                        />
+                        <label htmlFor={facility.id} className="flex items-center gap-2 cursor-pointer">
+                          <span className="text-xl">{facility.icon}</span>
+                          <span>{facility.label}</span>
+                        </label>
+                      </div>
+                    ))}
+                  </div>
+                </InputGroup>
+              </>
+            )}
+          </motion.div>
+
+          {/* Navigation Buttons */}
+          <div className="flex justify-between mt-8">
+            {step > 1 && (
+              <button
+                type="button"
+                onClick={prevStep}
+                className="bg-gray-300 text-gray-800 py-2 px-4 rounded-lg hover:bg-gray-400 transition-all duration-200"
+              >
+                Back
+              </button>
+            )}
+            {step < 3 ? (
+              <button
+                type="button"
+                onClick={nextStep}
+                className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition-all duration-200"
+              >
+                Next
+              </button>
+            ) : (
+              <button
+                type="submit"
+                className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition-all duration-200"
+              >
+                Submit
+              </button>
+            )}
           </div>
-        </InputGroup>
-        <InputGroup
-          label="Facilities"
-          text="Choose your place's facilities and easiness. click for check"
-        >
-          <div className="flex gap-4 my-2 flex-wrap ">
-            <div className="border rounded-md has-[:checked]:bg-red-200 shadow-lg flex  flex-1">
-              <input
-                type="checkbox"
-                id="tv"
-                {...register("tv")}
-                className="hidden"
-              />
-              <label
-                htmlFor="tv"
-                className="flex items-center justify-center w-full gap-2 p-2 text-nowrap cursor-pointer"
-              >
-                <span>
-                  <IoTvOutline />
-                </span>
-                <span>TV</span>
-              </label>
-            </div>
-            <div className="border rounded-md has-[:checked]:bg-red-200 shadow-lg flex flex-1">
-              <input
-                type="checkbox"
-                id="ac"
-                {...register("ac")}
-                className="hidden"
-              />
-              <label
-                htmlFor="ac"
-                className="flex items-center justify-center w-full gap-2 p-2 text-nowrap cursor-pointer"
-              >
-                <span>
-                  <TbAirConditioning />
-                </span>
-                <span>AC</span>
-              </label>
-            </div>
-            <div className="border rounded-md has-[:checked]:bg-red-200 shadow-lg flex flex-1">
-              <input
-                type="checkbox"
-                id="wifi"
-                {...register("wifi")}
-                className="hidden"
-              />
-              <label
-                htmlFor="wifi"
-                className="flex items-center justify-center w-full gap-2 p-2 text-nowrap cursor-pointer"
-              >
-                <span>
-                  <FaWifi />
-                </span>
-                <span>WiFi</span>
-              </label>
-            </div>
-            <div className="border rounded-md has-[:checked]:bg-red-200 shadow-lg flex flex-1">
-              <input
-                type="checkbox"
-                id="water"
-                {...register("water")}
-                className="hidden"
-              />
-              <label
-                htmlFor="water"
-                className="flex items-center justify-center w-full gap-2 p-2 text-nowrap cursor-pointer"
-              >
-                <span>
-                  <FaBottleWater />
-                </span>
-                <span>Drinking water</span>
-              </label>
-            </div>
-            <div className="border rounded-md has-[:checked]:bg-red-200 shadow-lg flex flex-1">
-              <input
-                type="checkbox"
-                id="parking"
-                {...register("parking")}
-                className="hidden"
-              />
-              <label
-                htmlFor="parking"
-                className="flex items-center justify-center w-full gap-2 p-2 text-nowrap cursor-pointer"
-              >
-                <span>
-                  <FaCarSide />
-                </span>
-                <span>Parking</span>
-              </label>
-            </div>
-            <div className="border rounded-md has-[:checked]:bg-red-200 shadow-lg flex flex-1">
-              <input
-                type="checkbox"
-                id="pool"
-                {...register("pool")}
-                className="hidden"
-              />
-              <label
-                htmlFor="pool"
-                className="flex items-center justify-center w-full gap-2 p-2 text-nowrap cursor-pointer"
-              >
-                <span>
-                  <FaSwimmingPool />
-                </span>
-                <span>Pool</span>
-              </label>
-            </div>
-            <div className="border rounded-md has-[:checked]:bg-red-200 shadow-lg flex flex-1">
-              <input
-                type="checkbox"
-                id="elevator"
-                {...register("elevator")}
-                className="hidden"
-              />
-              <label
-                htmlFor="elevator"
-                className="flex items-center justify-center w-full gap-2 p-2 text-nowrap cursor-pointer"
-              >
-                <span>
-                  <PiElevatorLight />
-                </span>
-                <span>Elevator</span>
-              </label>
-            </div>
-            <div className="border rounded-md has-[:checked]:bg-red-200 shadow-lg flex flex-1">
-              <input
-                type="checkbox"
-                id="guard"
-                {...register("guard")}
-                className="hidden"
-              />
-              <label
-                htmlFor="guard"
-                className="flex items-center justify-center w-full gap-2 p-2 text-nowrap cursor-pointer"
-              >
-                <span>
-                  <GuardIcon />
-                </span>
-                <span>Guard</span>
-              </label>
-            </div>
-          </div>
-        </InputGroup>
+        </form>
       </div>
     </div>
   );

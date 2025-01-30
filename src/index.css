@@ -2,28 +2,42 @@
 @tailwind components;
 @tailwind utilities;
 
+
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 47.4% 11.2%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 47.4% 11.2%;
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 100% 50%;
-    --destructive-foreground: 210 40% 98%;
-    --ring: 215 20.2% 65.1%;
-    --radius: 0.5rem;
+    --background: 0 0% 100%; /* Background color */
+    --foreground: 240 10% 3.9%; /* Foreground text color */
+    --card: 0 0% 100%; /* Card background color */
+    --card-foreground: 240 10% 3.9%; /* Card text color */
+    --popover: 0 0% 100%; /* Popover background color */
+    --popover-foreground: 240 10% 3.9%; /* Popover text color */
+    
+    /* Main theme color changed to HSL(0, 78%, 60%) */
+    --primary: 0 78% 60%; /* Main button background and primary theme color */
+    --primary-foreground: 355.7 100% 97.3%; /* Text color on primary background */
+    
+    --secondary: 240 4.8% 95.9%; /* Secondary color */
+    --secondary-foreground: 240 5.9% 10%; /* Text color on secondary background */
+    --muted: 240 4.8% 95.9%; /* Muted color for less emphasis */
+    --muted-foreground: 240 3.8% 46.1%; /* Text color for muted elements */
+    --accent: 240 4.8% 95.9%; /* Accent color */
+    --accent-foreground: 240 5.9% 10%; /* Text color on accent background */
+    
+    --destructive: 0 84.2% 60.2%; /* Color for destructive actions */
+    --destructive-foreground: 0 0% 98%; /* Text color on destructive background */
+    
+    --border: 240 5.9% 90%; /* Border color */
+    --input: 240 5.9% 90%; /* Input field background color */
+    --ring: 0 78% 60%; /* Ring color (can also be set to primary) */
+    
+    --radius: 0.3rem; /* Border radius */
+    
+    /* Chart colors */
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
     --sidebar-primary: 240 5.9% 10%;
@@ -35,25 +49,38 @@
   }
 
   .dark {
-    --background: 224 71% 4%;
-    --foreground: 213 31% 91%;
-    --muted: 223 47% 11%;
-    --muted-foreground: 215.4 16.3% 56.9%;
-    --accent: 216 34% 17%;
-    --accent-foreground: 210 40% 98%;
-    --popover: 224 71% 4%;
-    --popover-foreground: 215 20.2% 65.1%;
-    --border: 216 34% 17%;
-    --input: 216 34% 17%;
-    --card: 224 71% 4%;
-    --card-foreground: 213 31% 91%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 1.2%;
-    --secondary: 222.2 47.4% 11.2%;
-    --secondary-foreground: 210 40% 98%;
-    --destructive: 0 63% 31%;
-    --destructive-foreground: 210 40% 98%;
-    --ring: 216 34% 17%;
+    --background: 20 14.3% 4.1%; /* Dark mode background */
+    --foreground: 0 0% 95%; /* Dark mode foreground text color */
+    --card: 24 9.8% 10%; /* Dark mode card background */
+    --card-foreground: 0 0% 95%; /* Dark mode card text color */
+    --popover: 0 0% 9%; /* Dark mode popover background */
+    --popover-foreground: 0 0% 95%; /* Dark mode popover text color */
+    
+    /* Main theme color changed to HSL(0, 78%, 60%) for dark mode */
+    --primary: 0 78% 60%; /* Main button background and primary theme color */
+    --primary-foreground: 355.7 100% 97.3%; /* Text color on primary background */
+    
+    --secondary: 240 3.7% 15.9%; /* Dark mode secondary color */
+    --secondary-foreground: 0 0% 98%; /* Dark mode text color on secondary */
+    --muted: 0 0% 15%; /* Dark mode muted color */
+    --muted-foreground: 240 5% 64.9%; /* Dark mode text color for muted elements */
+    
+    --accent: 12 6.5% 15.1%; /* Dark mode accent color */
+    --accent-foreground: 0 0% 98%; /* Dark mode text color on accent background */
+    
+    --destructive: 0 62.8% 30.6%; /* Dark mode color for destructive actions */
+    --destructive-foreground: 0 85.7% 97.3%; /* Dark mode text color on destructive background */
+    
+    --border: 240 3.7% 15.9%; /* Dark mode border color */
+    --input: 240 3.7% 15.9%; /* Dark mode input field background color */
+    --ring: 0 78% 60%; /* Dark mode ring color (can also be set to primary) */
+    
+    /* Chart colors for dark mode */
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -64,6 +91,7 @@
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
+
 
 @layer base {
   * {

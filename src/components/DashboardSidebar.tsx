@@ -3,14 +3,17 @@ import { Calendar, Home, Inbox, Search, Settings } from "lucide-react"
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarRail,
 } from "@/components/ui/sidebar"
 import { Link } from "react-router-dom"
+import { NavUser } from "./nav-user"
 
 // Menu items.
 const items = [
@@ -44,7 +47,7 @@ const items = [
 export default function DashboardSidebar() {
   return (
     <Sidebar>
-      <SidebarContent style={{backgroundColor:"#000", color: "#fff"}}>
+      <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>Application</SidebarGroupLabel>
           <SidebarGroupContent>
@@ -63,6 +66,10 @@ export default function DashboardSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+      <SidebarFooter>
+        <NavUser user={{ email: "hematking12@gmail.com", name: "Hemat Waziri", avatar: "https://ui-avatars.com/api/?name=Hemat+Waziri&background=random&type=photo" }} />
+      </SidebarFooter>
+      <SidebarRail />
     </Sidebar>
   )
 }

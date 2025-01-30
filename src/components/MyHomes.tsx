@@ -37,7 +37,7 @@ const MyHomes = () => {
       <div className="flex flex-col justify-center">
         <div className="m-auto">
           <Button
-            type="gradient"
+            variant="gradient"
             icon={<TbHomePlus />}
             onClick={() => setIsModalActive(true)}
           >

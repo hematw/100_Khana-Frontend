@@ -11,6 +11,7 @@ import {
 
 import { RouteObject } from "react-router-dom";
 import PublicLayout from "./pages/PublicLayout";
+import AddHome from "./components/AddHome";
 
 const routes: RouteObject[] = [
   { path: "/login", element: <Login /> },
@@ -23,12 +24,13 @@ const routes: RouteObject[] = [
     ]
   },
   {
-    path: "/", element: <ProtectedPages />,
+    path: "/dashboard", element: <ProtectedPages />,
     children: [
       { path: "profile/me", element: <Profile />, },
       { path: "profile/homes", element: <Profile />, },
       { path: "dashboard", element: <DashboardLayout />, },
-      { path: "profile/:id", element: <DashboardLayout />, }
+      { path: "profile/:id", element: <DashboardLayout />, },
+      { path: "properties", element: <AddHome />, }
     ]
   },
   { path: "*", element: <NotFound /> }

@@ -1,5 +1,4 @@
 import DashboardSidebar from '@/components/DashboardSidebar'
-import React from 'react'
 import { Route, } from 'react-router-dom'
 
 function DashboardLayout() {

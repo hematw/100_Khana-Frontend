@@ -1,7 +1,6 @@
 import { Navigate, Outlet } from "react-router-dom";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-import { SidebarProvider } from "@/components/ui/sidebar";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import DashboardSidebar from "@/components/DashboardSidebar";
 
 export default function ProtectedPages() {
   const token = localStorage.getItem("token");
@@ -12,15 +11,15 @@ export default function ProtectedPages() {
 
   return (
     <>
-      <Header />
       <SidebarProvider>
-        <main className="min-h-[540px]">
+        <DashboardSidebar/>
+        <main className="min-h-[540px] p-4">
+        <SidebarTrigger className="-ml-1" />
           {token ?
             <Outlet />
             : <Navigate to={"/login"} />}
         </main>
       </SidebarProvider>
-      <Footer />
     </>
   );
 }
