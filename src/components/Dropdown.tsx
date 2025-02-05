@@ -70,6 +70,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { Link } from "react-router-dom";
 
 export default function Dropdown() {
   return (
@@ -88,15 +89,21 @@ export default function Dropdown() {
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>
-            Profile
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            Billing
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            Settings
-          </DropdownMenuItem>
+          <Link to="./dashboard/profile">
+            <DropdownMenuItem className="cursor-pointer">
+              Profile
+            </DropdownMenuItem>
+          </Link>
+          <Link to="./dashboard/properties">
+            <DropdownMenuItem className="cursor-pointer">
+              Add Property
+            </DropdownMenuItem>
+          </Link>
+          <Link to="./dashboard/homes">
+            <DropdownMenuItem className="cursor-pointer">
+              My Homes
+            </DropdownMenuItem>
+          </Link>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
@@ -121,6 +128,6 @@ export default function Dropdown() {
           Log out
         </DropdownMenuItem>
       </DropdownMenuContent>
-    </DropdownMenu>
+    </DropdownMenu >
   )
 }

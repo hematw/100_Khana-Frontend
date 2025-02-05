@@ -13,7 +13,7 @@ export default function ProtectedPages() {
     <>
       <SidebarProvider>
         <DashboardSidebar/>
-        <main className="min-h-[540px] p-4">
+        <main className="min-h-[540px] p-4  grow">
         <SidebarTrigger className="-ml-1" />
           {token ?
             <Outlet />
