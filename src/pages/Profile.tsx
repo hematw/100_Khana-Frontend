@@ -6,7 +6,6 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import axiosIns from "../axios";
 import Input from "../components/Input";
 import InputGroup from "../components/InputGroup";
-import { motion, AnimatePresence } from "framer-motion";
 import { FaUpload } from "react-icons/fa6";
 
 interface IProfile {
@@ -158,16 +157,11 @@ export default function Profile() {
         </div>
 
         <div className="mt-32">
-          <AnimatePresence mode="wait">
             {editMode ? (
-              <motion.form
+              <form
                 key="edit-form"
                 onSubmit={handleSubmit(onSubmit)}
                 encType="multipart/form-data"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.3 }}
               >
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div>
@@ -276,14 +270,9 @@ export default function Profile() {
                     Cancel
                   </Button>
                 </div>
-              </motion.form>
+              </form>
             ) : (
-              <motion.div
-                key="view-mode"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.3 }}
+              <div
               >
                 <div className="gap-8">
                   {/* <div> */}
@@ -312,9 +301,8 @@ export default function Profile() {
                   </div>
                   {/* </div> */}
                 </div>
-              </motion.div>
+              </div>
             )}
-          </AnimatePresence>
         </div>
       </div>
     </section>

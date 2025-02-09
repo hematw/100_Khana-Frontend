@@ -7,13 +7,16 @@
 
 // import { toast } from "@/hooks/use-toast"
 // import { Button } from "@/components/ui/button"
+
+
+import { Minus, Plus } from "lucide-react";
+import { Input } from "../../ui/input"
 import {
     FormDescription,
     FormLabel,
 } from "@/components/ui/form"
-import { IPropertyForm } from "./add-home"
+import { IPropertyForm } from "../add-home"
 import { UseFormReturn } from "react-hook-form"
-import { useState } from "react"
 
 
 function Rooms({ form }: { form: UseFormReturn<IPropertyForm> }) {
@@ -21,8 +24,9 @@ function Rooms({ form }: { form: UseFormReturn<IPropertyForm> }) {
         <div>
             <FormLabel>Number of Rooms</FormLabel>
             <FormDescription>
-                Select the total number of rooms available in the property, including bedrooms, living rooms, and other spaces.            </FormDescription>
-            <div className="flex justify-evenly flex-wrap gap-8 p-8">
+                Select the total number of rooms available in the property, including bedrooms, living rooms, and other spaces.
+            </FormDescription>
+            <div className="grid grid-cols-2  md:grid-cols-4 flex-wrap gap-4 p-8">
                 <NumberInput value={form.watch("numOfLivingRooms")} onChange={(value) => form.setValue("numOfLivingRooms", value)} label="Living Rooms" />
                 <NumberInput value={form.watch("numOfBedRooms")} onChange={(value) => form.setValue("numOfBedRooms", value)} label="Bedrooms" />
                 <NumberInput value={form.watch("numOfKitchens")} onChange={(value) => form.setValue("numOfKitchens", value)} label="Kitchens" />
@@ -34,12 +38,10 @@ function Rooms({ form }: { form: UseFormReturn<IPropertyForm> }) {
 export default Rooms
 
 
-import { Minus, Plus } from "lucide-react";
-import { Input } from "../ui/input"
+interface NumberInputProps { label: string, value: number, min?: number, max?: number, onChange: (value: number) => void }
 
 const NumberInput = ({ label, value, min = 0, max = 10, onChange }:
-    { label: string, value: number, min?: number, max?: number, onChange: (value: number) => void }) => {
-    // const [value, setValue] = useState(0);
+    NumberInputProps) => {
 
     const handleIncrement = () => {
         if (value < max) onChange(value + 1);
@@ -53,7 +55,7 @@ const NumberInput = ({ label, value, min = 0, max = 10, onChange }:
         <div className="flex flex-col items-center gap-2">
             <span className="text-lg font-medium">{label}</span>
             <div className="text-center border border-gray-300 rounded-lg p-4 bg-white shadow-md">
-                <Input className="font-semibold h-24 w-24 border text-center !text-7xl" value={value} />
+                <Input className="font-semibold h-24 w-24 border text-center !text-7xl" value={value} onChange={() => onChange} />
                 <div className="flex gap-4 mt-4 justify-center">
                     <button
                         onClick={handleDecrement}

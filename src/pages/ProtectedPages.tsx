@@ -12,9 +12,10 @@ export default function ProtectedPages() {
   return (
     <>
       <SidebarProvider>
-        <DashboardSidebar/>
+        <DashboardSidebar />
         <main className="min-h-[540px] p-4  grow">
-        <SidebarTrigger className="-ml-1" />
+          <SidebarTrigger className="fixed top-4" />
+
           {token ?
             <Outlet />
             : <Navigate to={"/login"} />}

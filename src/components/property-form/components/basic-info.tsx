@@ -16,9 +16,9 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { IPropertyForm } from "./add-home"
+import { IPropertyForm } from "../add-home"
 import { UseFormReturn } from "react-hook-form"
-import { MultiSelect } from "../multi-select"
+import { MultiSelect } from "../../multi-select"
 import { useEffect, useState } from "react"
 import axiosIns from "@/axios"
 
@@ -54,7 +54,7 @@ function BasicInfo({ form }: { form: UseFormReturn<IPropertyForm> }) {
                     <FormItem>
                         <FormLabel>Your property title</FormLabel>
                         <FormControl>
-                            <Input placeholder="" {...field} />
+                            <Input placeholder="Penthouse in Bamiyan" {...field} />
                         </FormControl>
                         <FormDescription>
                             Write a attractive title for you property.

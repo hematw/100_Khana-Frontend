@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { motion } from "framer-motion"; // Import motion from framer-motion
 // import Input from "../Input";
 // import InputGroup from "../InputGroup";
 // import { TbAirConditioning } from "react-icons/tb";
@@ -10,12 +9,12 @@ import { motion } from "framer-motion"; // Import motion from framer-motion
 // import { FaSwimmingPool, FaWifi } from "react-icons/fa";
 // import { FaBottleWater } from "react-icons/fa6";
 // import GuardIcon from "../GuardIcon";
-import BasicInfo from "./basic-info";
+import BasicInfo from "./components/basic-info";
 import { z } from "zod";
 import { Form } from "../ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Rooms from "./rooms";
-import FileUploadForm from "./property-images";
+import Rooms from "./components/rooms";
+import FileUploadForm from "./components/file-upload";
 
 export interface IPropertyForm {
   title: string,
@@ -52,7 +51,7 @@ const FormSchema = z.object({
   // area and price
   area: z.string(),
   price: z.number(),
-  listingType: z.string(),
+  listingType: z.array(z.string()),
   // address
   city: z.string(),
   district: z.string(),
@@ -101,28 +100,24 @@ function AddHome() {
         <h1 className="text-3xl font-bold text-gray-800 mb-6">Add Your Home</h1>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
-            <motion.div
+            <div
               className="space-y-6"
               key={step} // Use step as the key to trigger re-mounting
-              initial={{ opacity: 0, x: -100 }} // Initial state for animation
-              animate={{ opacity: 1, x: 0 }} // Target state for animation
-              exit={{ opacity: 0, x: 100 }} // Exit state for animation
-              transition={{ duration: 0.3 }} // Animation duration
             >
               {step === 1 && (
                 <BasicInfo form={form} />
               )}
-              
+
               {step === 2 && (
                 <Rooms form={form} />
               )}
-              
+
               {step === 3 && (
                 <FileUploadForm form={form} />
               )}
 
 
-            </motion.div>
+            </div>
 
             {/* Navigation Buttons */}
             <div className="flex justify-between mt-8">
