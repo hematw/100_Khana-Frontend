@@ -13,7 +13,8 @@ export default {
   		fontFamily: {
   			poppins: 'Poppins, sans-serif',
   			roboto: 'Roboto, sans-serif',
-  			smooch: 'SmoochSans, sans-serif'
+  			clash: 'ClashDisplay, sans-serif',
+  			smooch: 'Smooch Sans, sans-serif'
   		},
   		textShadow: {
   			sm: '0 1px 2px var(--tw-shadow-color)',

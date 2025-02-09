@@ -1,12 +1,11 @@
 import { RefObject, useEffect, useRef, useState } from "react";
 import Button from "../components/Button";
 import ProfileImage from "../components/ProfileImage";
-import { FaRegSave, FaEdit } from "react-icons/fa";
 import { useForm, SubmitHandler } from "react-hook-form";
 import axiosIns from "../axios";
 import Input from "../components/Input";
 import InputGroup from "../components/InputGroup";
-import { FaUpload } from "react-icons/fa6";
+import { Pencil, Save, Upload } from "lucide-react";
 
 interface IProfile {
   firstName?: string;
@@ -123,7 +122,7 @@ export default function Profile() {
             {editMode &&
               <label className="inline-flex justify-center items-center bg-black/50 text-white absolute bottom-2 right-2 p-2 gap-2 rounded-full cursor-pointer text-sm z-10">
                 <span>
-                  <FaUpload />
+                  <Upload />
                 </span>
                 Upload Background Photo
                 <input
@@ -260,7 +259,7 @@ export default function Profile() {
                   <Button
                     variant="gradient"
                     // type="submit"
-                    icon={<FaRegSave />}
+                    icon={<Save />}
                     disabled={isLoading}
                     className={isLoading ? "opacity-60" : ""}
                   >
@@ -294,7 +293,7 @@ export default function Profile() {
                     <Button
                       variant="gradient"
                       onClick={() => setEditMode(true)}
-                      icon={<FaEdit />}
+                      icon={<Pencil />}
                     >
                       Edit Profile
                     </Button>

@@ -1,5 +1,5 @@
 // import { FocusEventHandler, ReactNode, useState, useRef } from "react";
-// import { FaChevronDown } from "react-icons/fa6";
+// import { ChevronDown } from "lucide-react";
 
 // interface DropdownProps {
 //   children: React.ReactNode;
@@ -35,7 +35,7 @@
 //         onClick={() => setIsOpen((prev) => !prev)}
 //         onBlur={handleBlur}
 //       >
-//         {icon || <FaChevronDown />}
+//         {icon || <ChevronDown />}
 //         {buttonText}
 //       </button>
 
@@ -55,7 +55,7 @@
 //   );
 // }
 
-import { FiUser, FiMenu } from "react-icons/fi";
+import { CircleUserRound, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -80,9 +80,9 @@ export default function Dropdown() {
           className="rounded-3xl"
         >
           <span className="bg-slate-500 rounded-full overflow-hidden text-white ring-slate-500 ring-2">
-            <FiUser size={28} />
+            <CircleUserRound size={28} />
           </span>
-          <FiMenu />
+          <Menu />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="absolute -right-10 w-56 overflow-hidden">

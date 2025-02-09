@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FaChevronRight,FaChevronLeft  } from "react-icons/fa6";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 type carouselProps = {
     images: string[],
@@ -32,13 +32,13 @@ const Carousel = ({ className = '', images }: carouselProps) => {
           onClick={goPrev}
           className="p-2 h-8 w-8 flex items-center bg-white rounded-full "
         >
-          <FaChevronLeft />
+          <ChevronLeft />
         </button>
         <button
           onClick={goNext}
           className="p-2 h-8 w-8 flex items-center bg-white rounded-full "
         >
-          <FaChevronRight />
+          <ChevronRight />
         </button>
       </div>
       <div className="w-full ">

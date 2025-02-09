@@ -1,5 +1,4 @@
-import { FaLinkedinIn, FaXTwitter, FaGithub } from "react-icons/fa6";
-import { FaFacebookF } from "react-icons/fa";
+import { Linkedin, Twitter,Github, Facebook } from "lucide-react";
 
 export const Footer = () => {
   return (
@@ -20,25 +19,25 @@ export const Footer = () => {
                 href="https://www.x.com/_hematw"
                 className="bg-blue-400 text-white shadow-lg h-10 w-10 flex items-center justify-center rounded-full mr-2 transition-all hover:-translate-y-1  duration-200"
               >
-                <FaXTwitter />
+                <Twitter />
               </a>
               <a
                 href="https://www.facebook.com/hemat.w"
                 className="bg-blue-500 text-white shadow-lg h-10 w-10 flex items-center justify-center rounded-full mr-2 transition-all hover:-translate-y-1  duration-200"
               >
-                <FaFacebookF />
+                <Facebook />
               </a>
               <a
                 href="https://www.linkedin.com/in/hematw"
                 className="bg-sky-600 text-white shadow-lg h-10 w-10 flex items-center justify-center rounded-full mr-2 transition-all hover:-translate-y-1 duration-200"
               >
-                <FaLinkedinIn />
+                <Linkedin />
               </a>
               <a
                 href="https://www.github.com/hematw"
                 className="bg-gray-800 text-white shadow-lg h-10 w-10 flex items-center justify-center rounded-full mr-2 transition-all hover:-translate-y-1  duration-200"
               >
-                <FaGithub />
+                <Github />
               </a>
             </div>
           </div>

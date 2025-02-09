@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import axiosInstance from "../axios";
 import Button from "./Button";
 import HomeCard from "./HomeCard";
-import AddHome from "./AddHome";
-import { TbHomePlus } from "react-icons/tb";
+import AddHome from "./property-form/add-home";
+import { HousePlus } from "lucide-react";
 
 const fakeData = {
   id: "fdasfasj",
@@ -38,7 +38,7 @@ const MyHomes = () => {
         <div className="m-auto">
           <Button
             variant="gradient"
-            icon={<TbHomePlus />}
+            icon={<HousePlus />}
             onClick={() => setIsModalActive(true)}
           >
             Add new place

@@ -15,6 +15,7 @@ import { Form } from "../ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Rooms from "./components/rooms";
 import FileUploadForm from "./components/file-upload";
+import AreaAndPrice from "./components/area-and-price";
 
 export interface IPropertyForm {
   title: string,
@@ -28,6 +29,7 @@ export interface IPropertyForm {
   price: number,
   area: string,
   category: string[],
+  facilities: string[],
   listingType: string,
   city: string,
   district: string,
@@ -52,6 +54,7 @@ const FormSchema = z.object({
   area: z.string(),
   price: z.number(),
   listingType: z.array(z.string()),
+  facilities: z.array(z.string()   ),
   // address
   city: z.string(),
   district: z.string(),
@@ -63,6 +66,8 @@ const FormSchema = z.object({
 
 function AddHome() {
   const [step, setStep] = useState(1);
+
+  const TOTAL_STEPS = 5;
   const form = useForm<IPropertyForm>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -91,7 +96,7 @@ function AddHome() {
     // reset();
   };
 
-  const nextStep = () => setStep((prev) => Math.min(prev + 1, 3));
+  const nextStep = () => setStep((prev) => Math.min(prev + 1, TOTAL_STEPS));
   const prevStep = () => setStep((prev) => Math.max(prev - 1, 1));
 
   return (
@@ -116,12 +121,16 @@ function AddHome() {
                 <FileUploadForm form={form} />
               )}
 
+              {step === 4 && (
+                <AreaAndPrice form={form} />
+              )}
+
 
             </div>
 
             {/* Navigation Buttons */}
             <div className="flex justify-between mt-8">
-              {step > 1 && (
+              {/* {step > 1 && ( */}
                 <button
                   type="button"
                   onClick={prevStep}
@@ -129,8 +138,8 @@ function AddHome() {
                 >
                   Back
                 </button>
-              )}
-              {step < 3 ? (
+              {/* )} */}
+              {step < TOTAL_STEPS ? (
                 <button
                   type="button"
                   onClick={() => { nextStep(); form.trigger(); }}

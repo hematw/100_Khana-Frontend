@@ -1,5 +1,5 @@
 import React from "react";
-import { FaCamera } from "react-icons/fa";
+import { Camera } from "lucide-react";
 
 interface ProfileImageProps {
   image: string;
@@ -29,7 +29,7 @@ export default function ProfileImage({
             className="absolute inset-0 bg-black bg-opacity-50 rounded-full flex items-center justify-center cursor-pointer"
             onClick={() => fileInputRef.current?.click()}
           >
-            <FaCamera className="text-white text-2xl" />
+            <Camera className="text-white text-2xl" />
             <input
               type="file"
               accept=".png, .jpg, .jpeg, .gif"
@@ -48,7 +48,7 @@ export default function ProfileImage({
             </label>
             <label className="inline-flex justify-center items-center bg-black/50 text-white absolute bottom-0 left-0 w-10 h-10 rounded-full cursor-pointer">
               <span>
-                <FaCamera />
+                <Camera />
               </span>
               <input
                 type="file"
