@@ -1,13 +1,13 @@
-import DashboardSidebar from '@/components/DashboardSidebar'
+import { AppSidebar } from '@/components/app-sidebar'
 import { Route, } from 'react-router-dom'
 
 function DashboardLayout() {
     return (
         <div>
-            <DashboardSidebar />
-            
+            <AppSidebar />
+
             <Route>
-                <Route path='./my-info'  element={<h1>Welcome to dashboard</h1>} />
+                <Route path='./my-info' element={<h1>Welcome to dashboard</h1>} />
             </Route>
         </div>
     )

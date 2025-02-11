@@ -1,6 +1,6 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import DashboardSidebar from "@/components/DashboardSidebar";
+import { AppSidebar } from "@/components/app-sidebar";
 
 export default function ProtectedPages() {
   const token = localStorage.getItem("token");
@@ -12,7 +12,7 @@ export default function ProtectedPages() {
   return (
     <>
       <SidebarProvider>
-        <DashboardSidebar />
+        <AppSidebar />
         <main className="min-h-[540px] p-4  grow">
           <SidebarTrigger className="fixed top-4" />
 
