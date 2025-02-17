@@ -4,7 +4,7 @@ const ThemeSwitch = ({ theme, toggleTheme, className }: { theme: string, toggleT
   return (
     <>
       <label className={`switch ${className}`}>
-        <input id="input" type="checkbox" defaultChecked={theme === "light"} onClick={toggleTheme} />
+        <input id="input" type="checkbox" defaultChecked={theme === "dark"} onClick={toggleTheme} />
         <div className="slider round">
           <div className="sun-moon">
             <svg id="moon-dot-1" className="moon-dot" viewBox="0 0 100 100">

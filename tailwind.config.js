@@ -22,6 +22,11 @@ export default {
   			lg: '0 8px 16px var(--tw-shadow-color)'
   		},
   		colors: {
+			prime: "#DC2626",
+			sec: "#F8F9FA",
+			third: "#64748B",
+			forth: "#FACC15",
+			fifth: "#14B8A6",
   			border: 'hsl(var(--border))',
   			input: 'hsl(var(--input))',
   			ring: 'hsl(var(--ring))',

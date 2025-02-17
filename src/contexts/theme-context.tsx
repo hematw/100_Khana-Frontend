@@ -8,7 +8,7 @@ interface ThemeContextI {
 export const ThemeContext = createContext<ThemeContextI>({ theme: "", toggleTheme: () => { } });
 
 function ThemeProvider({ children }: { children: React.ReactNode }) {
-    const [theme, setTheme] = useState("light");
+    const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
 
     const toggleTheme = () => {
         console.log("clicked the toggle func")
@@ -16,9 +16,11 @@ function ThemeProvider({ children }: { children: React.ReactNode }) {
     }
 
     useEffect(() => {
-        if(theme==="dark"){
+        if (theme === "dark") {
+            localStorage.setItem("theme", "dark")
             window.document.body.classList.add("dark")
         } else {
+            localStorage.setItem("theme", "light")
             window.document.body.classList.remove("dark")
         }
     }, [theme])
