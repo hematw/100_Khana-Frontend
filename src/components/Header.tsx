@@ -9,12 +9,12 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
-    window.addEventListener("scroll", () => {
-      console.log(window.scrollY);
+    const handleScroll = () => {
       setIsScrolled(window.scrollY > 100);
-    });
+    };
 
-    return () => window.removeEventListener("scroll", () => {});
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
@@ -27,7 +27,7 @@ export default function Header() {
         {/* Logo */}
         <div className="text-2xl font-bold text-gray-800 cursor-pointer">
           <a href="/">
-            <img src="/100khana.png" alt="Our logo" className="w-16 h-12" />
+            <img src="/100khana.png" alt="Our logo" className="w-18 h-12" />
           </a>
         </div>
         {/* Navigation Links */}

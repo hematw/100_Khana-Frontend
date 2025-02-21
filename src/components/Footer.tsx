@@ -121,9 +121,9 @@ export default function Footer() {
         </div>
 
         {/* Bottom Illustration */}
-        <div className="relative h-24 mt-8">
-          <div className="absolute bottom-0 left-0 right-0">
-            <div className="h-16 bg-gradient-to-r from-red-600 to-purple-700 opacity-20 rounded-t-3xl"></div>
+        <div className="relative  mt-12 mb-4">
+          <div className=" max-w-2xl mx-auto">
+            <img src="/footer-illustration.png" alt="" />
           </div>
         </div>
 
