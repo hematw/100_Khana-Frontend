@@ -16,26 +16,29 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Rooms from "./components/rooms";
 import FileUploadForm from "./components/file-upload";
 import AreaAndPrice from "./components/area-and-price";
+import { Card, CardTitle } from "../ui/card";
+import { Button } from "../ui/button";
+import Address from "./components/address";
 
 export interface IPropertyForm {
-  title: string,
-  description: string,
-  owner: string,
-  numOfLivingRooms: number,
-  numOfBedRooms: number,
-  numOfKitchens: number,
-  numOfBaths: number,
-  images: (string | File)[],
-  price: number,
-  area: string,
-  category: string[],
-  facilities: string[],
-  listingType: string,
-  city: string,
-  district: string,
-  street: string,
-  longitude: string,
-  latitude: string
+  title: string;
+  description: string;
+  owner: string;
+  numOfLivingRooms: number;
+  numOfBedRooms: number;
+  numOfKitchens: number;
+  numOfBaths: number;
+  images: (string | File)[];
+  price: number;
+  area: string;
+  category: string[];
+  facilities: string[];
+  listingType: string;
+  city: string;
+  district: string;
+  street: string;
+  longitude: string;
+  latitude: string;
 }
 
 const FormSchema = z.object({
@@ -54,15 +57,14 @@ const FormSchema = z.object({
   area: z.string(),
   price: z.number(),
   listingType: z.array(z.string()),
-  facilities: z.array(z.string()   ),
+  facilities: z.array(z.string()),
   // address
   city: z.string(),
   district: z.string(),
   street: z.string(),
   longitude: z.string(),
-  latitude: z.string()
-})
-
+  latitude: z.string(),
+});
 
 function AddHome() {
   const [step, setStep] = useState(1);
@@ -71,24 +73,24 @@ function AddHome() {
   const form = useForm<IPropertyForm>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      title: '',
-      description: '',
-      owner: '',
+      title: "",
+      description: "",
+      owner: "",
       numOfLivingRooms: 0,
       numOfBedRooms: 0,
       numOfKitchens: 0,
       numOfBaths: 0,
       images: [],
       price: 0,
-      area: '',
+      area: "",
       category: [],
-      listingType: '',
-      city: '',
-      district: '',
-      street: '',
-      longitude: '',
-      latitude: '',
-    }
+      listingType: "",
+      city: "",
+      district: "",
+      street: "",
+      longitude: "",
+      latitude: "",
+    },
   });
 
   const onSubmit: SubmitHandler<IPropertyForm> = (data: IPropertyForm) => {
@@ -100,67 +102,63 @@ function AddHome() {
   const prevStep = () => setStep((prev) => Math.max(prev - 1, 1));
 
   return (
-    <div className="p-6 w-full bg-gray-50 min-h-screen">
-      <div className="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-8">
-        <h1 className="text-3xl font-bold text-gray-800 mb-6">Add Your Home</h1>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
-            <div
-              className="space-y-6"
-              key={step} // Use step as the key to trigger re-mounting
-            >
-              {step === 1 && (
-                <BasicInfo form={form} />
-              )}
+    <div className="p-6 w-full min-h-screen">
+      <Card className="grid grid-cols-12 max-w-5xl mx-auto rounded-lg shadow-lg overflow-hidden max-h-screen">
+        <div className="col-span-8 p-8 content-center">
+          <CardTitle className="text-3xl font-bold mb-6">
+            Add Your Home
+          </CardTitle>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)}>
+              <div
+                className="space-y-6"
+                key={step} // Use step as the key to trigger re-mounting
+              >
+                {step === 1 && <Address form={form} />}
 
-              {step === 2 && (
-                <Rooms form={form} />
-              )}
+                {step === 2 && <Rooms form={form} />}
 
-              {step === 3 && (
-                <FileUploadForm form={form} />
-              )}
+                {step === 3 && <FileUploadForm form={form} />}
 
-              {step === 4 && (
-                <AreaAndPrice form={form} />
-              )}
+                {step === 4 && <AreaAndPrice form={form} />}
 
+                {step === 5 && <BasicInfo form={form} />}
+              </div>
 
-            </div>
-
-            {/* Navigation Buttons */}
-            <div className="flex justify-between mt-8">
-              {/* {step > 1 && ( */}
-                <button
-                  type="button"
-                  onClick={prevStep}
-                  className="bg-gray-300 text-gray-800 py-2 px-4 rounded-lg hover:bg-gray-400 transition-all duration-200"
-                >
+              {/* Navigation Buttons */}
+              <div className="flex justify-between mt-8">
+                {/* {step > 1 && ( */}
+                <Button type="button" onClick={prevStep} variant={"outline"}>
                   Back
-                </button>
-              {/* )} */}
-              {step < TOTAL_STEPS ? (
-                <button
-                  type="button"
-                  onClick={() => { nextStep(); form.trigger(); }}
-                  className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition-all duration-200"
-                >
-                  Next
-                </button>
-              ) : (
-                <button
-                  type="submit"
-                  className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition-all duration-200"
-                >
-                  Submit
-                </button>
-              )}
-            </div>
-          </form>
-        </Form>
-      </div >
-    </div >
+                </Button>
+                {/* )} */}
+                {step < TOTAL_STEPS ? (
+                  <Button
+                    type="button"
+                    onClick={() => {
+                      nextStep();
+                      form.trigger();
+                    }}
+                  >
+                    Next
+                  </Button>
+                ) : (
+                  <Button type="submit">Submit</Button>
+                )}
+              </div>
+            </form>
+          </Form>
+        </div>
+        <div className="col-span-4 max-h-screen">
+          <img
+            src="/Photo.png"
+            alt=""
+            className="w-full h-full object-center  "
+          />
+        </div>
+      </Card>
+    </div>
   );
-};
+}
 
 export default AddHome;

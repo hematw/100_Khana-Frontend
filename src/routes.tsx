@@ -23,6 +23,7 @@ const routes: RouteObject[] = [
       { index: true, element: <Home /> },
     ]
   },
+  { path: "/properties", element: <AddHome />, },
   {
     path: "/dashboard", element: <ProtectedPages />,
     children: [
@@ -30,7 +31,6 @@ const routes: RouteObject[] = [
       { path: "profile/homes", element: <Profile />, },
       { path: "dashboard", element: <DashboardLayout />, },
       { path: "profile/:id", element: <DashboardLayout />, },
-      { path: "properties", element: <AddHome />, }
     ]
   },
   { path: "*", element: <NotFound /> }

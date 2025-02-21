@@ -11,7 +11,6 @@ function ThemeProvider({ children }: { children: React.ReactNode }) {
     const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
 
     const toggleTheme = () => {
-        console.log("clicked the toggle func")
         setTheme(prevTheme => prevTheme === "light" ? "dark" : "light")
     }
 
