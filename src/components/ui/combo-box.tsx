@@ -1,5 +1,3 @@
-"use client";
-
 import * as React from "react";
 import { Check, ChevronsUpDown } from "lucide-react";
 
@@ -25,18 +23,19 @@ type ComboBoxOption = {
 };
 
 type ComboBoxProps = {
+  value: string;
   options: ComboBoxOption[];
-  onValueChange: (value: string) => void;
+  onChange: (value: string) => void;
   placeholder?: string;
 };
 
 export function Combobox({
+  value,
   options,
-  onValueChange,
+  onChange,
   placeholder,
 }: ComboBoxProps): React.ReactElement {
   const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState<ComboBoxOption>();
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -45,15 +44,15 @@ export function Combobox({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-[200px] justify-between"
+          className="justify-between"
         >
           {value
-            ? options.find((opt) => opt.value === value.value)?.label
+            ? options.find((opt) => opt.value === value)?.label
             : placeholder}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0">
+      <PopoverContent className="w-full p-0">
         <Command>
           <CommandInput placeholder={placeholder} />
           <CommandList>
@@ -64,14 +63,14 @@ export function Combobox({
                   key={opt.value}
                   value={opt.value}
                   onSelect={(currentValue) => {
-                    setValue(currentValue === value ? null : currentValue);
+                    onChange(currentValue);
                     setOpen(false);
                   }}
                 >
                   <Check
                     className={cn(
                       "mr-2 h-4 w-4",
-                      value?.value === opt.value ? "opacity-100" : "opacity-0"
+                      value === opt.value ? "opacity-100" : "opacity-0"
                     )}
                   />
                   {opt.label}

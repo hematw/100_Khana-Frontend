@@ -1,110 +1,118 @@
-// import React from 'react'
-
-
-// import { zodResolver } from "@hookform/resolvers/zod"
-// import { useForm, UseFormRegister, UseFormReturn } from "react-hook-form"
-// import { z } from "zod"
-
-// import { toast } from "@/hooks/use-toast"
-// import { Button } from "@/components/ui/button"
 import {
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { IPropertyForm } from "../add-home"
-import { UseFormReturn } from "react-hook-form"
-import { MultiSelect } from "../../multi-select"
-import { useEffect, useState } from "react"
-import axiosIns from "@/axios"
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { IPropertyForm } from "../add-home";
+import { UseFormReturn } from "react-hook-form";
+import axiosIns from "@/axios";
+import { useQuery } from "@tanstack/react-query";
+import { Combobox } from "@/components/ui/combo-box";
 
+type TDistrict = {
+  name: string;
+  _id: string;
+};
 
-type TFacility = {
-    name: string,
-    _id: string,
-    description: string,
-    icon: string,
+type TCity = {
+  name: string;
+  _id: string;
+};
+
+async function getCities(): Promise<TCity[]> {
+  const response = await axiosIns.get("/cities");
+  return response.data.cities;
 }
 
+async function getDistricts(): Promise<TDistrict[]> {
+  const response = await axiosIns.get("/districts");
+  return response.data.districts;
+}
 
 function Address({ form }: { form: UseFormReturn<IPropertyForm> }) {
-    const [facilities, setFacilities] = useState<TFacility[]>([]);
+  const { isLoading: isLoadingCities, isError: isErrorCities, data: cities = [] } = useQuery({
+    queryKey: ["cities"],
+    queryFn: getCities,
+  });
 
-    useEffect(() => {
-        async function fetchCategories() {
-            try {
-                const { data } = await axiosIns.get('/facilities')
-                console.log(data)
-                setFacilities(data.facilities)
-            } catch (error) {
-                console.error(error)
-            }
-        }
-        fetchCategories()
-    }, [])
+  const { isLoading: isLoadingDistricts, isError: isErrorDistricts, data: districts = [] } = useQuery({
+    queryKey: ["districts"],
+    queryFn: getDistricts,
+  });
 
-    return (
-        <>
-            <FormField
-                control={form.control}
-                name="title"
-                render={({ field }) => (
-                    <FormItem>
-                        <FormLabel>Enter your house’s total area (m<sup>2</sup>).</FormLabel>
-                        <FormControl>
-                            <Input placeholder="Penthouse in Bamiyan" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                    </FormItem>
-                )}
+  if (isErrorCities || isErrorDistricts) {
+    return <h1>Something went wrong</h1>;
+  }
+
+  if (isLoadingCities || isLoadingDistricts) {
+    return <h1>Loading...</h1>;
+  }
+
+  return (
+    <>
+      <FormField
+        control={form.control}
+        name="city"
+        render={({ field }) => (
+          <FormItem className="col-span-1 flex flex-col">
+            <FormLabel>City</FormLabel>
+            <Combobox
+              value={field.value}
+              options={cities.map((c) => ({ label: c.name, value: c.name }))}
+              onChange={field.onChange}
+              placeholder="Select a city"
             />
-            <FormField
-                control={form.control}
-                name="description"
-                render={({ field }) => (
-                    <FormItem>
-                        <FormLabel>Set your asking price.</FormLabel>
-                        <FormControl>
-                            <Input placeholder="Big House like a palace" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                    </FormItem>
-                )}
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={form.control}
+        name="district"
+        render={({ field }) => (
+          <FormItem className="col-span-1 flex flex-col">
+            <FormLabel>District</FormLabel>
+            <Combobox
+              value={field.value}
+              options={districts.map((d) => ({ label: d.name, value: d.name }))}
+              onChange={field.onChange}
+              placeholder="Select a district"
             />
-            <FormField
-                control={form.control}
-                name="category"
-                render={({ field }) => (
-                    <FormItem>
-                        <FormLabel>Select the features and amenities your property includes.</FormLabel>
-                        <MultiSelect
-                            value={field.value}
-                            options={facilities.map(c => ({ label: c.name, value: c._id }))}
-                            onValueChange={field.onChange}
-                            placeholder="Facilities"
-                        />
-                    </FormItem>
-                )}
-            />
-            <FormField
-                control={form.control}
-                name="category"
-                render={({ field }) => (
-                    <FormItem>
-                        <FormLabel>How would you like to list your property? (For Sale, Rent, or Mortgage)</FormLabel>
-                        <MultiSelect
-                            value={field.value}
-                            options={["Rental", "Sale", "Mortgage"].map(item => ({ label: item, value: item }))}
-                            onValueChange={field.onChange}
-                            placeholder="Listing Type"
-                        />
-                    </FormItem>
-                )}
-            />
-        </>
-    )
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={form.control}
+        name="road"
+        render={({ field }) => (
+          <FormItem className="col-span-1 flex flex-col">
+            <FormLabel>Main Road</FormLabel>
+            <FormControl>
+              <Input
+                placeholder="eg: Shahr e Naw - Qala Fathullah"
+                {...field}
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={form.control}
+        name="street" // ✅ Fixed duplicate field name
+        render={({ field }) => (
+          <FormItem className="col-span-1 flex flex-col">
+            <FormLabel>Street</FormLabel>
+            <FormControl>
+              <Input placeholder="eg: 4th street" {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+    </>
+  );
 }
-export default Address
+export default Address;

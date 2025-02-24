@@ -36,6 +36,7 @@ export interface IPropertyForm {
   listingType: string;
   city: string;
   district: string;
+  road: string;
   street: string;
   longitude: string;
   latitude: string;
@@ -61,6 +62,7 @@ const FormSchema = z.object({
   // address
   city: z.string(),
   district: z.string(),
+  road: z.string(),
   street: z.string(),
   longitude: z.string(),
   latitude: z.string(),
@@ -87,6 +89,7 @@ function AddHome() {
       listingType: "",
       city: "",
       district: "",
+      road: "",
       street: "",
       longitude: "",
       latitude: "",
@@ -111,16 +114,16 @@ function AddHome() {
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <div
-                className="space-y-6"
+                className="space-y-6 grid grid-cols-2 gap-x-4 gap-y-8 justify-between"
                 key={step} // Use step as the key to trigger re-mounting
               >
                 {step === 1 && <Address form={form} />}
 
-                {step === 2 && <Rooms form={form} />}
+                {step === 2 && <AreaAndPrice form={form} />}
+
+                {step === 4 && <Rooms form={form} />}
 
                 {step === 3 && <FileUploadForm form={form} />}
-
-                {step === 4 && <AreaAndPrice form={form} />}
 
                 {step === 5 && <BasicInfo form={form} />}
               </div>
