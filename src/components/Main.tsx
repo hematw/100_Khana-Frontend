@@ -48,6 +48,14 @@ interface SearchFormI {
   };
 }
 
+type TListingType = { label: string; value: string };
+
+const listingTypes: TListingType[] = [
+  { label: "Rental", value: "rental" },
+  { label: "Sale", value: "sale" },
+  { label: "Mortgage", value: "mortgage" },
+];
+
 export default function Main() {
   const form = useForm<SearchFormI>({
     defaultValues: {
@@ -78,32 +86,22 @@ export default function Main() {
             <Form {...form} className="mx-10">
               <div className="min-w-full  bg-white dark:bg-zinc-800 rounded-xl flex rounded-lg p-2 ">
                 <div className="">
-                  <Label className="ml-2 text-xs">Property</Label>
-                  {/* <MultiSelect
-                    value={123}
-                    options={["Rental", "Sale", "Mortgage"].map((item) => ({
-                      label: item,
-                      value: item,
-                    }))}
-                    onValueChange={() => {}}
-                    placeholder="Listing Type"
-                    className="flex-1 border-none shadow-none -ml-2"
-                  /> */}
                   <Select
                     classNames={{
                       base: "max-w-xs",
                       trigger: "min-h-12 py-2",
+                      label: "text-xs font-medium",
                     }}
                     isMultiline={true}
-                    items={Array(["Rental", "Sale", "Mortgage"])}
+                    items={listingTypes}
                     label="Listing Type"
                     labelPlacement="outside"
                     placeholder="Select listing type"
-                    renderValue={(items: SelectedItems<string[]>) => {
+                    renderValue={(items: TListingType[]) => {
                       return (
                         <div className="flex flex-wrap gap-2">
                           {items.map((item) => (
-                            <Chip key={item.textValue}>{item.data}</Chip>
+                            <Chip key={item.value}>{item.label}</Chip>
                           ))}
                         </div>
                       );
@@ -112,12 +110,9 @@ export default function Main() {
                     variant="bordered"
                   >
                     {(item) => (
-                      <SelectItem
-                        key={item.toLocaleString()}
-                        textValue={item[0]}
-                      >
+                      <SelectItem key={item.value} textValue={item.value}>
                         <div className="flex gap-2 items-center">
-                          <div className="flex flex-col">{item}</div>
+                          <div className="flex flex-col">{item.value}</div>
                         </div>
                       </SelectItem>
                     )}
