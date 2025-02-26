@@ -15,7 +15,7 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
+import { Input } from "@heroui/input"
 import { IPropertyForm } from "../add-home"
 import { UseFormReturn } from "react-hook-form"
 import { MultiSelect } from "../../multi-select"
@@ -84,12 +84,12 @@ function BasicInfo({ form }: { form: UseFormReturn<IPropertyForm> }) {
                 name="category"
                 render={({ field }) => (
                     <FormControl>
-                        <MultiSelect
+                        {/* <MultiSelect
                             value={field.value}
                             options={categories.map(c => ({ label: c.name, value: c._id }))}
                             onValueChange={field.onChange}
                             placeholder="Category"
-                        />
+                        /> */}
                     </FormControl>
                 )}
             />

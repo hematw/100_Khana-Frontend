@@ -3,8 +3,8 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import axiosIns from "../axios";
 import { AxiosError } from "axios";
-import Button from "../components/Button";
-import Input from "../components/Input";
+import { Button } from "@heroui/button";
+import { Input } from "@heroui/input";
 
 interface RegisterFormData {
   username: string;
@@ -36,7 +36,7 @@ const Register = () => {
       localStorage.setItem("token", data.token);
       navigate("/");
     } catch (error) {
-      console.error("Error", error)
+      console.error("Error", error);
       if (error instanceof AxiosError) {
         if (error.response) {
           setServerError(error.response.data);
@@ -54,16 +54,16 @@ const Register = () => {
   return (
     <section className="h-screen flex justify-center items-center">
       <div className="max-w-md w-[32rem] border-2 px-8 py-12 rounded-2xl shadow-xl">
-        <h1 className="text-center text-2xl font-bold">Register to <span className="text-gradient">100 Khana</span></h1>
+        <h1 className="text-center text-2xl font-bold">
+          Register to <span className="text-gradient">100 Khana</span>
+        </h1>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-col relative mt-4">
             <Input
               placeholder="rezwan"
-              name="username"
               label="Username"
-              register={register}
-              validation={{ required: "Username is required!" }}
-              error={errors.username}
+              {...register("username", { required: "Username is required!" })}
+              errorMessage={errors.username?.message}
             />
             {!errors.username && serverError.duplicateField === "username" && (
               <p className="error">
@@ -75,17 +75,15 @@ const Register = () => {
           <div className="flex flex-col relative mt-4">
             <Input
               placeholder="rezwan@example.com"
-              name="email"
               label="Email"
-              register={register}
-              error={errors.email}
-              validation={{
+              {...register("email", {
                 required: "Email is required!",
                 pattern: {
                   value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
                   message: "Provide a valid email!",
                 },
-              }}
+              })}
+              errorMessage={errors.email?.message}
             />
             {!errors.email && serverError.duplicateField === "email" && (
               <p className="error">
@@ -97,17 +95,15 @@ const Register = () => {
           <div className="flex flex-col relative mt-4">
             <Input
               placeholder="Type your password"
-              name="password"
               label="Password"
-              register={register}
-              error={errors.password}
-              validation={{ required: "Password is required!" }}
+              {...register("password", { required: "Password is required!" })}
+              errorMessage={errors.password?.message}
             />
           </div>
 
           <div className="flex flex-col mt-8">
-            <Button variant="gradient">Register</Button>
-            <Button variant="dark" onClick={() => navigate("/login")}>
+            <Button variant="solid">Register</Button>
+            <Button variant="bordered" onPress={() => navigate("/login")}>
               Login
             </Button>
           </div>
@@ -117,4 +113,4 @@ const Register = () => {
   );
 };
 
-export default Register
+export default Register;

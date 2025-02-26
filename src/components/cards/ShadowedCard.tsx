@@ -1,4 +1,4 @@
-import { Card } from "../ui/card";
+import { Card } from "@heroui/card";
 import "./card.css"
 
 const ShadowedCard: React.FC<{ children: React.ReactNode, className?:string }> = ({ children, className }) => {

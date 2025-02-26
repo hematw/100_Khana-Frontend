@@ -1,14 +1,5 @@
 import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-// import Input from "../Input";
-// import InputGroup from "../InputGroup";
-// import { TbAirConditioning } from "react-icons/tb";
-// import { PiElevatorLight } from "react-icons/pi";
-// import { FaCarSide } from "react-icons/fa";
-// import { IoTvOutline } from "react-icons/io5";
-// import { FaSwimmingPool, FaWifi } from "react-icons/fa";
-// import { FaBottleWater } from "react-icons/fa6";
-// import GuardIcon from "../GuardIcon";
 import BasicInfo from "./components/basic-info";
 import { z } from "zod";
 import { Form } from "../ui/form";

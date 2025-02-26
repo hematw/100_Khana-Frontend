@@ -2,9 +2,9 @@ import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../axios";
-import Button from "../components/Button";
+import { Button } from "@heroui/button";
 import { AxiosError } from "axios";
-import Input from "../components/Input";
+import { Input } from "@heroui/input";
 
 interface ILoginForm {
   email: string;
@@ -54,17 +54,15 @@ const Login = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-col mt-4 relative">
             <Input
-              name="email"
               label="Email"
-              register={register}
-              error={errors.email}
-              validation={{
+              {...register("email", {
                 required: "Email field is empty!",
                 pattern: {
                   value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
                   message: "Provide a valid email!",
                 },
-              }}
+              })}
+              errorMessage={errors.email?.message}
             />
             {!errors.email && loginError && (
               <p className="error">{loginError}</p>
@@ -73,13 +71,11 @@ const Login = () => {
 
           <div className="flex flex-col mt-4 relative">
             <Input
-              name="password"
               label="Password"
-              register={register}
-              error={errors.password} // Only pass FieldError
-              validation={{
+              {...register("password", {
                 required: "Password field is empty!",
-              }}
+              })}
+              errorMessage={errors.password?.message} // Only pass FieldError
             />
             {!errors.password && loginError && (
               <p className="error">{loginError}</p>
@@ -87,10 +83,8 @@ const Login = () => {
           </div>
 
           <div className="flex flex-col mt-8">
-            <Button variant="gradient">Login</Button>
-            <Button variant="dark" onClick={() => navigate("/register")}>
-              Register
-            </Button>
+            <Button>Login</Button>
+            <Button onPress={() => navigate("/register")}>Register</Button>
           </div>
         </form>
       </div>

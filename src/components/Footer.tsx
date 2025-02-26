@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
-    <footer className="w-full bg-white dark:bg-zinc-900 text-gray-800 dark:text-white py-8 px-4 border-t">
+    <footer className="w-full max-w-7xl mx-auto bg-white dark:bg-zinc-900 text-gray-800 dark:text-white py-8 px-4 border-t">
       {/* Main Banner */}
       <div className="container mx-auto mb-12 text-center">
         <h1 className="text-3xl md:text-4xl font-bold mb-4">
@@ -12,9 +12,9 @@ export default function Footer() {
       </div>
 
       <div className="container mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-12 gap-8 mb-8">
           {/* Column 1 - Logo and Description */}
-          <div className="space-y-4">
+          <div className="space-y-4 col-span-4">
             <div className="mb-4">
               <img
                 src="/100khana.png"
@@ -31,10 +31,10 @@ export default function Footer() {
               100-Khana is your bridge to quickly browse through thousands of
               listings and find your perfect property.
             </p>
-          </div>
+          </div>  
 
           {/* Column 2 - Services */}
-          <div className="space-y-4">
+          <div className="space-y-4 col-span-3">
             <h3 className="font-bold text-lg mb-4">Services</h3>
             <div className="flex flex-col gap-2">
               <Link to="#" className="hover:text-red-600">
@@ -56,7 +56,7 @@ export default function Footer() {
           </div>
 
           {/* Column 3 - Most Popular */}
-          <div className="space-y-4">
+          <div className="space-y-4 col-span-3">
             <h3 className="font-bold text-lg mb-4">Most Popular Searches</h3>
             <div className="flex flex-col gap-2">
               <Link to="#" className="hover:text-red-600">
@@ -76,7 +76,7 @@ export default function Footer() {
           </div>
 
           {/* Column 4 - Contact */}
-          <div className="space-y-4">
+          <div className="space-y-4 col-span-2">
             <h3 className="font-bold text-lg mb-4">Stay Connected</h3>
             <div className="flex flex-col gap-3">
               <Link to="#" className="flex items-center gap-2">

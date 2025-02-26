@@ -1,3 +1,4 @@
+const {heroui} = require('@heroui/theme');
 /** @type {import('tailwindcss').Config} */
 const plugin = require('tailwindcss/plugin')
 
@@ -5,7 +6,8 @@ export default {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
-    "components/**/*.{ts,tsx}"
+    "components/**/*.{ts,tsx}",
+    "./node_modules/@heroui/theme/dist/components/(avatar|button|card|chip|dropdown|form|input|select|slider|ripple|spinner|menu|divider|popover|listbox|scroll-shadow).js"
   ],
   darkMode: ["class"],
   theme: {
@@ -73,18 +75,13 @@ export default {
   		}
   	}
   },
-  plugins: [
-    plugin(function ({ matchUtilities, theme }) {
+  plugins: [plugin(function ({ matchUtilities,theme }) {
       matchUtilities(
         {
           'text-shadow': (value) => ({
-            textShadow: value,
-          }),
-        },
-        { values: theme('textShadow') }
+            textShadow: value,}),},{ values: theme('textShadow') }
       )
-    }), require("tailwindcss-animate")
-  ],
+    }),require("tailwindcss-animate"),heroui()],
 }
 
 // #EEEEEE #D84040 #8E1616 #1D1616

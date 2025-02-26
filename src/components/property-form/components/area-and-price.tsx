@@ -13,7 +13,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import { Input } from "@heroui/input";
 import { IPropertyForm } from "../add-home";
 import { UseFormReturn } from "react-hook-form";
 import { MultiSelect } from "../../multi-select";
@@ -54,7 +54,7 @@ function AreaAndPrice({ form }: { form: UseFormReturn<IPropertyForm> }) {
               How would you like to list your property? (For Sell, Rent, or
               Mortgage)
             </FormLabel>
-            <MultiSelect
+            {/* <MultiSelect
               value={field.value}
               options={["Rent", "Sell", "Mortgage"].map((item) => ({
                 label: item,
@@ -62,7 +62,7 @@ function AreaAndPrice({ form }: { form: UseFormReturn<IPropertyForm> }) {
               }))}
               onValueChange={field.onChange}
               placeholder="Listing Type"
-            />
+            /> */}
           </FormItem>
         )}
       />
@@ -74,12 +74,12 @@ function AreaAndPrice({ form }: { form: UseFormReturn<IPropertyForm> }) {
             <FormLabel>
               Select the property type.
             </FormLabel>
-            <MultiSelect
+            {/* <MultiSelect
               value={field.value}
               options={categories.map((c) => ({ label: c.name, value: c._id }))}
               onValueChange={field.onChange}
               placeholder="Property Type"
-            />
+            /> */}
           </FormItem>
         )}
       />

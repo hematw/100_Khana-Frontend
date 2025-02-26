@@ -10,7 +10,7 @@ import { IPropertyForm } from "../add-home";
 import { UseFormReturn } from "react-hook-form";
 import axiosIns from "@/axios";
 import { useQuery } from "@tanstack/react-query";
-import { Combobox } from "@/components/ui/combo-box";
+// import { Combobox } from "@/components/ui/combo-box";
 
 type TDistrict = {
   name: string;
@@ -59,12 +59,12 @@ function Address({ form }: { form: UseFormReturn<IPropertyForm> }) {
         render={({ field }) => (
           <FormItem className="col-span-1 flex flex-col">
             <FormLabel>City</FormLabel>
-            <Combobox
+            {/* <Combobox
               value={field.value}
               options={cities.map((c) => ({ label: c.name, value: c.name }))}
               onChange={field.onChange}
               placeholder="Select a city"
-            />
+            /> */}
           </FormItem>
         )}
       />
@@ -74,12 +74,12 @@ function Address({ form }: { form: UseFormReturn<IPropertyForm> }) {
         render={({ field }) => (
           <FormItem className="col-span-1 flex flex-col">
             <FormLabel>District</FormLabel>
-            <Combobox
+            {/* <Combobox
               value={field.value}
               options={districts.map((d) => ({ label: d.name, value: d.name }))}
               onChange={field.onChange}
               placeholder="Select a district"
-            />
+            /> */}
           </FormItem>
         )}
       />
