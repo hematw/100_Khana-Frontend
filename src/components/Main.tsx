@@ -4,7 +4,6 @@ import { ArrowDown } from "lucide-react";
 import { useForm } from "react-hook-form";
 // import { Input } from "./ui/input";
 import { Input } from "@heroui/input";
-import { Label } from "./ui/label";
 import { Separator } from "./ui/separator";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import ShadowedCard from "./cards/ShadowedCard";
@@ -84,30 +83,31 @@ export default function Main() {
               </p>
             </div>
             <Form {...form} className="mx-10">
-              <div className="min-w-full  bg-white dark:bg-zinc-800 rounded-xl flex rounded-lg p-2 ">
-                <div className="">
+              <div className="min-w-full items-center bg-white dark:bg-zinc-800 flex rounded-lg p-2 ">
+                <div className="flex-1">
                   <Select
                     classNames={{
                       base: "max-w-xs",
                       trigger: "min-h-12 py-2",
                       label: "text-xs font-medium",
                     }}
-                    isMultiline={true}
+                    // isMultiline={true}
                     items={listingTypes}
-                    label="Listing Type"
+                    // label="Listing Type"
                     labelPlacement="outside"
                     placeholder="Select listing type"
-                    renderValue={(items: TListingType[]) => {
+                    renderValue={(items: SelectedItems<TListingType>) => {
                       return (
                         <div className="flex flex-wrap gap-2">
                           {items.map((item) => (
-                            <Chip key={item.value}>{item.label}</Chip>
+                            <Chip key={item.key}>{item.data?.value}</Chip>
                           ))}
                         </div>
                       );
                     }}
                     selectionMode="multiple"
-                    variant="bordered"
+                    variant="flat"
+                    size="sm"
                   >
                     {(item) => (
                       <SelectItem key={item.value} textValue={item.value}>
@@ -120,33 +120,31 @@ export default function Main() {
                 </div>
                 <Separator
                   orientation="vertical"
-                  className="z-30 h-16 mx-1 dark:bg-gray-600"
+                  className="z-30 h-12 mx-1 dark:bg-gray-600"
                 />
                 <div className="flex-1">
-                  <Label htmlFor="location" className="ml-3 text-xs">
+                  {/* <Label htmlFor="location" className="ml-3 text-xs">
                     Location
-                  </Label>
+                  </Label> */}
                   <Input
                     id="location"
+                    variant="flat"
+                    size="lg"
+                    radius="sm"
                     placeholder="e.g. Kabul..."
                     className="text-sm border-none shadow-none"
                   />
                 </div>
                 <Separator
                   orientation="vertical"
-                  className="z-30 h-16 mx-1 dark:bg-gray-600"
+                  className="z-30 h-12 mx-1 dark:bg-gray-600"
                 />
                 <div className="flex-1">
                   <Popover>
-                    <PopoverTrigger className="w-full">
-                      <div className="flex flex-col items-start px-3">
-                        <Label htmlFor="price" className="text-xs">
-                          Price Range
-                        </Label>
-                        <p className="text-gray-500 mt-2 text-sm ">
-                          e.g. 5K - 10K...
-                        </p>
-                      </div>
+                    <PopoverTrigger className="w-full bg-gray-100 hover:bg-gray-200 rounded-md h-12 shadow-sm flex items-center p-3">
+                      <p className="text-gray-500 mt-2 text-sm ">
+                        e.g. 5K - 10K...
+                      </p>
                     </PopoverTrigger>
                     <PopoverContent>
                       <div className="grid gap-4">
@@ -179,10 +177,17 @@ export default function Main() {
                 </div>
                 <Separator
                   orientation="vertical"
-                  className="z-30 h-16 mx-1 dark:bg-gray-600"
+                  className="z-30 h-12 mx-1 dark:bg-gray-600"
                 />
                 <div className="content-center">
-                  <Button className="py-6">Search</Button>
+                  <Button
+                    className="py-6"
+                    radius="sm"
+                    variant="solid"
+                    color="primary"
+                  >
+                    Search
+                  </Button>
                 </div>
               </div>
             </Form>
@@ -206,10 +211,10 @@ export default function Main() {
         <div className="flex justify-between items-stretch gap-6 flex-nowrap overflow-auto py-10">
           <ShadowedCard className="max-w-96 min-w-80">
             <CardBody className=" flex flex-col justify-center items-center text-center">
-              <CardHeader>
+              <CardHeader className="flex justify-center">
                 <img src="/For sale-bro.svg" height={200} width={200} alt="" />
               </CardHeader>
-              <CardHeader className="text-lg">
+              <CardHeader className="text-lg font-semibold flex justify-center">
                 <h3>Are You a Property Owner?</h3>
               </CardHeader>
               <CardFooter className="mt-2">
@@ -219,12 +224,12 @@ export default function Main() {
                   right buyer or tenant in no time.
                 </p>
               </CardFooter>
-              <Button className="min-w-full mt-8 ">Post a Listing</Button>
+              <Button className="min-w-full mt-8 " color="primary">Post a Listing</Button>
             </CardBody>
           </ShadowedCard>
           <ShadowedCard className="max-w-96 min-w-80">
             <CardBody className=" flex flex-col justify-center items-center text-center">
-              <CardHeader>
+              <CardHeader className="flex justify-center">
                 <img
                   src="/House searching-amico.svg"
                   height={200}
@@ -232,7 +237,7 @@ export default function Main() {
                   alt=""
                 />
               </CardHeader>
-              <CardHeader className="text-lg">
+              <CardHeader className="text-lg font-semibold flex justify-center">
                 <h3>Find Your Ideal Home</h3>
               </CardHeader>
               <CardFooter className="mt-2">
@@ -242,12 +247,12 @@ export default function Main() {
                   find your perfect home quickly and easily.
                 </p>
               </CardFooter>
-              <Button className="min-w-full mt-8 ">Browse Properties</Button>
+              <Button className="min-w-full mt-8 " color="primary">Browse Properties</Button>
             </CardBody>
           </ShadowedCard>
           <ShadowedCard className="max-w-96 min-w-80">
             <CardBody className=" flex flex-col justify-center items-center text-center">
-              <CardHeader>
+              <CardHeader className="flex justify-center">
                 <img
                   src="/Apartment rent-bro.svg"
                   height={200}
@@ -255,7 +260,7 @@ export default function Main() {
                   alt=""
                 />
               </CardHeader>
-              <CardHeader className="text-lg">
+              <CardHeader className="text-lg font-semibold flex justify-center">
                 <h3>Rent Out Your Property Faster</h3>
               </CardHeader>
               <CardFooter className="mt-2">
@@ -266,7 +271,7 @@ export default function Main() {
                   inquiries.
                 </p>
               </CardFooter>
-              <Button className="min-w-full mt-8 ">Rent Out Property</Button>
+              <Button className="min-w-full mt-8 " color="primary">Rent Out Property</Button>
             </CardBody>
           </ShadowedCard>
         </div>
@@ -279,10 +284,8 @@ export default function Main() {
           <Card className="w-64 flex justify-center items-center flex-col overflow-hidden text-center">
             <img src="/villa.jpg" alt="" className="w-64" />
             <CardBody className="py-4 space-y-2">
-              <CardHeader>
-                <h4>2,394</h4>
-              </CardHeader>
-              <CardFooter>
+              <CardFooter className="gap-2 flex-col items-start">
+                <h4 className="text-2xl">2,394</h4>
                 <p>Villas</p>
               </CardFooter>
             </CardBody>
@@ -290,10 +293,8 @@ export default function Main() {
           <Card className="w-64 flex justify-center items-center flex-col overflow-hidden text-center">
             <img src="/residential.jpg" alt="" className="w-64" />
             <CardBody className="py-4 space-y-2">
-              <CardHeader>
-                <h4>13,902</h4>
-              </CardHeader>
-              <CardFooter>
+              <CardFooter className="gap-2 flex-col items-start">
+                <h4 className="text-2xl">13,902</h4>
                 <p>Residential Houses</p>
               </CardFooter>
             </CardBody>
@@ -301,10 +302,8 @@ export default function Main() {
           <Card className="w-64 flex justify-center items-center flex-col overflow-hidden text-center">
             <img src="/apartment.jpg" alt="" className="w-64" />
             <CardBody className="py-4 space-y-2">
-              <CardHeader>
-                <h4>8,521</h4>
-              </CardHeader>
-              <CardFooter>
+              <CardFooter className="gap-2 flex-col items-start">
+                <h4 className="text-2xl">8,521</h4>
                 <p>Apartments</p>
               </CardFooter>
             </CardBody>
@@ -312,10 +311,8 @@ export default function Main() {
           <Card className="w-64 flex justify-center items-center flex-col overflow-hidden text-center">
             <img src="/business-center.jpg" alt="" className="w-64" />
             <CardBody className="py-4 space-y-2">
-              <CardHeader>
-                <h4>6,200</h4>
-              </CardHeader>
-              <CardFooter>
+              <CardFooter className="gap-2 flex-col items-start">
+                <h4 className="text-2xl">6,200</h4>
                 <p>Commercial & Office</p>
               </CardFooter>
             </CardBody>
@@ -330,7 +327,7 @@ export default function Main() {
           <Card className="w-64 flex justify-center items-center flex-col overflow-hidden text-center">
             <CardBody className="py-4 space-y-2 h-full flex flex-col justify-between">
               <img src="/Connected world-bro.svg" alt="" className="w-60" />
-              <CardFooter>
+              <CardFooter className="text-center">
                 Connect with trusted agents & property owners
               </CardFooter>
             </CardBody>
@@ -338,7 +335,7 @@ export default function Main() {
           <Card className="w-64 flex justify-center items-center flex-col overflow-hidden text-center">
             <CardBody className="py-4 space-y-2 h-full flex flex-col justify-between">
               <img src="/Houses-pana.svg" alt="" className="w-60" />
-              <CardFooter>
+              <CardFooter className="text-center">
                 Compare & explore hundreds of listings effortlessly
               </CardFooter>
             </CardBody>
@@ -346,7 +343,7 @@ export default function Main() {
           <Card className="w-64 flex justify-center items-center flex-col overflow-hidden text-center">
             <CardBody className="py-4 space-y-2 h-full flex flex-col justify-between">
               <img src="/Directions-bro.svg" alt="" className="w-60" />
-              <CardFooter>
+              <CardFooter className="text-center">
                 Buy or rent properties in top locations across the country
               </CardFooter>
             </CardBody>

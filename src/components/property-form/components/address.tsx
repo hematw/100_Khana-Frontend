@@ -1,15 +1,9 @@
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { IPropertyForm } from "../add-home";
-import { UseFormReturn } from "react-hook-form";
+import { Input } from "@heroui/input";
+import { IPropertyForm } from "..";
+import { Controller, UseFormReturn } from "react-hook-form";
 import axiosIns from "@/axios";
 import { useQuery } from "@tanstack/react-query";
+import { Autocomplete, AutocompleteItem } from "@heroui/autocomplete";
 // import { Combobox } from "@/components/ui/combo-box";
 
 type TDistrict = {
@@ -33,12 +27,20 @@ async function getDistricts(): Promise<TDistrict[]> {
 }
 
 function Address({ form }: { form: UseFormReturn<IPropertyForm> }) {
-  const { isLoading: isLoadingCities, isError: isErrorCities, data: cities = [] } = useQuery({
+  const {
+    isLoading: isLoadingCities,
+    isError: isErrorCities,
+    data: cities = [],
+  } = useQuery({
     queryKey: ["cities"],
     queryFn: getCities,
   });
 
-  const { isLoading: isLoadingDistricts, isError: isErrorDistricts, data: districts = [] } = useQuery({
+  const {
+    isLoading: isLoadingDistricts,
+    isError: isErrorDistricts,
+    data: districts = [],
+  } = useQuery({
     queryKey: ["districts"],
     queryFn: getDistricts,
   });
@@ -53,63 +55,56 @@ function Address({ form }: { form: UseFormReturn<IPropertyForm> }) {
 
   return (
     <>
-      <FormField
+      <Controller
         control={form.control}
         name="city"
         render={({ field }) => (
-          <FormItem className="col-span-1 flex flex-col">
-            <FormLabel>City</FormLabel>
-            {/* <Combobox
-              value={field.value}
-              options={cities.map((c) => ({ label: c.name, value: c.name }))}
-              onChange={field.onChange}
-              placeholder="Select a city"
-            /> */}
-          </FormItem>
+          <Autocomplete
+          label="City"
+            value={field.value}
+            items={cities.map((c) => ({ label: c.name, value: c.name }))}
+            onChange={field.onChange}
+            placeholder="Select a city"
+          >
+            {(item) => (
+              <AutocompleteItem key={item.value}>{item.label}</AutocompleteItem>
+            )}
+          </Autocomplete>
         )}
       />
-      <FormField
+      <Controller
         control={form.control}
         name="district"
         render={({ field }) => (
-          <FormItem className="col-span-1 flex flex-col">
-            <FormLabel>District</FormLabel>
-            {/* <Combobox
-              value={field.value}
-              options={districts.map((d) => ({ label: d.name, value: d.name }))}
-              onChange={field.onChange}
-              placeholder="Select a district"
-            /> */}
-          </FormItem>
+          <Autocomplete
+            label="District"
+            value={field.value}
+            items={districts.map((d) => ({ label: d.name, value: d.name }))}
+            onChange={field.onChange}
+            placeholder="Select a district"
+          >
+            {(item) => (
+              <AutocompleteItem key={item.value}>{item.label}</AutocompleteItem>
+            )}
+          </Autocomplete>
         )}
       />
-      <FormField
+      <Controller
         control={form.control}
         name="road"
         render={({ field }) => (
-          <FormItem className="col-span-1 flex flex-col">
-            <FormLabel>Main Road</FormLabel>
-            <FormControl>
-              <Input
-                placeholder="eg: Shahr e Naw - Qala Fathullah"
-                {...field}
-              />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
+          <Input
+            label="Main Road"
+            placeholder="eg: Shahr e Naw - Qala Fathullah"
+            {...field}
+          />
         )}
       />
-      <FormField
+      <Controller
         control={form.control}
         name="street" // ✅ Fixed duplicate field name
         render={({ field }) => (
-          <FormItem className="col-span-1 flex flex-col">
-            <FormLabel>Street</FormLabel>
-            <FormControl>
-              <Input placeholder="eg: 4th street" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
+          <Input label="Street" placeholder="eg: 4th street" {...field} />
         )}
       />
     </>

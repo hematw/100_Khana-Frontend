@@ -11,7 +11,7 @@ import {
 
 import { RouteObject } from "react-router-dom";
 import PublicLayout from "./pages/PublicLayout";
-import AddHome from "./components/property-form/add-home";
+import AddHome from "./components/property-form";
 
 const routes: RouteObject[] = [
   { path: "/login", element: <Login /> },

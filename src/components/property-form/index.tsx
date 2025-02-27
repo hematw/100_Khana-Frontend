@@ -1,19 +1,17 @@
 import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import BasicInfo from "./components/basic-info";
+import Facilities from "./components/facilities";
 import { z } from "zod";
 import { Form } from "../ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Rooms from "./components/rooms";
 import FileUploadForm from "./components/file-upload";
-import AreaAndPrice from "./components/area-and-price";
+import AreaAndPrice from "./components/type-and-price";
 import { Card, CardTitle } from "../ui/card";
 import { Button } from "../ui/button";
 import Address from "./components/address";
 
 export interface IPropertyForm {
-  title: string;
-  description: string;
   owner: string;
   numOfLivingRooms: number;
   numOfBedRooms: number;
@@ -31,11 +29,11 @@ export interface IPropertyForm {
   street: string;
   longitude: string;
   latitude: string;
+  floor: string;
+  totalFloors: string;
 }
 
 const FormSchema = z.object({
-  title: z.string().nullable(),
-  description: z.string(),
   category: z.array(z.string()),
   owner: z.string(),
   // rooms
@@ -55,8 +53,11 @@ const FormSchema = z.object({
   district: z.string(),
   road: z.string(),
   street: z.string(),
+
   longitude: z.string(),
   latitude: z.string(),
+  floor: z.string(),
+  totalFloors: z.string(),
 });
 
 function AddHome() {
@@ -66,8 +67,6 @@ function AddHome() {
   const form = useForm<IPropertyForm>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      title: "",
-      description: "",
       owner: "",
       numOfLivingRooms: 0,
       numOfBedRooms: 0,
@@ -84,6 +83,8 @@ function AddHome() {
       street: "",
       longitude: "",
       latitude: "",
+      floor: "",
+      totalFloors: "",
     },
   });
 
@@ -105,18 +106,18 @@ function AddHome() {
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <div
-                className="space-y-6 grid grid-cols-2 gap-x-4 gap-y-8 justify-between"
+                className="grid grid-cols-2 gap-x-4 gap-y-8 justify-between"
                 key={step} // Use step as the key to trigger re-mounting
               >
                 {step === 1 && <Address form={form} />}
 
                 {step === 2 && <AreaAndPrice form={form} />}
 
-                {step === 4 && <Rooms form={form} />}
+                {step === 3 && <Rooms form={form} />}
 
-                {step === 3 && <FileUploadForm form={form} />}
+                {step === 4 && <Facilities form={form} />}
 
-                {step === 5 && <BasicInfo form={form} />}
+                {step === 5 && <FileUploadForm form={form} />}
               </div>
 
               {/* Navigation Buttons */}

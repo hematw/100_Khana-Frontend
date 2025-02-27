@@ -1,101 +1,73 @@
-// import React from 'react'
-
-// import { zodResolver } from "@hookform/resolvers/zod"
-// import { useForm, UseFormRegister, UseFormReturn } from "react-hook-form"
-// import { z } from "zod"
-
-// import { toast } from "@/hooks/use-toast"
-// import { Button } from "@/components/ui/button"
-
-import { Minus, Plus } from "lucide-react";
 import { Input } from "@heroui/input";
-import { FormDescription, FormLabel } from "@/components/ui/form";
-import { IPropertyForm } from "../add-home";
-import { UseFormReturn } from "react-hook-form";
+import { IPropertyForm } from "..";
+import { Controller, UseFormReturn } from "react-hook-form";
 
 function Rooms({ form }: { form: UseFormReturn<IPropertyForm> }) {
   return (
-    <div>
-      <FormLabel>Number of Rooms</FormLabel>
-      <FormDescription>
-        Select the total number of rooms available in the property, including
-        bedrooms, living rooms, and other spaces.
-      </FormDescription>
-      <div className="grid grid-cols-2  md:grid-cols-4 flex-wrap gap-4 p-8">
-        <NumberInput
-          value={form.watch("numOfLivingRooms")}
-          onChange={(value) => form.setValue("numOfLivingRooms", value)}
-          label="Living Rooms"
-        />
-        <NumberInput
-          value={form.watch("numOfBedRooms")}
-          onChange={(value) => form.setValue("numOfBedRooms", value)}
-          label="Bedrooms"
-        />
-        <NumberInput
-          value={form.watch("numOfKitchens")}
-          onChange={(value) => form.setValue("numOfKitchens", value)}
-          label="Kitchens"
-        />
-        <NumberInput
-          value={form.watch("numOfBaths")}
-          onChange={(value) => form.setValue("numOfBaths", value)}
-          label="Bathrooms"
-        />
-      </div>
-    </div>
+    <>
+      <Controller
+        control={form.control}
+        name="numOfLivingRooms"
+        render={({ field }) => (
+          <Input
+            label="Living Rooms."
+            placeholder="4"
+            {...field}
+            value={field.value.toString()}
+          />
+        )}
+      />
+      <Controller
+        control={form.control}
+        name="numOfBedRooms"
+        render={({ field }) => (
+          <Input
+            label="Bed Rooms."
+            placeholder="4"
+            {...field}
+            value={field.value.toString()}
+          />
+        )}
+      />
+      <Controller
+        control={form.control}
+        name="numOfBaths"
+        render={({ field }) => (
+          <Input
+            label="Bathrooms."
+            placeholder="2"
+            {...field}
+            value={field.value.toString()}
+          />
+        )}
+      />
+      <Controller
+        control={form.control}
+        name="numOfKitchens"
+        render={({ field }) => (
+          <Input
+            label="Kitchens."
+            placeholder="320m2"
+            {...field}
+            value={field.value.toString()}
+          />
+        )}
+      />
+      <Controller
+        control={form.control}
+        name="floor"
+        render={({ field }) => (
+          <Input label="Floor." placeholder="3" {...field} />
+        )}
+      />
+      <Controller
+        control={form.control}
+        name="totalFloors"
+        render={({ field }) => (
+          <Input label="Total Floors." placeholder="5" {...field} />
+        )}
+      />
+    </>
   );
 }
 export default Rooms;
-
-interface NumberInputProps {
-  label: string;
-  value: number;
-  min?: number;
-  max?: number;
-  onChange: (value: number) => void;
-}
-
-const NumberInput = ({
-  label,
-  value,
-  min = 0,
-  max = 10,
-  onChange,
-}: NumberInputProps) => {
-  const handleIncrement = () => {
-    if (value < max) onChange(value + 1);
-  };
-
-  const handleDecrement = () => {
-    if (value > min) onChange(value - 1);
-  };
-
-  return (
-    <div className="flex flex-col items-center gap-2">
-      <span className="text-lg font-medium">{label}</span>
-      <div className="text-center border border-gray-300 rounded-lg p-4 bg-white shadow-md">
-        <Input
-          className="font-semibold h-24 w-24 border text-center !text-7xl"
-          type="number"
-          value={value.toString()}
-          onChange={() => onChange}
-        />
-        <div className="flex gap-4 mt-4 justify-center">
-          <button
-            onClick={handleDecrement}
-            className="p-2 rounded-full bg-gray-100 hover:bg-gray-200"
-          >
-            <Minus className="w-5 h-5" />
-          </button>
-          <button
-            onClick={handleIncrement}
-            className="p-2 rounded-full bg-gray-100 hover:bg-gray-200"
-          >
-            <Plus className="w-5 h-5" />
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-};

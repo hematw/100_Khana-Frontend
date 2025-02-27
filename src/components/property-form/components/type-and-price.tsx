@@ -1,34 +1,26 @@
-// import React from 'react'
-
-// import { zodResolver } from "@hookform/resolvers/zod"
-// import { useForm, UseFormRegister, UseFormReturn } from "react-hook-form"
-// import { z } from "zod"
-
-// import { toast } from "@/hooks/use-toast"
-// import { Button } from "@/components/ui/button"
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
 import { Input } from "@heroui/input";
-import { IPropertyForm } from "../add-home";
-import { UseFormReturn } from "react-hook-form";
-import { MultiSelect } from "../../multi-select";
+import { IPropertyForm } from "..";
+import { Controller, UseFormReturn } from "react-hook-form";
 import { useEffect, useState } from "react";
 import axiosIns from "@/axios";
+import { Select, SelectedItems, SelectItem } from "@heroui/select";
+import { Chip } from "@heroui/chip";
 
-type TFacility = {
+type TCategory = {
   name: string;
   _id: string;
-  description: string;
-  icon: string;
 };
 
+type TListingType = { label: string; value: string };
+
+const listingTypes: TListingType[] = [
+  { label: "Rental", value: "rental" },
+  { label: "Sale", value: "sale" },
+  { label: "Mortgage", value: "mortgage" },
+];
+
 function AreaAndPrice({ form }: { form: UseFormReturn<IPropertyForm> }) {
-  const [categories, setCategories] = useState<TFacility[]>([]);
+  const [categories, setCategories] = useState<TCategory[]>([]);
 
   useEffect(() => {
     async function fetchCategories() {
@@ -45,89 +37,94 @@ function AreaAndPrice({ form }: { form: UseFormReturn<IPropertyForm> }) {
 
   return (
     <>
-      <FormField
+      <Controller
         control={form.control}
         name="listingType"
         render={({ field }) => (
-          <FormItem className="col-span-1 flex flex-col">
-            <FormLabel>
-              How would you like to list your property? (For Sell, Rent, or
-              Mortgage)
-            </FormLabel>
-            {/* <MultiSelect
-              value={field.value}
-              options={["Rent", "Sell", "Mortgage"].map((item) => ({
-                label: item,
-                value: item,
-              }))}
-              onValueChange={field.onChange}
-              placeholder="Listing Type"
-            /> */}
-          </FormItem>
+          <Select
+            label="Listing Type"
+            classNames={{
+              base: "max-w-xs",
+              trigger: "min-h-12 py-2",
+              label: "text-xs font-medium",
+            }}
+            // isMultiline={true}
+            items={listingTypes}
+            {...field}
+            placeholder="Select listing type"
+            renderValue={(items: SelectedItems<TListingType>) => {
+              return (
+                <div className="flex flex-wrap gap-2">
+                  {items.map((item) => (
+                    <Chip key={item.key}>{item.data?.value}</Chip>
+                  ))}
+                </div>
+              );
+            }}
+            selectionMode="multiple"
+            variant="flat"
+            size="sm"
+          >
+            {(item) => (
+              <SelectItem key={item.value} textValue={item.value}>
+                <div className="flex gap-2 items-center">
+                  <div className="flex flex-col">{item.value}</div>
+                </div>
+              </SelectItem>
+            )}
+          </Select>
         )}
       />
-      <FormField
+      <Controller
         control={form.control}
         name="category"
         render={({ field }) => (
-          <FormItem className="col-span-1 flex flex-col">
-            <FormLabel>
-              Select the property type.
-            </FormLabel>
-            {/* <MultiSelect
-              value={field.value}
-              options={categories.map((c) => ({ label: c.name, value: c._id }))}
-              onValueChange={field.onChange}
-              placeholder="Property Type"
-            /> */}
-          </FormItem>
+          <Select
+            label="Property type"
+            classNames={{
+              base: "max-w-xs",
+              trigger: "min-h-12 py-2",
+              label: "text-xs font-medium",
+            }}
+            // isMultiline={true}
+            items={categories}
+            {...field}
+            placeholder="Select property type"
+            renderValue={(items: SelectedItems<TCategory>) => {
+              return (
+                <div className="flex flex-wrap gap-2">
+                  {items.map((item) => (
+                    <Chip key={item.key}>{item.data?.name}</Chip>
+                  ))}
+                </div>
+              );
+            }}
+            selectionMode="multiple"
+            variant="flat"
+            size="sm"
+          >
+            {(item) => (
+              <SelectItem key={item._id} textValue={item.name}>
+                <div className="flex gap-2 items-center">
+                  <div className="flex flex-col">{item.name}</div>
+                </div>
+              </SelectItem>
+            )}
+          </Select>
         )}
       />
-      <FormField
+      <Controller
         control={form.control}
-        name="title"
+        name="price"
         render={({ field }) => (
-          <FormItem className="col-span-1 flex flex-col">
-            <FormLabel>
-              Enter your house’s total area (m<sup>2</sup>).
-            </FormLabel>
-            <FormControl>
-              <Input placeholder="Penthouse in Bamiyan" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
+          <Input
+            label="Price"
+            placeholder="320"
+            {...field}
+            value={field.value.toString()}
+          />
         )}
       />
-      <FormField
-        control={form.control}
-        name="description"
-        render={({ field }) => (
-          <FormItem className="col-span-1 flex flex-col">
-            <FormLabel>Set your asking price.</FormLabel>
-            <FormControl>
-              <Input placeholder="Big House like a palace" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      {/* <FormField
-        control={form.control}
-        name="category"
-        render={({ field }) => (
-          <FormItem className="col-span-1 flex flex-col">
-            <FormLabel>
-              Select the features and amenities your property includes.
-            </FormLabel>
-            <MultiSelect
-              value={field.value}
-              options={facilities.map((c) => ({ label: c.name, value: c._id }))}
-              onValueChange={field.onChange}
-              placeholder="Facilities"
-            />
-          </FormItem>
-        )}
-      /> */}
     </>
   );
 }

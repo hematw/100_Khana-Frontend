@@ -1,7 +1,7 @@
 import { UploadCloud, X } from "lucide-react";
 import { ChangeEventHandler, useState } from "react";
 import { UseFormReturn } from "react-hook-form";
-import { IPropertyForm } from "../add-home";
+import { IPropertyForm } from "..";
 import { Button } from "@/components/ui/button";
 
 type FilePreview = {
@@ -37,7 +37,7 @@ function FileUpload({ form }: { form: UseFormReturn<IPropertyForm> }) {
   }
 
   return (
-    <div className="flex flex-col items-center gap-3 rounded-lg">
+    <div className="flex flex-col items-center gap-3 rounded-lg col-span-2">
       <label className="max-w-xl mt-4 cursor-pointer bg-red-200 px-4 py-2 rounded-lg  w-full h-36 border-2 border-red-400 border-dashed flex flex-col gap-4 items-center justify-center">
         <UploadCloud size={42} color="#f82855" />
         <p className="text-sm text-gray-600">Upload multiple images (JPG, PNG, etc.)</p>
@@ -58,7 +58,7 @@ function FileUpload({ form }: { form: UseFormReturn<IPropertyForm> }) {
                 <img key={index} src={file.url} alt={`Preview ${index}`} className="w-16 h-16 object-cover rounded-lg border-2" />
                 <div>
                   <p className="font-medium">{file.name}</p>
-                  <p className="text-sm text-gray-500">{(file.size / 1024).toFixed(2)} KB</p>
+                  <p className="text-sm text-gray-500">{(file.size / (1024 ** 2)).toFixed(2)} MB</p>
                 </div>
                 <Button size={"icon"} variant={"ghost"} className="ml-auto rounded-full" onClick={() => handleDelete(file.name)}><X /></Button>
               </div>

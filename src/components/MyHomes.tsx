@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../axios";
 import HomeCard from "./HomeCard";
-import AddHome from "./property-form/add-home";
+import AddHome from "./property-form";
 import { HousePlus } from "lucide-react";
 import { Button } from "@heroui/button";
 
