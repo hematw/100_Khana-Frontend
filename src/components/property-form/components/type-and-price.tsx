@@ -1,10 +1,10 @@
 import { Input } from "@heroui/input";
 import { IPropertyForm } from "..";
 import { Controller, UseFormReturn } from "react-hook-form";
-import { useEffect, useState } from "react";
 import axiosIns from "@/axios";
 import { Select, SelectedItems, SelectItem } from "@heroui/select";
 import { Chip } from "@heroui/chip";
+import { useQuery } from "@tanstack/react-query";
 
 type TCategory = {
   name: string;
@@ -20,20 +20,26 @@ const listingTypes: TListingType[] = [
 ];
 
 function AreaAndPrice({ form }: { form: UseFormReturn<IPropertyForm> }) {
-  const [categories, setCategories] = useState<TCategory[]>([]);
+  const {
+    data: categories,
+    error,
+    isLoading,
+  } = useQuery({
+    queryKey: ["categories"],
+    queryFn: async (): Promise<TCategory[]> => {
+      const { data } = await axiosIns.get("/categories");
+      console.log(data);
+      return data.categories;
+    },
+  });
 
-  useEffect(() => {
-    async function fetchCategories() {
-      try {
-        const { data } = await axiosIns.get("/categories");
-        console.log(data);
-        setCategories(data.categories);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    fetchCategories();
-  }, []);
+  if (error) {
+    return <h1>Something went wrong</h1>;
+  }
+
+  if (isLoading) {
+    return <h1>Loading...</h1>;
+  }
 
   return (
     <>

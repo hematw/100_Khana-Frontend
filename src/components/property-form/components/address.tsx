@@ -4,6 +4,8 @@ import { Controller, UseFormReturn } from "react-hook-form";
 import axiosIns from "@/axios";
 import { useQuery } from "@tanstack/react-query";
 import { Autocomplete, AutocompleteItem } from "@heroui/autocomplete";
+import { Button } from "@heroui/button";
+import { Pin } from "lucide-react";
 // import { Combobox } from "@/components/ui/combo-box";
 
 type TDistrict = {
@@ -45,6 +47,16 @@ function Address({ form }: { form: UseFormReturn<IPropertyForm> }) {
     queryFn: getDistricts,
   });
 
+  const getGeolocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((loc) => {
+        console.log(loc.coords);
+        form.setValue("longitude", loc.coords.longitude.toString());
+        form.setValue("latitude", loc.coords.latitude.toString());
+      });
+    }
+  };
+
   if (isErrorCities || isErrorDistricts) {
     return <h1>Something went wrong</h1>;
   }
@@ -60,14 +72,13 @@ function Address({ form }: { form: UseFormReturn<IPropertyForm> }) {
         name="city"
         render={({ field }) => (
           <Autocomplete
-          label="City"
-            value={field.value}
-            items={cities.map((c) => ({ label: c.name, value: c.name }))}
-            onChange={field.onChange}
-            placeholder="Select a city"
+            label="City"
+            items={cities}
+            {...field}
+            placeholder="Kabul..."
           >
             {(item) => (
-              <AutocompleteItem key={item.value}>{item.label}</AutocompleteItem>
+              <AutocompleteItem key={item._id}>{item.name}</AutocompleteItem>
             )}
           </Autocomplete>
         )}
@@ -78,13 +89,14 @@ function Address({ form }: { form: UseFormReturn<IPropertyForm> }) {
         render={({ field }) => (
           <Autocomplete
             label="District"
-            value={field.value}
-            items={districts.map((d) => ({ label: d.name, value: d.name }))}
-            onChange={field.onChange}
-            placeholder="Select a district"
+            items={districts}
+            placeholder="12th district..."
+            onChange={(e) => console.log(e)}
           >
             {(item) => (
-              <AutocompleteItem key={item.value}>{item.label}</AutocompleteItem>
+              <AutocompleteItem key={item._id} {...field} textValue={item.name}>
+                {item.name}
+              </AutocompleteItem>
             )}
           </Autocomplete>
         )}
@@ -107,6 +119,15 @@ function Address({ form }: { form: UseFormReturn<IPropertyForm> }) {
           <Input label="Street" placeholder="eg: 4th street" {...field} />
         )}
       />
+      <Button
+        onPress={getGeolocation}
+        startContent={<Pin />}
+        size="lg"
+        color="primary"
+        variant="solid"
+      >
+        Get current Location
+      </Button>
     </>
   );
 }

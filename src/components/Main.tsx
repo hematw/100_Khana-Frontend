@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form";
 // import { Input } from "./ui/input";
 import { Input } from "@heroui/input";
 import { Separator } from "./ui/separator";
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import ShadowedCard from "./cards/ShadowedCard";
 import { Card, CardBody, CardFooter, CardHeader } from "@heroui/card";
 import { Button } from "@heroui/button";
@@ -13,6 +12,12 @@ import { Select, SelectedItems, SelectItem } from "@heroui/select";
 import { Chip } from "@heroui/chip";
 import { Form } from "@heroui/form";
 import { Slider } from "@heroui/slider";
+import {
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
+} from "@heroui/dropdown";
 // import {
 //   Card,
 //   CardBody,
@@ -86,16 +91,14 @@ export default function Main() {
               <div className="min-w-full items-center bg-white dark:bg-zinc-800 flex rounded-lg p-2 ">
                 <div className="flex-1">
                   <Select
-                    classNames={{
-                      base: "max-w-xs",
-                      trigger: "min-h-12 py-2",
-                      label: "text-xs font-medium",
-                    }}
-                    // isMultiline={true}
                     items={listingTypes}
-                    // label="Listing Type"
-                    labelPlacement="outside"
+                    label="Listing Type"
                     placeholder="Select listing type"
+                    selectionMode="multiple"
+                    size="lg"
+                    radius="sm"
+                    color="primary"
+                    variant="faded"
                     renderValue={(items: SelectedItems<TListingType>) => {
                       return (
                         <div className="flex flex-wrap gap-2">
@@ -105,9 +108,6 @@ export default function Main() {
                         </div>
                       );
                     }}
-                    selectionMode="multiple"
-                    variant="flat"
-                    size="sm"
                   >
                     {(item) => (
                       <SelectItem key={item.value} textValue={item.value}>
@@ -123,16 +123,15 @@ export default function Main() {
                   className="z-30 h-12 mx-1 dark:bg-gray-600"
                 />
                 <div className="flex-1">
-                  {/* <Label htmlFor="location" className="ml-3 text-xs">
-                    Location
-                  </Label> */}
                   <Input
                     id="location"
-                    variant="flat"
-                    size="lg"
-                    radius="sm"
+                    label="Location"
                     placeholder="e.g. Kabul..."
                     className="text-sm border-none shadow-none"
+                    size="lg"
+                    radius="sm"
+                    color="primary"
+                    variant="faded"
                   />
                 </div>
                 <Separator
@@ -140,14 +139,20 @@ export default function Main() {
                   className="z-30 h-12 mx-1 dark:bg-gray-600"
                 />
                 <div className="flex-1">
-                  <Popover>
-                    <PopoverTrigger className="w-full bg-gray-100 hover:bg-gray-200 rounded-md h-12 shadow-sm flex items-center p-3">
-                      <p className="text-gray-500 mt-2 text-sm ">
+                  <Dropdown>
+                    <DropdownTrigger className="w-full bg-gray-100 hover:bg-gray-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 rounded-md h-12 shadow-sm flex items-center p-3">
+                      <Button
+                        size="lg"
+                        radius="sm"
+                        color="primary"
+                        variant="faded"
+                        // className="text-gray-500 dark:text-gray-00 mt-2 text-sm "
+                      >
                         e.g. 5K - 10K...
-                      </p>
-                    </PopoverTrigger>
-                    <PopoverContent>
-                      <div className="grid gap-4">
+                      </Button>
+                    </DropdownTrigger>
+                    <DropdownMenu>
+                      <DropdownItem key={"abc"} className="grid gap-4">
                         <div className="space-y-2">
                           <h4 className="font-medium leading-none">
                             Price ranges
@@ -171,9 +176,9 @@ export default function Main() {
                             });
                           }}
                         />
-                      </div>
-                    </PopoverContent>
-                  </Popover>
+                      </DropdownItem>
+                    </DropdownMenu>
+                  </Dropdown>
                 </div>
                 <Separator
                   orientation="vertical"
@@ -224,7 +229,9 @@ export default function Main() {
                   right buyer or tenant in no time.
                 </p>
               </CardFooter>
-              <Button className="min-w-full mt-8 " color="primary">Post a Listing</Button>
+              <Button className="min-w-full mt-8 " color="primary">
+                Post a Listing
+              </Button>
             </CardBody>
           </ShadowedCard>
           <ShadowedCard className="max-w-96 min-w-80">
@@ -247,7 +254,9 @@ export default function Main() {
                   find your perfect home quickly and easily.
                 </p>
               </CardFooter>
-              <Button className="min-w-full mt-8 " color="primary">Browse Properties</Button>
+              <Button className="min-w-full mt-8 " color="primary">
+                Browse Properties
+              </Button>
             </CardBody>
           </ShadowedCard>
           <ShadowedCard className="max-w-96 min-w-80">
@@ -271,7 +280,9 @@ export default function Main() {
                   inquiries.
                 </p>
               </CardFooter>
-              <Button className="min-w-full mt-8 " color="primary">Rent Out Property</Button>
+              <Button className="min-w-full mt-8 " color="primary">
+                Rent Out Property
+              </Button>
             </CardBody>
           </ShadowedCard>
         </div>

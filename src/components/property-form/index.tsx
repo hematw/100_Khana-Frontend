@@ -10,6 +10,7 @@ import AreaAndPrice from "./components/type-and-price";
 import { Card, CardTitle } from "../ui/card";
 import { Button } from "../ui/button";
 import Address from "./components/address";
+import OtherDescription from "./components/other-details";
 
 export interface IPropertyForm {
   owner: string;
@@ -31,6 +32,7 @@ export interface IPropertyForm {
   latitude: string;
   floor: string;
   totalFloors: string;
+  description: string[]
 }
 
 const FormSchema = z.object({
@@ -58,12 +60,13 @@ const FormSchema = z.object({
   latitude: z.string(),
   floor: z.string(),
   totalFloors: z.string(),
+  description: z.array(z.string())
 });
 
 function AddHome() {
   const [step, setStep] = useState(1);
 
-  const TOTAL_STEPS = 5;
+  const TOTAL_STEPS = 6;
   const form = useForm<IPropertyForm>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -85,6 +88,7 @@ function AddHome() {
       latitude: "",
       floor: "",
       totalFloors: "",
+      description: []
     },
   });
 
@@ -96,8 +100,11 @@ function AddHome() {
   const nextStep = () => setStep((prev) => Math.min(prev + 1, TOTAL_STEPS));
   const prevStep = () => setStep((prev) => Math.max(prev - 1, 1));
 
+  console.log(form.watch());
+
+
   return (
-    <div className="p-6 w-full min-h-screen">
+    <div className="p-6 w-full max-h-[80vh]">
       <Card className="grid grid-cols-12 max-w-5xl mx-auto rounded-lg shadow-lg overflow-hidden max-h-screen">
         <div className="col-span-8 p-8 content-center">
           <CardTitle className="text-3xl font-bold mb-6">
@@ -117,7 +124,9 @@ function AddHome() {
 
                 {step === 4 && <Facilities form={form} />}
 
-                {step === 5 && <FileUploadForm form={form} />}
+                {step === 5 && <OtherDescription form={form} />}
+
+                {step === 6 && <FileUploadForm form={form} />}
               </div>
 
               {/* Navigation Buttons */}
@@ -144,7 +153,7 @@ function AddHome() {
             </form>
           </Form>
         </div>
-        <div className="col-span-4 max-h-screen">
+        <div className="col-span-4 max-h-[80vh]">
           <img
             src="/Photo.png"
             alt=""
