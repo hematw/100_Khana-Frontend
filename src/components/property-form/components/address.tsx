@@ -76,6 +76,9 @@ function Address({ form }: { form: UseFormReturn<IPropertyForm> }) {
             items={cities}
             {...field}
             placeholder="Kabul..."
+            onSelectionChange={(selectedCity) =>
+              form.setValue("city", selectedCity?.toString() || "")
+            }
           >
             {(item) => (
               <AutocompleteItem key={item._id}>{item.name}</AutocompleteItem>
@@ -90,11 +93,14 @@ function Address({ form }: { form: UseFormReturn<IPropertyForm> }) {
           <Autocomplete
             label="District"
             items={districts}
+            {...field}
             placeholder="12th district..."
-            onChange={(e) => console.log(e)}
+            onSelectionChange={(selectedCity) =>
+              form.setValue("district", selectedCity?.toString() || "")
+            }
           >
             {(item) => (
-              <AutocompleteItem key={item._id} {...field} textValue={item.name}>
+              <AutocompleteItem key={item._id} textValue={item.name}>
                 {item.name}
               </AutocompleteItem>
             )}
