@@ -49,15 +49,16 @@ function AreaAndPrice({ form }: { form: UseFormReturn<IPropertyForm> }) {
         render={({ field }) => (
           <Select
             label="Listing Type"
-            classNames={{
-              base: "max-w-xs",
-              trigger: "min-h-12 py-2",
-              label: "text-xs font-medium",
-            }}
             // isMultiline={true}
             items={listingTypes}
-            {...field}
-            placeholder="Select listing type"
+            placeholder="e.g. Rental"
+            selectionMode="multiple"
+            variant="flat"
+            defaultSelectedKeys={field.value}
+            onSelectionChange={(keys) => {
+              const selectedValues = Array.from(keys).map((key) => String(key));
+              form.setValue("listingType", selectedValues);
+            }}
             renderValue={(items: SelectedItems<TListingType>) => {
               return (
                 <div className="flex flex-wrap gap-2">
@@ -67,9 +68,6 @@ function AreaAndPrice({ form }: { form: UseFormReturn<IPropertyForm> }) {
                 </div>
               );
             }}
-            selectionMode="multiple"
-            variant="flat"
-            size="sm"
           >
             {(item) => (
               <SelectItem key={item.value} textValue={item.value}>
@@ -87,15 +85,15 @@ function AreaAndPrice({ form }: { form: UseFormReturn<IPropertyForm> }) {
         render={({ field }) => (
           <Select
             label="Property type"
-            classNames={{
-              base: "max-w-xs",
-              trigger: "min-h-12 py-2",
-              label: "text-xs font-medium",
-            }}
             // isMultiline={true}
             items={categories}
-            {...field}
-            placeholder="Select property type"
+            // {...field}
+            defaultSelectedKeys={field.value}
+            placeholder="e.g. Apartment"
+            onSelectionChange={(keys) => {
+              const selectedValues = Array.from(keys).map((key) => String(key));
+              form.setValue("category", selectedValues);
+            }}
             renderValue={(items: SelectedItems<TCategory>) => {
               return (
                 <div className="flex flex-wrap gap-2">
@@ -107,7 +105,6 @@ function AreaAndPrice({ form }: { form: UseFormReturn<IPropertyForm> }) {
             }}
             selectionMode="multiple"
             variant="flat"
-            size="sm"
           >
             {(item) => (
               <SelectItem key={item._id} textValue={item.name}>
@@ -121,11 +118,25 @@ function AreaAndPrice({ form }: { form: UseFormReturn<IPropertyForm> }) {
       />
       <Controller
         control={form.control}
+        name="area"
+        render={({ field }) => (
+          <Input
+          type="number"
+            label="Area (m2)"
+            placeholder="e.g. 320"
+            {...field}
+            value={field.value.toString()}
+          />
+        )}
+      />
+      <Controller
+        control={form.control}
         name="price"
         render={({ field }) => (
           <Input
-            label="Price"
-            placeholder="320"
+          type="number"
+            label="Price (AFN)"
+            placeholder="e.g. 1000"
             {...field}
             value={field.value.toString()}
           />

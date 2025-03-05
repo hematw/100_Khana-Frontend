@@ -50,25 +50,30 @@ function Facilities({ form }: { form: UseFormReturn<IPropertyForm> }) {
         render={({ field }) => (
           <Select
             label="Facilities"
-            classNames={{
-              base: "max-w-xs",
-              trigger: "min-h-12 py-2",
-              label: "text-xs font-medium",
-            }}
             className="min-w-full"
             isMultiline={true}
             items={facilities}
-            {...field}
-            placeholder="Secure doors"
+            value={field.value}
+            placeholder="e.g. Secure doors"
+            defaultSelectedKeys={field.value}
+            selectionMode="multiple"
+            variant="flat"
+            size="sm"
+            onSelectionChange={(keys) => {
+              const selectedValues = Array.from(keys).map((key) => String(key));
+              form.setValue("facilities", selectedValues); // Update form state with array of strings
+            }}
             renderValue={(items: SelectedItems<TFacility>) => {
               return (
                 <div className="flex flex-wrap gap-2">
                   {items.map((item) => (
                     <Chip
                       key={item.key}
-                      startContent={icons[item.data?.icon]}
                       color="primary"
                       className="py-2 px-3 inline-flex h-fit"
+                      startContent={
+                        icons[item.data?.icon as keyof typeof icons]
+                      }
                     >
                       <span>{item.data?.name}</span>
                     </Chip>
@@ -76,9 +81,6 @@ function Facilities({ form }: { form: UseFormReturn<IPropertyForm> }) {
                 </div>
               );
             }}
-            selectionMode="multiple"
-            variant="flat"
-            size="sm"
           >
             {(item) => (
               <SelectItem key={item._id} textValue={item.name}>

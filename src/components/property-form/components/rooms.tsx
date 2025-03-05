@@ -10,8 +10,9 @@ function Rooms({ form }: { form: UseFormReturn<IPropertyForm> }) {
         name="numOfLivingRooms"
         render={({ field }) => (
           <Input
+            type="number"
             label="Living Rooms."
-            placeholder="4"
+            placeholder="e.g. 4"
             {...field}
             value={field.value.toString()}
           />
@@ -22,8 +23,9 @@ function Rooms({ form }: { form: UseFormReturn<IPropertyForm> }) {
         name="numOfBedRooms"
         render={({ field }) => (
           <Input
+            type="number"
             label="Bed Rooms."
-            placeholder="4"
+            placeholder="e.g. 4"
             {...field}
             value={field.value.toString()}
           />
@@ -34,8 +36,9 @@ function Rooms({ form }: { form: UseFormReturn<IPropertyForm> }) {
         name="numOfBaths"
         render={({ field }) => (
           <Input
+            type="number"
             label="Bathrooms."
-            placeholder="2"
+            placeholder="e.g. 2"
             {...field}
             value={field.value.toString()}
           />
@@ -46,8 +49,9 @@ function Rooms({ form }: { form: UseFormReturn<IPropertyForm> }) {
         name="numOfKitchens"
         render={({ field }) => (
           <Input
+            type="number"
             label="Kitchens."
-            placeholder="320m2"
+            placeholder="e.g. 320m2"
             {...field}
             value={field.value.toString()}
           />
@@ -57,14 +61,19 @@ function Rooms({ form }: { form: UseFormReturn<IPropertyForm> }) {
         control={form.control}
         name="floor"
         render={({ field }) => (
-          <Input label="Floor." placeholder="3" {...field} />
+          <Input type="number" label="Floor." placeholder="e.g. 3" {...field} />
         )}
       />
       <Controller
         control={form.control}
         name="totalFloors"
         render={({ field }) => (
-          <Input label="Total Floors." placeholder="5" {...field} />
+          <Input
+            type="number"
+            label="Total Floors."
+            placeholder="e.g. 5"
+            {...field}
+          />
         )}
       />
     </>

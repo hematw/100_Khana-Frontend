@@ -124,10 +124,8 @@ export default function Main() {
                 />
                 <div className="flex-1">
                   <Input
-                    id="location"
                     label="Location"
-                    placeholder="e.g. Kabul..."
-                    className="text-sm border-none shadow-none"
+                    placeholder="Kabul..."
                     size="lg"
                     radius="sm"
                     color="primary"
@@ -140,16 +138,15 @@ export default function Main() {
                 />
                 <div className="flex-1">
                   <Dropdown>
-                    <DropdownTrigger className="w-full bg-gray-100 hover:bg-gray-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 rounded-md h-12 shadow-sm flex items-center p-3">
-                      <Button
+                    <DropdownTrigger className="w-full  bg-gray-100 hover:bg-gray-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 rounded-md shadow-sm flex items-center ">
+                      <Input
+                        label="Price Range"
+                        placeholder="5K - 10K..."
                         size="lg"
                         radius="sm"
                         color="primary"
                         variant="faded"
-                        // className="text-gray-500 dark:text-gray-00 mt-2 text-sm "
-                      >
-                        e.g. 5K - 10K...
-                      </Button>
+                      />
                     </DropdownTrigger>
                     <DropdownMenu>
                       <DropdownItem key={"abc"} className="grid gap-4">

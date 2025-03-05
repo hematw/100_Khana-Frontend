@@ -51,8 +51,8 @@ function Address({ form }: { form: UseFormReturn<IPropertyForm> }) {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((loc) => {
         console.log(loc.coords);
-        form.setValue("longitude", loc.coords.longitude.toString());
-        form.setValue("latitude", loc.coords.latitude.toString());
+        form.setValue("lng", loc.coords.longitude.toString());
+        form.setValue("lat", loc.coords.latitude.toString());
       });
     }
   };
@@ -75,7 +75,7 @@ function Address({ form }: { form: UseFormReturn<IPropertyForm> }) {
             label="City"
             items={cities}
             {...field}
-            placeholder="Kabul..."
+            placeholder="e.g. Kabul..."
             onSelectionChange={(selectedCity) =>
               form.setValue("city", selectedCity?.toString() || "")
             }
@@ -94,7 +94,7 @@ function Address({ form }: { form: UseFormReturn<IPropertyForm> }) {
             label="District"
             items={districts}
             {...field}
-            placeholder="12th district..."
+            placeholder="e.g. 12th district..."
             onSelectionChange={(selectedCity) =>
               form.setValue("district", selectedCity?.toString() || "")
             }
@@ -113,7 +113,7 @@ function Address({ form }: { form: UseFormReturn<IPropertyForm> }) {
         render={({ field }) => (
           <Input
             label="Main Road"
-            placeholder="eg: Shahr e Naw - Qala Fathullah"
+            placeholder="e.g. Shahr e Naw - Qala Fathullah"
             {...field}
           />
         )}
@@ -122,7 +122,7 @@ function Address({ form }: { form: UseFormReturn<IPropertyForm> }) {
         control={form.control}
         name="street" // ✅ Fixed duplicate field name
         render={({ field }) => (
-          <Input label="Street" placeholder="eg: 4th street" {...field} />
+          <Input label="Street" placeholder="e.g. 4th street" {...field} />
         )}
       />
       <Button
