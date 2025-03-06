@@ -20,7 +20,7 @@ import {
   DropdownTrigger,
 } from "@heroui/dropdown";
 import { Avatar } from "@heroui/avatar";
-import { Separator } from "./ui/separator";
+import { Separator } from "./ui/Divider";
 
 export function NavUser({
   user,
@@ -72,8 +72,8 @@ export function NavUser({
                 </div>
               </div>
             </DropdownItem>
-            <Separator />
-            <Separator />
+            <Divider />
+            <Divider />
             <DropdownSection>
               <DropdownItem key="account">
                 <BadgeCheck />
@@ -88,7 +88,7 @@ export function NavUser({
                 Notifications
               </DropdownItem>
             </DropdownSection>
-            <Separator />
+            <Divider />
             <DropdownItem key="logout">
               <LogOut />
               Log out

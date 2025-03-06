@@ -2,13 +2,13 @@ import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Facilities from "./components/facilities";
 import { z } from "zod";
-import { Form } from "../ui/form";
+import { Form } from "@heroui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Rooms from "./components/rooms";
 import FileUploadForm from "./components/file-upload";
 import AreaAndPrice from "./components/type-and-price";
-import { Card, CardTitle } from "../ui/card";
-import { Button } from "../ui/button";
+import { Card, CardHeader } from "@heroui/card";
+import { Button } from "@heroui/button";
 import Address from "./components/address";
 import OtherDescription from "./components/other-details";
 import axiosIns from "@/axios";
@@ -161,9 +161,9 @@ function AddHome() {
             <Confetti />
           ) : (
             <>
-              <CardTitle className="text-3xl font-bold mb-6">
+              <CardHeader className="text-3xl font-bold mb-6">
                 Add Your Home
-              </CardTitle>
+              </CardHeader>
               <div className="px-6">
                 <div className="w-full relative py-12 items-center flex justify-between">
                   <div className="w-full h-2  absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gray-200">
@@ -210,8 +210,8 @@ function AddHome() {
                     {/* {step > 1 && ( */}
                     <Button size="lg"
                       type="button"
-                      onClick={prevStep}
-                      variant={"outline"}
+                      onPress={prevStep}
+                      variant={"bordered"}
                     >
                       Back
                     </Button>

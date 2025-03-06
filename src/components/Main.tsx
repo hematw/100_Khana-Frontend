@@ -4,7 +4,7 @@ import { ArrowDown } from "lucide-react";
 import { useForm } from "react-hook-form";
 // import { Input } from "./ui/input";
 import { Input } from "@heroui/input";
-import { Separator } from "./ui/separator";
+import { Divider } from "@heroui/divider";
 import ShadowedCard from "./cards/ShadowedCard";
 import { Card, CardBody, CardFooter, CardHeader } from "@heroui/card";
 import { Button } from "@heroui/button";
@@ -18,13 +18,6 @@ import {
   DropdownMenu,
   DropdownTrigger,
 } from "@heroui/dropdown";
-// import {
-//   Card,
-//   CardBody,
-//   CardFooter,
-//   CardHeader,
-//   CardHeader,
-// } from "./ui/card";
 
 // const images = [
 //   "/photos/1.jpg",
@@ -118,7 +111,7 @@ export default function Main() {
                     )}
                   </Select>
                 </div>
-                <Separator
+                <Divider
                   orientation="vertical"
                   className="z-30 h-12 mx-1 dark:bg-gray-600"
                 />
@@ -132,7 +125,7 @@ export default function Main() {
                     variant="faded"
                   />
                 </div>
-                <Separator
+                <Divider
                   orientation="vertical"
                   className="z-30 h-12 mx-1 dark:bg-gray-600"
                 />
@@ -177,7 +170,7 @@ export default function Main() {
                     </DropdownMenu>
                   </Dropdown>
                 </div>
-                <Separator
+                <Divider
                   orientation="vertical"
                   className="z-30 h-12 mx-1 dark:bg-gray-600"
                 />

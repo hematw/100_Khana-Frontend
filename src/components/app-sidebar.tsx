@@ -1,4 +1,4 @@
-import * as React from "react"
+import * as React from "react";
 import {
   AudioWaveform,
   BookOpen,
@@ -10,21 +10,26 @@ import {
   PieChart,
   Settings2,
   SquareTerminal,
-} from "lucide-react"
+} from "lucide-react";
+import { Button } from "@heroui/button";
 
-import { NavMain } from "@/components/nav-main"
-import { NavProjects } from "@/components/nav-projects"
-import { NavUser } from "@/components/nav-user"
-import { TeamSwitcher } from "@/components/team-switcher"
 import {
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarHeader,
-  SidebarRail,
-} from "@/components/ui/sidebar"
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  DrawerBody,
+  DrawerFooter,
+} from "@heroui/drawer";
 
-// This is sample data.
+import {
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
+} from "@heroui/dropdown";
+import { Avatar } from "@heroui/avatar";
+
+// Sample Data
 const data = {
   user: {
     name: "shadcn",
@@ -54,85 +59,25 @@ const data = {
       url: "#",
       icon: SquareTerminal,
       isActive: true,
-      items: [
-        {
-          title: "History",
-          url: "#",
-        },
-        {
-          title: "Starred",
-          url: "#",
-        },
-        {
-          title: "Settings",
-          url: "#",
-        },
-      ],
+      items: ["History", "Starred", "Settings"],
     },
     {
       title: "Models",
       url: "#",
       icon: Bot,
-      items: [
-        {
-          title: "Genesis",
-          url: "#",
-        },
-        {
-          title: "Explorer",
-          url: "#",
-        },
-        {
-          title: "Quantum",
-          url: "#",
-        },
-      ],
+      items: ["Genesis", "Explorer", "Quantum"],
     },
     {
       title: "Documentation",
       url: "#",
       icon: BookOpen,
-      items: [
-        {
-          title: "Introduction",
-          url: "#",
-        },
-        {
-          title: "Get Started",
-          url: "#",
-        },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
-        },
-      ],
+      items: ["Introduction", "Get Started", "Tutorials", "Changelog"],
     },
     {
       title: "Settings",
       url: "#",
       icon: Settings2,
-      items: [
-        {
-          title: "General",
-          url: "#",
-        },
-        {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
-        },
-      ],
+      items: ["General", "Team", "Billing", "Limits"],
     },
   ],
   projects: [
@@ -152,22 +97,67 @@ const data = {
       icon: Map,
     },
   ],
-}
+};
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar() {
+  const [isOpen, setIsOpen] = React.useState(false);
+
   return (
-    <Sidebar collapsible="icon" {...props}>
-      <SidebarHeader>
-        <TeamSwitcher teams={data.teams} />
-      </SidebarHeader>
-      <SidebarContent>
-        <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
-      </SidebarContent>
-      <SidebarFooter>
-        <NavUser user={data.user} />
-      </SidebarFooter>
-      <SidebarRail />
-    </Sidebar>
-  )
+    <>
+      <Button onPress={() => setIsOpen(true)}>Open Sidebar</Button>
+      <Drawer
+        isOpen={isOpen}
+        onOpenChange={setIsOpen}
+        placement="left"
+        size="xs"
+        isDismissable
+      >
+        <DrawerContent>
+          {/* User Profile */}
+          <DrawerHeader>
+            <Dropdown>
+              <DropdownTrigger>
+                <Avatar src={data.user.avatar} size="lg" />
+              </DropdownTrigger>
+              <DropdownMenu aria-label="User Menu">
+                <DropdownItem key="profile">Profile</DropdownItem>
+                <DropdownItem key="logout">Logout</DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+          </DrawerHeader>
+
+          {/* Navigation */}
+          <DrawerBody>
+            {data.navMain.map((item, index) => (
+              <Button
+                key={index}
+                startContent={<item.icon />}
+                variant="light"
+                fullWidth
+                className="justify-start"
+              >
+                {item.title}
+              </Button>
+            ))}
+          </DrawerBody>
+
+          {/* Projects */}
+          <DrawerFooter>
+            <h4 className="text-sm font-semibold">Projects</h4>
+            {data.projects.map((project, index) => (
+              <Button
+                key={index}
+                startContent={<project.icon />}
+                variant="light"
+                fullWidth
+                className="justify-start"
+              >
+                {project.name}
+              </Button>
+            ))}
+          </DrawerFooter>
+        </DrawerContent>
+      </Drawer>
+    </>
+  );
 }

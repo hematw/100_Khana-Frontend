@@ -1,24 +1,14 @@
 import { CircleUserRound, Menu } from "lucide-react";
-import { Button } from "@/components/ui/button"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuPortal,
-  DropdownMenuSeparator,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 import { Link } from "react-router-dom";
+import { Dropdown, DropdownItem, DropdownMenu, DropdownSection, DropdownTrigger } from "@heroui/dropdown";
+import { Button } from "@heroui/button";
+import { Divider } from "@heroui/divider";
 
-export default function Dropdown() {
+
+export default function NavDropdown() {
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
+    <Dropdown>
+      <DropdownTrigger asChild>
         <Button
           className="rounded-3xl"
         >
@@ -27,50 +17,39 @@ export default function Dropdown() {
           </span>
           <Menu />
         </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent className="absolute -right-10 w-56 overflow-hidden">
-        <DropdownMenuLabel>My Account</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuGroup>
+      </DropdownTrigger>
+      <DropdownMenu className="absolute -right-10 w-56 overflow-hidden">
+        <p>My Account</p>
+        <Divider />
+        <DropdownSection>
           <Link to="./dashboard/profile">
-            <DropdownMenuItem className="cursor-pointer">
+            <DropdownItem key="profile" className="cursor-pointer">
               Profile
-            </DropdownMenuItem>
+            </DropdownItem>
           </Link>
           <Link to="./properties">
-            <DropdownMenuItem className="cursor-pointer">
+            <DropdownItem key="add-property" className="cursor-pointer">
               Add Property
-            </DropdownMenuItem>
+            </DropdownItem>
           </Link>
           <Link to="./dashboard/homes">
-            <DropdownMenuItem className="cursor-pointer">
-              My Homes
-            </DropdownMenuItem>
+            <DropdownItem key="my-properties" className="cursor-pointer">
+              My Properties
+            </DropdownItem>
           </Link>
-        </DropdownMenuGroup>
-        <DropdownMenuSeparator />
-        <DropdownMenuGroup>
-          <DropdownMenuItem>Team</DropdownMenuItem>
-          <DropdownMenuSub>
-            <DropdownMenuSubTrigger>Invite users</DropdownMenuSubTrigger>
-            <DropdownMenuPortal>
-              <DropdownMenuSubContent>
-                <DropdownMenuItem>Email</DropdownMenuItem>
-                <DropdownMenuItem>Message</DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>More...</DropdownMenuItem>
-              </DropdownMenuSubContent>
-            </DropdownMenuPortal>
-          </DropdownMenuSub>
-        </DropdownMenuGroup>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem>Support</DropdownMenuItem>
-        <DropdownMenuItem disabled>API</DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        </DropdownSection>
+        <Divider />
+        <DropdownSection>
+          <DropdownItem key="team">Team</DropdownItem>
+        </DropdownSection>
+        <Divider />
+        <DropdownItem key="support">Support</DropdownItem>
+        <DropdownItem key="api">API</DropdownItem>
+        <Divider />
+        <DropdownItem key="logout">
           Log out
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu >
+        </DropdownItem>
+      </DropdownMenu>
+    </Dropdown >
   )
 }
