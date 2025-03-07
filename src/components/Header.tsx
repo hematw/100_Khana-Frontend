@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import Dropdown from "./Dropdown";
+import NavDropdown from "./NavDropdown";
 import ThemeSwitch from "./theme-switch";
 import { useContext, useEffect, useState } from "react";
 import { ThemeContext } from "@/contexts/theme-context";
@@ -65,7 +65,7 @@ export default function Header() {
         </div>
         <div className="flex items-center gap-2">
           <ThemeSwitch theme={theme} toggleTheme={toggleTheme} />
-          <Dropdown />
+          <NavDropdown />
         </div>
       </nav>
     </header>

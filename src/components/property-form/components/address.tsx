@@ -5,7 +5,7 @@ import axiosIns from "@/axios";
 import { useQuery } from "@tanstack/react-query";
 import { Autocomplete, AutocompleteItem } from "@heroui/autocomplete";
 import { Button } from "@heroui/button";
-import { Pin } from "lucide-react";
+import { Locate} from "lucide-react";
 // import { Combobox } from "@/components/ui/combo-box";
 
 type TDistrict = {
@@ -127,7 +127,7 @@ function Address({ form }: { form: UseFormReturn<IPropertyForm> }) {
       />
       <Button
         onPress={getGeolocation}
-        startContent={<Pin />}
+        startContent={<Locate />}
         size="lg"
         color="primary"
         variant="solid"

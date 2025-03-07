@@ -13,6 +13,14 @@ import Address from "./components/address";
 import OtherDescription from "./components/other-details";
 import axiosIns from "@/axios";
 import Confetti from "react-confetti";
+import {
+  Building,
+  Gem,
+  Images,
+  MapPinHouse,
+  ScrollText,
+  WavesLadder,
+} from "lucide-react";
 
 export interface IPropertyForm {
   numOfLivingRooms: string;
@@ -62,6 +70,15 @@ const FormSchema = z.object({
   totalFloors: z.string(),
   description: z.array(z.string()),
 });
+
+const icons = [
+  <MapPinHouse size={16} />,
+  <Gem size={16} />,
+  <Building size={16} />,
+  <WavesLadder size={16} />,
+  <ScrollText size={16} />,
+  <Images size={16} />,
+];
 
 function AddHome() {
   const [step, setStep] = useState(1);
@@ -155,13 +172,13 @@ function AddHome() {
 
   return (
     <div className="p-6 w-full">
-      <Card className="grid grid-cols-12 max-w-5xl mx-auto rounded-lg shadow-lg overflow-hidden max-h-screen">
+      <Card className="grid grid-cols-12 max-w-5xl mx-auto rounded-lg shadow-lg overflow-hidden min-h-[80vh]">
         <div className="md:col-span-8 col-span-12 p-8 content-center max-h-screen">
           {showConfetti ? (
             <Confetti />
           ) : (
             <>
-              <CardHeader className="text-3xl font-bold mb-6">
+              <CardHeader className="text-3xl font-bold ">
                 Add Your Home
               </CardHeader>
               <div className="px-6">
@@ -169,7 +186,7 @@ function AddHome() {
                   <div className="w-full h-2  absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gray-200">
                     <div>
                       <div
-                        className={`h-2 bg-danger-500`}
+                        className="h-2 bg-danger-500 transition-all duration-500"
                         style={{
                           width: `${(100 / (TOTAL_STEPS - 1)) * (step - 1)}%`,
                         }}
@@ -177,60 +194,74 @@ function AddHome() {
                     </div>
                   </div>
                   {Array.from({ length: TOTAL_STEPS }).map((_, index) => (
-                    <div
+                    <Button
+                      isIconOnly
+                      size="sm"
                       key={index}
-                      className={`z-10 step w-5 h-5 rounded-full  ${
-                        step >= index + 1 ? "bg-danger-500" : "bg-gray-200"
+                      onPress={()=> setStep(index + 1)}
+                      className={`z-10 step w-6 h-6 rounded-full flex items-center justify-center ${
+                        step >= index + 1
+                          ? "bg-danger-500 text-white"
+                          : "bg-gray-200 text-danger-500"
                       }`}
-                    ></div>
+                    >
+                      {icons[index]}
+                    </Button>
                   ))}
                 </div>
               </div>
-              <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)}>
-                  <div
-                    className="grid grid-cols-2 gap-x-4 gap-y-8 justify-between"
-                    key={step} // Use step as the key to trigger re-mounting
+              <Form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="w-full items-stretch"
+              >
+                {/* <form onSubmit={form.handleSubmit(onSubmit)}> */}
+                <div
+                  className="grid grid-cols-2 gap-x-4 gap-y-8 justify-between"
+                  key={step} // Use step as the key to trigger re-mounting
+                >
+                  {step === 1 && <Address form={form} />}
+
+                  {step === 2 && <AreaAndPrice form={form} />}
+
+                  {step === 3 && <Rooms form={form} />}
+
+                  {step === 4 && <Facilities form={form} />}
+
+                  {step === 5 && <OtherDescription form={form} />}
+
+                  {step === 6 && <FileUploadForm form={form} />}
+                </div>
+
+                {/* Navigation Buttons */}
+                <div className="flex justify-between mt-8">
+                  {/* {step > 1 && ( */}
+                  <Button
+                    size="lg"
+                    type="button"
+                    onPress={prevStep}
+                    variant={"bordered"}
                   >
-                    {step === 1 && <Address form={form} />}
-
-                    {step === 2 && <AreaAndPrice form={form} />}
-
-                    {step === 3 && <Rooms form={form} />}
-
-                    {step === 4 && <Facilities form={form} />}
-
-                    {step === 5 && <OtherDescription form={form} />}
-
-                    {step === 6 && <FileUploadForm form={form} />}
-                  </div>
-
-                  {/* Navigation Buttons */}
-                  <div className="flex justify-between mt-8">
-                    {/* {step > 1 && ( */}
-                    <Button size="lg"
+                    Back
+                  </Button>
+                  {/* )} */}
+                  {step < TOTAL_STEPS ? (
+                    <Button
+                      size="lg"
                       type="button"
-                      onPress={prevStep}
-                      variant={"bordered"}
+                      onPress={() => {
+                        nextStep();
+                        // form.trigger();
+                      }}
                     >
-                      Back
+                      Next
                     </Button>
-                    {/* )} */}
-                    {step < TOTAL_STEPS ? (
-                      <Button size="lg"
-                        type="button"
-                        onClick={() => {
-                          nextStep();
-                          // form.trigger();
-                        }}
-                      >
-                        Next
-                      </Button>
-                    ) : (
-                      <Button size="lg" type="submit">Submit</Button>
-                    )}
-                  </div>
-                </form>
+                  ) : (
+                    <Button size="lg" type="submit" color="danger">
+                      Submit
+                    </Button>
+                  )}
+                </div>
+                {/* </form> */}
               </Form>
             </>
           )}
