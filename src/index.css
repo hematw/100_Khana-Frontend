@@ -2,13 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @layer base {
   :root {
-background-color: #F8F9FA;
+    background-color: #f8f9fa;
+    color: #1e1e1e;
   }
 
   .dark {
-    background-color: #1E1E1E;
+    background-color: #1e1e1e;
+    color: #f8f9fa;
   }
 }

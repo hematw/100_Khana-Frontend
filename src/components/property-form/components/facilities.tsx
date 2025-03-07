@@ -59,6 +59,8 @@ function Facilities({ form }: { form: UseFormReturn<IPropertyForm> }) {
             selectionMode="multiple"
             variant="flat"
             size="sm"
+            isInvalid={!!form.formState.errors.facilities}
+            errorMessage={form.formState.errors.facilities?.message}
             onSelectionChange={(keys) => {
               const selectedValues = Array.from(keys).map((key) => String(key));
               form.setValue("facilities", selectedValues); // Update form state with array of strings

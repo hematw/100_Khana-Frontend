@@ -13,6 +13,8 @@ function Rooms({ form }: { form: UseFormReturn<IPropertyForm> }) {
             type="number"
             label="Living Rooms."
             placeholder="e.g. 4"
+            isInvalid={!!form.formState.errors.numOfLivingRooms}
+            errorMessage={form.formState.errors.numOfLivingRooms?.message}
             {...field}
             value={field.value.toString()}
           />
@@ -26,6 +28,8 @@ function Rooms({ form }: { form: UseFormReturn<IPropertyForm> }) {
             type="number"
             label="Bed Rooms."
             placeholder="e.g. 4"
+            isInvalid={!!form.formState.errors.numOfBaths}
+            errorMessage={form.formState.errors.numOfBaths?.message}
             {...field}
             value={field.value.toString()}
           />
@@ -39,6 +43,8 @@ function Rooms({ form }: { form: UseFormReturn<IPropertyForm> }) {
             type="number"
             label="Bathrooms."
             placeholder="e.g. 2"
+            isInvalid={!!form.formState.errors.numOfBaths}
+            errorMessage={form.formState.errors.numOfBaths?.message}
             {...field}
             value={field.value.toString()}
           />
@@ -52,6 +58,8 @@ function Rooms({ form }: { form: UseFormReturn<IPropertyForm> }) {
             type="number"
             label="Kitchens."
             placeholder="e.g. 320m2"
+            isInvalid={!!form.formState.errors.numOfKitchens}
+            errorMessage={form.formState.errors.numOfKitchens?.message}
             {...field}
             value={field.value.toString()}
           />
@@ -61,7 +69,9 @@ function Rooms({ form }: { form: UseFormReturn<IPropertyForm> }) {
         control={form.control}
         name="floor"
         render={({ field }) => (
-          <Input type="number" label="Floor." placeholder="e.g. 3" {...field} />
+          <Input type="number" label="Floor." placeholder="e.g. 3" 
+            isInvalid={!!form.formState.errors.floor}
+            errorMessage={form.formState.errors.floor?.message} {...field} />
         )}
       />
       <Controller
@@ -72,6 +82,8 @@ function Rooms({ form }: { form: UseFormReturn<IPropertyForm> }) {
             type="number"
             label="Total Floors."
             placeholder="e.g. 5"
+            isInvalid={!!form.formState.errors.totalFloors}
+            errorMessage={form.formState.errors.totalFloors?.message}
             {...field}
           />
         )}

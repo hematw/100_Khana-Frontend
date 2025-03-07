@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { HeroUIProvider } from "@heroui/system";
+import {ToastProvider} from "@heroui/toast";
 
 const queryClient = new QueryClient();
 
@@ -18,6 +19,7 @@ function App() {
     <>
       <ThemeProvider>
         <HeroUIProvider>
+          <ToastProvider placement="top-center"/>
           <QueryClientProvider client={queryClient}>
             <RoutesRenderer />
             <ReactQueryDevtools />

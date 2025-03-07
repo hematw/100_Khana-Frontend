@@ -5,7 +5,7 @@ import axiosIns from "@/axios";
 import { useQuery } from "@tanstack/react-query";
 import { Autocomplete, AutocompleteItem } from "@heroui/autocomplete";
 import { Button } from "@heroui/button";
-import { Locate} from "lucide-react";
+import { Locate } from "lucide-react";
 // import { Combobox } from "@/components/ui/combo-box";
 
 type TDistrict = {
@@ -76,6 +76,8 @@ function Address({ form }: { form: UseFormReturn<IPropertyForm> }) {
             items={cities}
             {...field}
             placeholder="e.g. Kabul..."
+            isInvalid={!!form.formState.errors.city}
+            errorMessage={form.formState.errors.city?.message}
             onSelectionChange={(selectedCity) =>
               form.setValue("city", selectedCity?.toString() || "")
             }
@@ -95,6 +97,8 @@ function Address({ form }: { form: UseFormReturn<IPropertyForm> }) {
             items={districts}
             {...field}
             placeholder="e.g. 12th district..."
+            isInvalid={!!form.formState.errors.district}
+            errorMessage={form.formState.errors.district?.message}
             onSelectionChange={(selectedCity) =>
               form.setValue("district", selectedCity?.toString() || "")
             }
@@ -114,6 +118,8 @@ function Address({ form }: { form: UseFormReturn<IPropertyForm> }) {
           <Input
             label="Main Road"
             placeholder="e.g. Shahr e Naw - Qala Fathullah"
+            isInvalid={!!form.formState.errors.road}
+            errorMessage={form.formState.errors.road?.message}
             {...field}
           />
         )}
@@ -122,18 +128,26 @@ function Address({ form }: { form: UseFormReturn<IPropertyForm> }) {
         control={form.control}
         name="street" // ✅ Fixed duplicate field name
         render={({ field }) => (
-          <Input label="Street" placeholder="e.g. 4th street" {...field} />
+          <Input label="Street" placeholder="e.g. 4th street"
+            isInvalid={!!form.formState.errors.street}
+            errorMessage={form.formState.errors.street?.message} {...field} />
         )}
       />
-      <Button
-        onPress={getGeolocation}
-        startContent={<Locate />}
-        size="lg"
-        color="primary"
-        variant="solid"
+      <div
+        className="col-span-2 flex flex-col"
       >
-        Get current Location
-      </Button>
+        <Button
+          onPress={getGeolocation}
+          startContent={<Locate />}
+          size="lg"
+          color="primary"
+          variant="solid"
+
+        >
+          Get current Location
+        </Button>
+        <span className="text-xs text-danger-400 mt-2">{!!form.formState.errors.lat?.message && "Give us your location info"}</span>
+      </div>
     </>
   );
 }

@@ -15,12 +15,14 @@ import axiosIns from "@/axios";
 import Confetti from "react-confetti";
 import {
   Building,
+  CircleCheck,
   Gem,
   Images,
   MapPinHouse,
   ScrollText,
   WavesLadder,
 } from "lucide-react";
+import { addToast } from "@heroui/toast";
 
 export interface IPropertyForm {
   numOfLivingRooms: string;
@@ -45,32 +47,26 @@ export interface IPropertyForm {
 }
 
 const FormSchema = z.object({
-  category: z.array(z.string()),
-  // rooms
-  numOfLivingRooms: z.string(),
-  numOfBedRooms: z.string(),
-  numOfKitchens: z.string(),
-  numOfBaths: z.string(),
-  // images
-  images: z.array(z.instanceof(File)),
-  // area and price
-  area: z.string(),
-  price: z.string(),
-  listingType: z.array(z.string()),
-  facilities: z.array(z.string()),
-  // address
-  city: z.string(),
-  district: z.string(),
-  road: z.string(),
-  street: z.string(),
-
-  lng: z.string(),
-  lat: z.string(),
-  floor: z.string(),
-  totalFloors: z.string(),
+  category: z.array(z.string()).min(1, { message: "Number of living room is required" }),
+  numOfLivingRooms: z.string().min(1, { message: "Number of living room is required" }),
+  numOfBedRooms: z.string().min(1, { message: "" }),
+  numOfKitchens: z.string().min(1, { message: "This field is required" }),
+  numOfBaths: z.string().min(1, { message: "This field is required" }),
+  images: z.array(z.instanceof(File)).min(1, { message: "At least one image is required" }),
+  area: z.string().min(1, { message: "This field is required" }),
+  price: z.string().min(1, { message: "This field is required" }),
+  listingType: z.array(z.string()).min(1, { message: "This field is required" }),
+  facilities: z.array(z.string()).min(1, { message: "This field is required" }),
+  city: z.string().min(1, { message: "This field is required" }),
+  district: z.string().min(1, { message: "This field is required" }),
+  road: z.string().min(1, { message: "This field is required" }),
+  street: z.string().min(1, { message: "This field is required" }),
+  lng: z.string().min(1, { message: "This field is required" }),
+  lat: z.string().min(1, { message: "This field is required" }),
+  floor: z.string().min(1, { message: "This field is required" }),
+  totalFloors: z.string().min(1, { message: "This field is required" }),
   description: z.array(z.string()),
 });
-
 const icons = [
   <MapPinHouse size={16} />,
   <Gem size={16} />,
@@ -80,6 +76,20 @@ const icons = [
   <Images size={16} />,
 ];
 
+const validationsForEachStep:
+  ("category" | "numOfLivingRooms" | "numOfBedRooms" |
+    "numOfKitchens" | "numOfBaths" | "images" | "area" |
+    "price" | "listingType" | "facilities" | "city" |
+    "district" | "road" | "street" | "description" | "floor" | "totalFloors")[][] = [
+    ["city", "district", "road", "street"],
+    ["area", "price", "listingType", "category"],
+    ["numOfLivingRooms", "numOfBedRooms", "numOfKitchens", "numOfBaths", "floor", "totalFloors"],
+    ["facilities"],
+    [],
+    ["images"],
+
+  ]
+
 function AddHome() {
   const [step, setStep] = useState(1);
   const [showConfetti, setShowConfetti] = useState(false);
@@ -87,6 +97,7 @@ function AddHome() {
   const TOTAL_STEPS = 6;
   const form = useForm<IPropertyForm>({
     resolver: zodResolver(FormSchema),
+    mode: "all",
     defaultValues: {
       numOfLivingRooms: "",
       numOfBedRooms: "",
@@ -113,20 +124,7 @@ function AddHome() {
   console.log("Errors", form.formState.errors);
   console.log("data", form.watch());
 
-  // const onSubmit: SubmitHandler<IPropertyForm> = async (data: IPropertyForm) => {
-  //   console.log(data);
-  //   try {
-  //     const formData = new FormData();
-  //     const entries = Object.entries(data)
-  //     entries.forEach(entry=> {
-  //       formData.append(entry[0], entry[1])
-  //     })
-  //     await axiosIns.post("/properties", formData, {headers: {"Content-Type": "multipart/form-data"}});
-  //     // form.reset();
-  //   } catch (error) {
-  //     console.error(error)
-  //   }
-  // };
+
 
   const onSubmit: SubmitHandler<IPropertyForm> = async (
     data: IPropertyForm
@@ -160,22 +158,43 @@ function AddHome() {
         },
       });
       setShowConfetti(true);
-      // Reset the form after successful submission
       // form.reset();
     } catch (error) {
       console.error("Error submitting form:", error);
+      addToast({
+        color: "danger",
+        title: "Form is not valid!",
+        timeout: 3000,
+        description: "Please fill all the required fields"
+      })
     }
   };
 
-  const nextStep = () => setStep((prev) => Math.min(prev + 1, TOTAL_STEPS));
+  const nextStep = async () => {
+    const isValid = await form.trigger(validationsForEachStep[step - 1])
+    console.log("form is valid ", isValid)
+    if (isValid) {
+      setStep((prev) => Math.min(prev + 1, TOTAL_STEPS))
+    };
+  }
   const prevStep = () => setStep((prev) => Math.max(prev - 1, 1));
 
   return (
     <div className="p-6 w-full">
       <Card className="grid grid-cols-12 max-w-5xl mx-auto rounded-lg shadow-lg overflow-hidden min-h-[80vh]">
-        <div className="md:col-span-8 col-span-12 p-8 content-center max-h-screen">
+        <div className="md:col-span-8 col-span-12 p-8  max-h-screen">
           {showConfetti ? (
-            <Confetti />
+            <>
+              <Confetti width={600}/> {/* Optional: Add confetti for celebration */}
+              <div className="success-message w-full h-full text-center flex flex-col items-center justify-center">
+                <div className="flex flex-col items-center justify-center">
+                  <CircleCheck size={82} className="text-danger-400"/>
+                  <h3 className="font-semibold text-2xl mb-4 mt-10">Success!</h3>
+                  <p>Thank you! Your property has been listed successfully.</p>
+                </div>
+                <div className="mt-10"><Button>Back to Profile</Button></div>
+              </div>
+            </>
           ) : (
             <>
               <CardHeader className="text-3xl font-bold ">
@@ -183,10 +202,10 @@ function AddHome() {
               </CardHeader>
               <div className="px-6">
                 <div className="w-full relative py-12 items-center flex justify-between">
-                  <div className="w-full h-2  absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gray-200">
+                  <div className="w-full h-1  absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gray-200">
                     <div>
                       <div
-                        className="h-2 bg-danger-500 transition-all duration-500"
+                        className="h-1 bg-danger-500 transition-all duration-500"
                         style={{
                           width: `${(100 / (TOTAL_STEPS - 1)) * (step - 1)}%`,
                         }}
@@ -198,12 +217,11 @@ function AddHome() {
                       isIconOnly
                       size="sm"
                       key={index}
-                      onPress={()=> setStep(index + 1)}
-                      className={`z-10 step w-6 h-6 rounded-full flex items-center justify-center ${
-                        step >= index + 1
-                          ? "bg-danger-500 text-white"
-                          : "bg-gray-200 text-danger-500"
-                      }`}
+                      onPress={() => setStep(index + 1)}
+                      className={`z-10 step w-6 h-6 rounded-full flex items-center justify-center ${step >= index + 1
+                        ? "bg-danger-500 text-white"
+                        : "bg-gray-200 text-danger-500"
+                        }`}
                     >
                       {icons[index]}
                     </Button>
@@ -250,7 +268,6 @@ function AddHome() {
                       type="button"
                       onPress={() => {
                         nextStep();
-                        // form.trigger();
                       }}
                     >
                       Next

@@ -3,12 +3,12 @@ const { heroui } = require('@heroui/theme');
 const plugin = require('tailwindcss/plugin')
 
 export default {
-	content: [
-		"./index.html",
-		"./src/**/*.{js,ts,jsx,tsx}",
-		"components/**/*.{ts,tsx}",
-		"./node_modules/@heroui/theme/dist/components/(autocomplete|avatar|button|card|chip|divider|drawer|dropdown|form|input|select|slider|ripple|spinner|listbox|popover|scroll-shadow|modal|menu).js"
-	],
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "components/**/*.{ts,tsx}",
+    "./node_modules/@heroui/theme/dist/components/(autocomplete|avatar|button|card|chip|divider|drawer|dropdown|form|input|select|slider|toast|ripple|spinner|listbox|popover|scroll-shadow|modal|menu).js"
+  ],
 	darkMode: ["class"],
 	theme: {
 		extend: {

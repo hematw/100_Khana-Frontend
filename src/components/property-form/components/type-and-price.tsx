@@ -54,6 +54,8 @@ function AreaAndPrice({ form }: { form: UseFormReturn<IPropertyForm> }) {
             placeholder="e.g. Rental"
             selectionMode="multiple"
             variant="flat"
+            isInvalid={!!form.formState.errors.listingType}
+            errorMessage={form.formState.errors.listingType?.message}
             defaultSelectedKeys={field.value}
             onSelectionChange={(keys) => {
               const selectedValues = Array.from(keys).map((key) => String(key));
@@ -90,6 +92,8 @@ function AreaAndPrice({ form }: { form: UseFormReturn<IPropertyForm> }) {
             // {...field}
             defaultSelectedKeys={field.value}
             placeholder="e.g. Apartment"
+            isInvalid={!!form.formState.errors.category}
+            errorMessage={form.formState.errors.category?.message}
             onSelectionChange={(keys) => {
               const selectedValues = Array.from(keys).map((key) => String(key));
               form.setValue("category", selectedValues);
@@ -124,6 +128,8 @@ function AreaAndPrice({ form }: { form: UseFormReturn<IPropertyForm> }) {
           type="number"
             label="Area (m2)"
             placeholder="e.g. 320"
+            isInvalid={!!form.formState.errors.area}
+            errorMessage={form.formState.errors.area?.message}
             {...field}
             value={field.value.toString()}
           />
@@ -137,6 +143,8 @@ function AreaAndPrice({ form }: { form: UseFormReturn<IPropertyForm> }) {
           type="number"
             label="Price (AFN)"
             placeholder="e.g. 1000"
+            isInvalid={!!form.formState.errors.price}
+            errorMessage={form.formState.errors.price?.message}
             {...field}
             value={field.value.toString()}
           />
