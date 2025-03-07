@@ -5,6 +5,8 @@ import axiosInstance from "../axios";
 import { Button } from "@heroui/button";
 import { AxiosError } from "axios";
 import { Input } from "@heroui/input";
+import { Card, CardBody, CardFooter, CardHeader } from "@heroui/card";
+import { addToast } from "@heroui/toast";
 
 interface ILoginForm {
   email: string;
@@ -17,44 +19,42 @@ const Login = () => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<ILoginForm>();
 
   const onSubmit: SubmitHandler<ILoginForm> = async (values) => {
     console.log(values);
     try {
-      const { data } = await axiosInstance.post("/auth/login", values, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const { data } = await axiosInstance.post("/auth/login", values);
       console.log(data);
-      localStorage.setItem("token", data.token);
-      navigate("/");
-
       setLoginError(data.message || "Login failed, try again!");
     } catch (error) {
-      if (error instanceof AxiosError) {
-        if (error.response) {
-          setLoginError(error.response.data.message);
-        } else if (error.request) {
-          setLoginError("Something went wrong! please try again");
-        }
-      }
-      console.log(error);
+      console.error(error);
+
+      addToast({ title: "Invalid credential", color: "danger", variant: "flat", description: "Oops! The email or password you entered doesn't match our records. Please try again." })
     }
   };
 
+  console.log(errors)
+  console.log(watch())
+
   return (
     <section className="h-screen flex justify-center items-center">
-      <div className="max-w-md w-[32rem] border-2 px-8 py-12 rounded-2xl shadow-xl">
-        <h1 className="text-center text-2xl font-bold">
+      <Card className="w-[420px] p-6">
+        <CardHeader className="text-center text-2xl font-bold">
           Login to <span className="text-gradient">100 Khana</span>
-        </h1>
+        </CardHeader>
+
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="flex flex-col mt-4 relative">
+          <CardBody className="space-y-8">
             <Input
+              isRequired
+              variant="faded"
               label="Email"
+              placeholder="ahmad@example.com"
+              isInvalid={!!errors.email}
+              errorMessage={errors.email?.message}
               {...register("email", {
                 required: "Email field is empty!",
                 pattern: {
@@ -62,33 +62,30 @@ const Login = () => {
                   message: "Provide a valid email!",
                 },
               })}
-              errorMessage={errors.email?.message}
             />
-            {!errors.email && loginError && (
-              <p className="error">{loginError}</p>
-            )}
-          </div>
 
-          <div className="flex flex-col mt-4 relative">
             <Input
+              isRequired
+              variant="faded"
               label="Password"
+              placeholder="Enter your password"
+              isInvalid={!!errors.password}
+              errorMessage={errors.password?.message} // Only pass FieldError
               {...register("password", {
                 required: "Password field is empty!",
               })}
-              errorMessage={errors.password?.message} // Only pass FieldError
             />
-            {!errors.password && loginError && (
-              <p className="error">{loginError}</p>
-            )}
-          </div>
+          </CardBody>
 
-          <div className="flex flex-col mt-8">
-            <Button>Login</Button>
-            <Button onPress={() => navigate("/register")}>Register</Button>
-          </div>
+          <CardFooter className="w-full">
+            <div className="flex flex-col w-full space-y-4">
+              <Button color="danger" type="submit">Login</Button>
+              <Button variant="bordered" onPress={() => navigate("/register")}>Register</Button>
+            </div>
+          </CardFooter>
         </form>
-      </div>
-    </section>
+      </Card>
+    </section >
   );
 };
 

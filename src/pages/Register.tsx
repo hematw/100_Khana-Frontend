@@ -5,11 +5,13 @@ import axiosIns from "../axios";
 import { AxiosError } from "axios";
 import { Button } from "@heroui/button";
 import { Input } from "@heroui/input";
+import { Card, CardBody, CardFooter, CardHeader } from "@heroui/card";
 
 interface RegisterFormData {
   username: string;
   email: string;
   password: string;
+  confirmPassword: string;
 }
 
 type ServerError = {
@@ -53,29 +55,29 @@ const Register = () => {
 
   return (
     <section className="h-screen flex justify-center items-center">
-      <div className="max-w-md w-[32rem] border-2 px-8 py-12 rounded-2xl shadow-xl">
-        <h1 className="text-center text-2xl font-bold">
-          Register to <span className="text-gradient">100 Khana</span>
-        </h1>
+      <Card className="w-[420px] p-6">
+        <CardHeader className="text-center text-2xl font-bold">
+          Register to <span className="text-gradient"> 100 Khana</span>
+        </CardHeader>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="flex flex-col relative mt-4">
+          <CardBody className="flex flex-col relative space-y-4 mt-4">
             <Input
-              placeholder="rezwan"
+              isRequired
+              variant="faded"
               label="Username"
-              {...register("username", { required: "Username is required!" })}
+              placeholder="@rezwan"
+              isInvalid={!!errors.username}
               errorMessage={errors.username?.message}
+              {...register("username", { required: "Username is required!" })}
             />
-            {!errors.username && serverError.duplicateField === "username" && (
-              <p className="error">
-                <span>{serverError.message}</span>
-              </p>
-            )}
-          </div>
 
-          <div className="flex flex-col relative mt-4">
             <Input
-              placeholder="rezwan@example.com"
+              isRequired
+              variant="faded"
               label="Email"
+              placeholder="rezwan@example.com"
+              isInvalid={!!errors.email}
+              errorMessage={errors.email?.message}
               {...register("email", {
                 required: "Email is required!",
                 pattern: {
@@ -83,32 +85,35 @@ const Register = () => {
                   message: "Provide a valid email!",
                 },
               })}
-              errorMessage={errors.email?.message}
             />
-            {!errors.email && serverError.duplicateField === "email" && (
-              <p className="error">
-                <span>{serverError.message}</span>
-              </p>
-            )}
-          </div>
-
-          <div className="flex flex-col relative mt-4">
             <Input
-              placeholder="Type your password"
+              isRequired
+              variant="faded"
               label="Password"
-              {...register("password", { required: "Password is required!" })}
+              placeholder="Enter your password"
+              isInvalid={!!errors.password}
               errorMessage={errors.password?.message}
+              {...register("password", { required: "Password is required!" })}
             />
-          </div>
+            <Input
+              isRequired
+              variant="faded"
+              label="Confirm Password"
+              placeholder="Enter your password confirm"
+              isInvalid={!!errors.confirmPassword}
+              errorMessage={errors.confirmPassword?.message}
+              {...register("confirmPassword", { required: "Confirm Password is required!" })}
+            />
+          </CardBody>
 
-          <div className="flex flex-col mt-8">
-            <Button variant="solid">Register</Button>
-            <Button variant="bordered" onPress={() => navigate("/login")}>
+          <CardFooter className="flex flex-col space-y-4">
+            <Button variant="solid" color="danger" type="submit" fullWidth>Register</Button>
+            <Button variant="bordered" onPress={() => navigate("/login")} fullWidth>
               Login
             </Button>
-          </div>
+          </CardFooter>
         </form>
-      </div>
+      </Card>
     </section>
   );
 };

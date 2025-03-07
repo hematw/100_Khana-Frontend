@@ -5,7 +5,7 @@ import {
   Login,
   NotFound,
   Profile,
-  ProtectedPages,
+  AccountLayout,
   Home,
 } from "./pages/index";
 
@@ -25,7 +25,7 @@ const routes: RouteObject[] = [
   },
   { path: "/properties", element: <AddHome />, },
   {
-    path: "/dashboard", element: <ProtectedPages />,
+    path: "/account", element: <AccountLayout />,
     children: [
       { path: "profile", element: <Profile />, },
       { path: "profile/homes", element: <Profile />, },

@@ -1,4 +1,5 @@
 import axiosIns from "@/axios";
+import { addToast } from "@heroui/toast";
 import { isAxiosError } from "axios";
 import { createContext, ReactNode, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -25,8 +26,12 @@ interface ILoginForm {
 const AuthContext: React.Context<{ login: (values: ILoginForm) => Promise<void>, logout: () => void, user: IUser }> = createContext();
 
 export default function AuthProvider({ children }: { children: ReactNode }) {
-    const [user, setUser] = useState<IUser>(JSON.parse(localStorage.getItem("user") as string) || null);
-    const [loginError, setLoginError] = useState("");
+    const [user, setUser] = useState<IUser>(() => {
+        const userData = localStorage.getItem("user")
+        if (userData) { return JSON.parse(userData) }
+        else { return null }
+    });
+    const [loginError, setLoginError] = useState();
 
     const navigate = useNavigate();
 
@@ -45,14 +50,11 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
             navigate("/");
 
         } catch (error) {
-            if (isAxiosError(error)) {
-                if (error.response) {
-                    setLoginError(error.response.data.message);
-                } else if (error.request) {
-                    setLoginError("Something went wrong! please try again");
-                }
+            if (error?.status == 401) {
+                console.error("Unauthorized")
+                addToast({ title: "Invalid credential", color: "danger" })
             }
-            console.log(error);
+            console.error(error);
         }
     }
 
