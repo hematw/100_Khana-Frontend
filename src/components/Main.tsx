@@ -71,12 +71,12 @@ export default function Main() {
         <div className="relative h-full w-full flex items-center justify-center">
           <div className="h-full w-full bg-black/50 dark:block absolute top-0 left-0 hidden z-0"></div>
           <div className="space-y-4 z-10">
-            <div className="relative backdrop-blur-sm  max-w-5xl  bg-gradient-to-b from-gray-50 to-transparent sm:mx-10 text-stone-800 text-center rounded-full border-2 border-gray-300/50">
-              <h1 className="text-4xl px-10 py-6 font-semibold font-clash">
+            <div className="relative   mx-6 max-w-5xl   sm:mx-10 text-stone-800 text-center ">
+              <h1 className="text-2xl backdrop-blur-sm bg-gradient-to-b from-gray-50 to-transparent rounded-full border-2 border-gray-300/50 md:text-4xl md:px-10 py-6 font-semibold font-clash">
                 Find Your Perfect Space with{" "}
                 <span className=" text-red-500">100-Khana </span>
               </h1>
-              <p className="absolute -top-6 left-1/2 -translate-x-1/2 -rotate-3 border-3 border-gray-400/50 bg-gradient-to-b from-slate-500 to-gray-700 px-6 py-2 text-white rounded-full">
+              <p className="w-full md:max-w-fit md:absolute -top-6 left-1/2 md:-translate-x-1/2 md:-rotate-3 border-3 border-gray-400/50 bg-gradient-to-b from-slate-500 to-gray-700 px-6 py-2 text-white rounded-full">
                 Buy, Rent, or Mortgage—All in One Place!
               </p>
             </div>
@@ -281,41 +281,33 @@ export default function Main() {
         <h2 className="text-3xl text-center font-semibold mb-12">
           What type of property are you looking for on 100-Khana?
         </h2>
-        <div className="flex justify-evenly gap-4">
-          <Card className="w-64 flex justify-center items-center flex-col overflow-hidden text-center">
+        <div className="flex justify-evenly gap-4 p-4 overflow-auto">
+          <Card className="min-w-48 md:min-w-64 flex justify-center items-center flex-col overflow-hidden text-center">
             <img src="/villa.jpg" alt="" className="w-64" />
-            <CardBody className="py-4 space-y-2">
-              <CardFooter className="gap-2 flex-col items-start">
-                <h4 className="text-2xl">2,394</h4>
-                <p>Villas</p>
-              </CardFooter>
+            <CardBody className="py-4 space-y-2 gap-2 flex-col items-start">
+              <h4 className="text-2xl">2,394</h4>
+              <p>Villas</p>
             </CardBody>
           </Card>
-          <Card className="w-64 flex justify-center items-center flex-col overflow-hidden text-center">
+          <Card className="min-w-48 md:min-w-64 flex justify-center items-center flex-col overflow-hidden text-center">
             <img src="/residential.jpg" alt="" className="w-64" />
-            <CardBody className="py-4 space-y-2">
-              <CardFooter className="gap-2 flex-col items-start">
-                <h4 className="text-2xl">13,902</h4>
-                <p>Residential Houses</p>
-              </CardFooter>
+            <CardBody className="py-4 space-y-2 gap-2 flex-col items-start">
+              <h4 className="text-2xl">13,902</h4>
+              <p>Residential Houses</p>
             </CardBody>
           </Card>
-          <Card className="w-64 flex justify-center items-center flex-col overflow-hidden text-center">
+          <Card className="min-w-48 md:min-w-64 flex justify-center items-center flex-col overflow-hidden text-center">
             <img src="/apartment.jpg" alt="" className="w-64" />
-            <CardBody className="py-4 space-y-2">
-              <CardFooter className="gap-2 flex-col items-start">
-                <h4 className="text-2xl">8,521</h4>
-                <p>Apartments</p>
-              </CardFooter>
+            <CardBody className="py-4 space-y-2 gap-2 flex-col items-start">
+              <h4 className="text-2xl">8,521</h4>
+              <p>Apartments</p>
             </CardBody>
           </Card>
-          <Card className="w-64 flex justify-center items-center flex-col overflow-hidden text-center">
+          <Card className="min-w-48 md:min-w-64 flex justify-center items-center flex-col overflow-hidden text-center">
             <img src="/business-center.jpg" alt="" className="w-64" />
-            <CardBody className="py-4 space-y-2">
-              <CardFooter className="gap-2 flex-col items-start">
-                <h4 className="text-2xl">6,200</h4>
-                <p>Commercial & Office</p>
-              </CardFooter>
+            <CardBody className="py-4 space-y-2 gap-2 flex-col items-start">
+              <h4 className="text-2xl">6,200</h4>
+              <p>Commercial & Office</p>
             </CardBody>
           </Card>
         </div>
@@ -324,8 +316,8 @@ export default function Main() {
         <h2 className="text-3xl text-center font-semibold mb-12">
           Everyone gives you advice, but 100-Khana stays with you!
         </h2>
-        <div className="flex justify-evenly gap-4">
-          <Card className="w-64 flex justify-center items-center flex-col overflow-hidden text-center">
+        <div className="flex justify-evenly gap-4 overflow-auto p-4">
+          <Card className="min-w-48 md:min-w-64 flex justify-center items-center flex-col overflow-hidden text-center">
             <CardBody className="py-4 space-y-2 h-full flex flex-col justify-between">
               <img src="/Connected world-bro.svg" alt="" className="w-60" />
               <CardFooter className="text-center">
@@ -333,7 +325,7 @@ export default function Main() {
               </CardFooter>
             </CardBody>
           </Card>
-          <Card className="w-64 flex justify-center items-center flex-col overflow-hidden text-center">
+          <Card className="min-w-48 md:min-w-64 flex justify-center items-center flex-col overflow-hidden text-center">
             <CardBody className="py-4 space-y-2 h-full flex flex-col justify-between">
               <img src="/Houses-pana.svg" alt="" className="w-60" />
               <CardFooter className="text-center">
@@ -341,7 +333,7 @@ export default function Main() {
               </CardFooter>
             </CardBody>
           </Card>
-          <Card className="w-64 flex justify-center items-center flex-col overflow-hidden text-center">
+          <Card className="min-w-48 md:min-w-64 flex justify-center items-center flex-col overflow-hidden text-center">
             <CardBody className="py-4 space-y-2 h-full flex flex-col justify-between">
               <img src="/Directions-bro.svg" alt="" className="w-60" />
               <CardFooter className="text-center">

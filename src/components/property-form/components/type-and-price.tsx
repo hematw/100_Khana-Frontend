@@ -19,6 +19,11 @@ const listingTypes: TListingType[] = [
   { label: "Mortgage", value: "mortgage" },
 ];
 
+async function getCategories(): Promise<TCategory[]> {
+  const { data } = await axiosIns.get("/categories");
+  return data.categories;
+}
+
 function AreaAndPrice({ form }: { form: UseFormReturn<IPropertyForm> }) {
   const {
     data: categories,
@@ -26,11 +31,8 @@ function AreaAndPrice({ form }: { form: UseFormReturn<IPropertyForm> }) {
     isLoading,
   } = useQuery({
     queryKey: ["categories"],
-    queryFn: async (): Promise<TCategory[]> => {
-      const { data } = await axiosIns.get("/categories");
-      console.log(data);
-      return data.categories;
-    },
+    staleTime: 1000 * 60 * 3,
+    queryFn: getCategories,
   });
 
   if (error) {
@@ -125,7 +127,7 @@ function AreaAndPrice({ form }: { form: UseFormReturn<IPropertyForm> }) {
         name="area"
         render={({ field }) => (
           <Input
-          type="number"
+            type="number"
             label="Area (m2)"
             placeholder="e.g. 320"
             isInvalid={!!form.formState.errors.area}
@@ -140,7 +142,7 @@ function AreaAndPrice({ form }: { form: UseFormReturn<IPropertyForm> }) {
         name="price"
         render={({ field }) => (
           <Input
-          type="number"
+            type="number"
             label="Price (AFN)"
             placeholder="e.g. 1000"
             isInvalid={!!form.formState.errors.price}

@@ -3,10 +3,12 @@ import NavDropdown from "./NavDropdown";
 import ThemeSwitch from "./theme-switch";
 import { useContext, useEffect, useState } from "react";
 import { ThemeContext } from "@/contexts/theme-context";
+import { Drawer,  } from "@heroui/drawer";
 
 export default function Header() {
   const { theme, toggleTheme } = useContext(ThemeContext);
   const [isScrolled, setIsScrolled] = useState(false);
+  const {} = useDisclosure()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -63,6 +65,9 @@ export default function Header() {
             Real Estate & Properties
           </NavLink>
         </div>
+        <Drawer>
+
+        </Drawer>
         <div className="flex items-center gap-2">
           <ThemeSwitch theme={theme} toggleTheme={toggleTheme} />
           <NavDropdown />

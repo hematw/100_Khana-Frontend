@@ -11,17 +11,17 @@ export default function Footer() {
         </h1>
       </div>
 
-      <div className="container mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-12 gap-8 mb-8">
+      <div className="max-w-7xl px-10 mx-auto">
+        <div className="grid grid-cols-6 lg:grid-cols-12 gap-8 mb-8">
           {/* Column 1 - Logo and Description */}
-          <div className="space-y-4 col-span-4">
+          <div className="space-y-4 col-span-6 md:col-span-4">
             <div className="mb-4">
               <img
                 src="/100khana.png"
                 alt="100-Khana Logo"
                 width={100}
                 // height={50}
-                className="object-contain"
+                className="object-contain mx-auto md:mx-0"
               />
             </div>
             <p className="text-sm leading-relaxed">
@@ -31,7 +31,7 @@ export default function Footer() {
               100-Khana is your bridge to quickly browse through thousands of
               listings and find your perfect property.
             </p>
-          </div>  
+          </div>
 
           {/* Column 2 - Services */}
           <div className="space-y-4 col-span-3">
@@ -76,7 +76,7 @@ export default function Footer() {
           </div>
 
           {/* Column 4 - Contact */}
-          <div className="space-y-4 col-span-2">
+          <div className="space-y-4 col-span-3 md:col-span-2">
             <h3 className="font-bold text-lg mb-4">Stay Connected</h3>
             <div className="flex flex-col gap-3">
               <Link to="#" className="flex items-center gap-2">
@@ -93,32 +93,32 @@ export default function Footer() {
               </Link>
             </div>
           </div>
+          <div className="grid grid-cols-1 col-span-3 md:grid-cols-3 lg:col-span-12 gap-4 mb-8">
+            <div className="space-y-2">
+              <h4 className="font-semibold">Kabul Real Estate</h4>
+              <Link to="#" className="text-red-600 flex items-center gap-1">
+                View More
+                <ChevronDown />
+              </Link>
+            </div>
+            <div className="space-y-2">
+              <h4 className="font-semibold">Badakhshan Real Estate</h4>
+              <Link to="#" className="text-red-600 flex items-center gap-1">
+                View More
+                <ChevronDown />
+              </Link>
+            </div>
+            <div className="space-y-2">
+              <h4 className="font-semibold">Herat Real Estate</h4>
+              <Link to="#" className="text-red-600 flex items-center gap-1">
+                View More
+                <ChevronDown />
+              </Link>
+            </div>
+          </div>
         </div>
 
         {/* Property Listings Section */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-          <div className="space-y-2">
-            <h4 className="font-semibold">Kabul Real Estate</h4>
-            <Link to="#" className="text-red-600 flex items-center gap-1">
-              View More
-              <ChevronDown />
-            </Link>
-          </div>
-          <div className="space-y-2">
-            <h4 className="font-semibold">Badakhshan Real Estate</h4>
-            <Link to="#" className="text-red-600 flex items-center gap-1">
-              View More
-              <ChevronDown />
-            </Link>
-          </div>
-          <div className="space-y-2">
-            <h4 className="font-semibold">Herat Real Estate</h4>
-            <Link to="#" className="text-red-600 flex items-center gap-1">
-              View More
-              <ChevronDown />
-            </Link>
-          </div>
-        </div>
 
         {/* Bottom Illustration */}
         <div className="relative  mt-12 mb-4">

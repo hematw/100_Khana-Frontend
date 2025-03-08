@@ -5,7 +5,9 @@ import axiosIns from "@/axios";
 import { useQuery } from "@tanstack/react-query";
 import { Autocomplete, AutocompleteItem } from "@heroui/autocomplete";
 import { Button } from "@heroui/button";
-import { MapPin } from "lucide-react";
+// import { MapPin } from "lucide-react";
+import { useState } from "react";
+import { addToast } from "@heroui/toast";
 // import { Combobox } from "@/components/ui/combo-box";
 
 type TDistrict = {
@@ -23,12 +25,15 @@ async function getCities(): Promise<TCity[]> {
   return response.data.cities;
 }
 
-async function getDistricts(): Promise<TDistrict[]> {
-  const response = await axiosIns.get("/districts");
+async function getDistricts(cityId: string): Promise<TDistrict[]> {
+  const response = await axiosIns.get("/districts", { params: { cityId } });
   return response.data.districts;
 }
 
 function Address({ form }: { form: UseFormReturn<IPropertyForm> }) {
+  const selectedCity = form.getValues("city");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const {
     isLoading: isLoadingCities,
     isError: isErrorCities,
@@ -36,6 +41,7 @@ function Address({ form }: { form: UseFormReturn<IPropertyForm> }) {
   } = useQuery({
     queryKey: ["cities"],
     queryFn: getCities,
+    staleTime: 1000 * 60 * 3,
   });
 
   const {
@@ -43,17 +49,31 @@ function Address({ form }: { form: UseFormReturn<IPropertyForm> }) {
     isError: isErrorDistricts,
     data: districts = [],
   } = useQuery({
-    queryKey: ["districts"],
-    queryFn: getDistricts,
+    queryKey: ["districts", selectedCity],
+    queryFn: () => getDistricts(selectedCity),
+    staleTime: 1000 * 60 * 3,
+    enabled: !!selectedCity,
   });
 
   const getGeolocation = () => {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((loc) => {
-        console.log(loc.coords);
-        form.setValue("lng", loc.coords.longitude.toString());
-        form.setValue("lat", loc.coords.latitude.toString());
-      });
+      setIsLoading(true);
+      try {
+        navigator.geolocation.getCurrentPosition((loc) => {
+          console.log(loc.coords);
+          form.setValue("lng", loc.coords.longitude.toString());
+          form.setValue("lat", loc.coords.latitude.toString());
+        });
+      } catch (error) {
+        console.error(error);
+        addToast({
+          color: "danger",
+          title: "Something went wrong!",
+          description: "Couldn't get location info.",
+        });
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -130,25 +150,29 @@ function Address({ form }: { form: UseFormReturn<IPropertyForm> }) {
         control={form.control}
         name="street" // ✅ Fixed duplicate field name
         render={({ field }) => (
-          <Input label="Street" placeholder="e.g. 4th street"
+          <Input
+            label="Street"
+            placeholder="e.g. 4th street"
             isInvalid={!!form.formState.errors.street}
-            errorMessage={form.formState.errors.street?.message} {...field} />
+            errorMessage={form.formState.errors.street?.message}
+            {...field}
+          />
         )}
       />
-      <div
-        className="col-span-2 flex flex-col"
-      >
+      <div className="col-span-2 flex flex-col">
         <Button
           onPress={getGeolocation}
-          startContent={<MapPin />}
+          // startContent={<MapPin />}
           size="lg"
           color="primary"
           variant="solid"
-
+          isLoading={isLoading}
         >
           Get current Location
         </Button>
-        <span className="text-xs text-danger-400 mt-2">{!!form.formState.errors.lat?.message && "Give us your location info"}</span>
+        <span className="text-xs text-danger-400 mt-2">
+          {!!form.formState.errors.lat?.message && "Give us your location info"}
+        </span>
       </div>
     </>
   );

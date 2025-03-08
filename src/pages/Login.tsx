@@ -1,12 +1,10 @@
-import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import axiosInstance from "../axios";
 import { Button } from "@heroui/button";
-import { AxiosError } from "axios";
 import { Input } from "@heroui/input";
 import { Card, CardBody, CardFooter, CardHeader } from "@heroui/card";
-import { addToast } from "@heroui/toast";
+import { useAuth } from "@/contexts/auth-context";
+import PassInput from "@/components/pass-input";
 
 interface ILoginForm {
   email: string;
@@ -15,29 +13,20 @@ interface ILoginForm {
 
 const Login = () => {
   const navigate = useNavigate();
-  const [loginError, setLoginError] = useState("");
   const {
+    watch,
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<ILoginForm>();
 
+  console.log(watch())
+  const { login } = useAuth();
+
   const onSubmit: SubmitHandler<ILoginForm> = async (values) => {
     console.log(values);
-    try {
-      const { data } = await axiosInstance.post("/auth/login", values);
-      console.log(data);
-      setLoginError(data.message || "Login failed, try again!");
-    } catch (error) {
-      console.error(error);
-
-      addToast({ title: "Invalid credential", color: "danger", variant: "flat", description: "Oops! The email or password you entered doesn't match our records. Please try again." })
-    }
+    await login(values);
   };
-
-  console.log(errors)
-  console.log(watch())
 
   return (
     <section className="h-screen flex justify-center items-center">
@@ -56,7 +45,7 @@ const Login = () => {
               isInvalid={!!errors.email}
               errorMessage={errors.email?.message}
               {...register("email", {
-                required: "Email field is empty!",
+                required: "Email is required!",
                 pattern: {
                   value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
                   message: "Provide a valid email!",
@@ -64,28 +53,30 @@ const Login = () => {
               })}
             />
 
-            <Input
+            <PassInput
               isRequired
               variant="faded"
               label="Password"
               placeholder="Enter your password"
               isInvalid={!!errors.password}
-              errorMessage={errors.password?.message} // Only pass FieldError
+              errorMessage={errors.password?.message}
               {...register("password", {
-                required: "Password field is empty!",
+                required: "Password is required!",
               })}
             />
           </CardBody>
 
-          <CardFooter className="w-full">
-            <div className="flex flex-col w-full space-y-4">
-              <Button color="danger" type="submit">Login</Button>
-              <Button variant="bordered" onPress={() => navigate("/register")}>Register</Button>
-            </div>
+          <CardFooter className="w-full flex flex-col items-stretch space-y-4">
+            <Button color="danger" type="submit">
+              Login
+            </Button>
+            <Button variant="bordered" onPress={() => navigate("/register")}>
+              Register
+            </Button>
           </CardFooter>
         </form>
       </Card>
-    </section >
+    </section>
   );
 };
 

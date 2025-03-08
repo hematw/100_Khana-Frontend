@@ -20,6 +20,11 @@ const icons = {
   Bath: <Bath />,
 };
 
+async function getFacilities(): Promise<TFacility[]> {
+  const { data } = await axiosIns.get("/facilities");
+  return data.facilities;
+}
+
 function Facilities({ form }: { form: UseFormReturn<IPropertyForm> }) {
   const {
     data: facilities,
@@ -27,11 +32,8 @@ function Facilities({ form }: { form: UseFormReturn<IPropertyForm> }) {
     isLoading,
   } = useQuery({
     queryKey: ["facilities"],
-    queryFn: async (): Promise<TFacility[]> => {
-      const { data } = await axiosIns.get("/facilities");
-      console.log(data);
-      return data.facilities;
-    },
+    queryFn: getFacilities,
+    staleTime: 1000 * 60 * 3,
   });
 
   if (error) {

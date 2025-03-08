@@ -1,4 +1,4 @@
-import { CircleUserRound, Menu } from "lucide-react";
+import { Menu } from "lucide-react";
 import { Link } from "react-router-dom";
 import {
   Dropdown,
@@ -13,10 +13,7 @@ export default function NavDropdown() {
   return (
     <Dropdown>
       <DropdownTrigger asChild>
-        <Button radius="full" aria-label="User menu">
-          <span className="bg-slate-500 rounded-full overflow-hidden text-white ring-slate-500 ring-2">
-            <CircleUserRound size={28} />
-          </span>
+        <Button isIconOnly  variant="light" aria-label="User menu">
           <Menu />
         </Button>
       </DropdownTrigger>
