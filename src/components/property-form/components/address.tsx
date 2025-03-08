@@ -5,7 +5,7 @@ import axiosIns from "@/axios";
 import { useQuery } from "@tanstack/react-query";
 import { Autocomplete, AutocompleteItem } from "@heroui/autocomplete";
 import { Button } from "@heroui/button";
-import { Locate } from "lucide-react";
+import { MapPin } from "lucide-react";
 // import { Combobox } from "@/components/ui/combo-box";
 
 type TDistrict = {
@@ -78,6 +78,7 @@ function Address({ form }: { form: UseFormReturn<IPropertyForm> }) {
             placeholder="e.g. Kabul..."
             isInvalid={!!form.formState.errors.city}
             errorMessage={form.formState.errors.city?.message}
+            defaultSelectedKey={field.value}
             onSelectionChange={(selectedCity) =>
               form.setValue("city", selectedCity?.toString() || "")
             }
@@ -99,6 +100,7 @@ function Address({ form }: { form: UseFormReturn<IPropertyForm> }) {
             placeholder="e.g. 12th district..."
             isInvalid={!!form.formState.errors.district}
             errorMessage={form.formState.errors.district?.message}
+            defaultSelectedKey={field.value}
             onSelectionChange={(selectedCity) =>
               form.setValue("district", selectedCity?.toString() || "")
             }
@@ -138,7 +140,7 @@ function Address({ form }: { form: UseFormReturn<IPropertyForm> }) {
       >
         <Button
           onPress={getGeolocation}
-          startContent={<Locate />}
+          startContent={<MapPin />}
           size="lg"
           color="primary"
           variant="solid"

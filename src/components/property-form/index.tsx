@@ -47,15 +47,23 @@ export interface IPropertyForm {
 }
 
 const FormSchema = z.object({
-  category: z.array(z.string()).min(1, { message: "Number of living room is required" }),
-  numOfLivingRooms: z.string().min(1, { message: "Number of living room is required" }),
+  category: z
+    .array(z.string())
+    .min(1, { message: "Number of living room is required" }),
+  numOfLivingRooms: z
+    .string()
+    .min(1, { message: "Number of living room is required" }),
   numOfBedRooms: z.string().min(1, { message: "" }),
   numOfKitchens: z.string().min(1, { message: "This field is required" }),
   numOfBaths: z.string().min(1, { message: "This field is required" }),
-  images: z.array(z.instanceof(File)).min(1, { message: "At least one image is required" }),
+  images: z
+    .array(z.instanceof(File))
+    .min(1, { message: "At least one image is required" }),
   area: z.string().min(1, { message: "This field is required" }),
   price: z.string().min(1, { message: "This field is required" }),
-  listingType: z.array(z.string()).min(1, { message: "This field is required" }),
+  listingType: z
+    .array(z.string())
+    .min(1, { message: "This field is required" }),
   facilities: z.array(z.string()).min(1, { message: "This field is required" }),
   city: z.string().min(1, { message: "This field is required" }),
   district: z.string().min(1, { message: "This field is required" }),
@@ -76,19 +84,41 @@ const icons = [
   <Images size={16} />,
 ];
 
-const validationsForEachStep:
-  ("category" | "numOfLivingRooms" | "numOfBedRooms" |
-    "numOfKitchens" | "numOfBaths" | "images" | "area" |
-    "price" | "listingType" | "facilities" | "city" |
-    "district" | "road" | "street" | "description" | "floor" | "totalFloors")[][] = [
-    ["city", "district", "road", "street"],
-    ["area", "price", "listingType", "category"],
-    ["numOfLivingRooms", "numOfBedRooms", "numOfKitchens", "numOfBaths", "floor", "totalFloors"],
-    ["facilities"],
-    [],
-    ["images"],
-
-  ]
+const validationsForEachStep: (
+  | "category"
+  | "numOfLivingRooms"
+  | "numOfBedRooms"
+  | "numOfKitchens"
+  | "numOfBaths"
+  | "images"
+  | "area"
+  | "price"
+  | "listingType"
+  | "facilities"
+  | "city"
+  | "lng"
+  | "lat"
+  | "district"
+  | "road"
+  | "street"
+  | "description"
+  | "floor"
+  | "totalFloors"
+)[][] = [
+  ["city", "district", "road", "street", "lng", "lat"],
+  ["area", "price", "listingType", "category"],
+  [
+    "numOfLivingRooms",
+    "numOfBedRooms",
+    "numOfKitchens",
+    "numOfBaths",
+    "floor",
+    "totalFloors",
+  ],
+  ["facilities"],
+  [],
+  ["images"],
+];
 
 function AddHome() {
   const [step, setStep] = useState(1);
@@ -123,8 +153,6 @@ function AddHome() {
 
   console.log("Errors", form.formState.errors);
   console.log("data", form.watch());
-
-
 
   const onSubmit: SubmitHandler<IPropertyForm> = async (
     data: IPropertyForm
@@ -165,18 +193,18 @@ function AddHome() {
         color: "danger",
         title: "Form is not valid!",
         timeout: 3000,
-        description: "Please fill all the required fields"
-      })
+        description: "Please fill all the required fields",
+      });
     }
   };
 
   const nextStep = async () => {
-    const isValid = await form.trigger(validationsForEachStep[step - 1])
-    console.log("form is valid ", isValid)
+    const isValid = await form.trigger(validationsForEachStep[step - 1]);
+    console.log("form is valid ", isValid);
     if (isValid) {
-      setStep((prev) => Math.min(prev + 1, TOTAL_STEPS))
-    };
-  }
+      setStep((prev) => Math.min(prev + 1, TOTAL_STEPS));
+    }
+  };
   const prevStep = () => setStep((prev) => Math.max(prev - 1, 1));
 
   return (
@@ -185,14 +213,19 @@ function AddHome() {
         <div className="md:col-span-8 col-span-12 p-8  max-h-screen">
           {showConfetti ? (
             <>
-              <Confetti width={600}/> {/* Optional: Add confetti for celebration */}
+              <Confetti width={600} />{" "}
+              {/* Optional: Add confetti for celebration */}
               <div className="success-message w-full h-full text-center flex flex-col items-center justify-center">
                 <div className="flex flex-col items-center justify-center">
-                  <CircleCheck size={82} className="text-danger-400"/>
-                  <h3 className="font-semibold text-2xl mb-4 mt-10">Success!</h3>
+                  <CircleCheck size={82} className="text-danger-400" />
+                  <h3 className="font-semibold text-2xl mb-4 mt-10">
+                    Success!
+                  </h3>
                   <p>Thank you! Your property has been listed successfully.</p>
                 </div>
-                <div className="mt-10"><Button>Back to Profile</Button></div>
+                <div className="mt-10">
+                  <Button>Back to Profile</Button>
+                </div>
               </div>
             </>
           ) : (
@@ -217,11 +250,20 @@ function AddHome() {
                       isIconOnly
                       size="sm"
                       key={index}
-                      onPress={() => setStep(index + 1)}
-                      className={`z-10 step w-6 h-6 rounded-full flex items-center justify-center ${step >= index + 1
-                        ? "bg-danger-500 text-white"
-                        : "bg-gray-200 text-danger-500"
-                        }`}
+                      onPress={async () => {
+                        const isValid = await form.trigger(
+                          validationsForEachStep[step - 1]
+                        );
+                        console.log("form is valid ", isValid);
+                        if (isValid) {
+                          setStep(index + 1);
+                        }
+                      }}
+                      className={`z-10 step w-6 h-6 rounded-full flex items-center justify-center ${
+                        step >= index + 1
+                          ? "bg-danger-500 text-white"
+                          : "bg-gray-200 text-danger-500"
+                      }`}
                     >
                       {icons[index]}
                     </Button>
