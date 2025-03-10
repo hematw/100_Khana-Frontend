@@ -11,7 +11,7 @@ export default function Footer() {
         </h1>
       </div>
 
-      <div className="max-w-7xl px-10 mx-auto">
+      <div className="max-w-7xl px-4 md:px-10 mx-auto">
         <div className="grid grid-cols-6 lg:grid-cols-12 gap-8 mb-8">
           {/* Column 1 - Logo and Description */}
           <div className="space-y-4 col-span-6 md:col-span-4">

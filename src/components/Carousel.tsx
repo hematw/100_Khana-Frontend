@@ -24,7 +24,7 @@ const Carousel = ({ className = '', images }: carouselProps) => {
         style={{ transform: `translateX(-${curr * 100}%)` }}
       >
         {images.map((img, index) => (
-          <img key={index} src={img} className="min-w-full rounded-xl" />
+          <img key={index} src={img} className="min-w-full rounded-xl aspect-square object-cover" />
         ))}
       </div>
       <div className="px-2 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-between opacity-0 w-full group-hover:opacity-100 duration-200">

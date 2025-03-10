@@ -25,6 +25,7 @@
     "@heroui/system": "^2.4.10",
     "@heroui/theme": "^2.4.9",
     "@heroui/toast": "^2.0.5",
+    "@heroui/use-disclosure": "^2.2.8",
     "@hookform/resolvers": "^3.10.0",
     "@radix-ui/react-avatar": "^1.1.2",
     "@radix-ui/react-collapsible": "^1.1.2",

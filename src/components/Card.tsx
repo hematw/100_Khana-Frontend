@@ -1,3 +1,4 @@
+import { Card } from "@heroui/card";
 import Carousel from "./Carousel";
 
 interface CardData {
@@ -5,22 +6,22 @@ interface CardData {
   address: string;
   price: number;
   status: string;
-  rating: number;
+  // rating: number;
   images: string[];
   className?: string
 }
 
-const Card: React.FC<CardData> = ({
+const PropertyCard: React.FC<CardData> = ({
   title,
   address,
   price,
   status,
-  rating,
+  // rating,
   images,
   className
 }) => {
   return (
-    <div className={`flex items-center justify-center flex-col w-full rounded-lg ${className}`}>
+    <Card className={`flex items-center justify-center flex-col w-full rounded-lg max-w-96 ${className}`}>
       <div className="relative">
         <Carousel images={images} />
         <div className="">
@@ -41,7 +42,7 @@ const Card: React.FC<CardData> = ({
             <span className="w-5 h-5">
               <img src="/icons/star.svg" alt="" />
             </span>
-            <span>{rating}</span>
+            <span>{3.6}</span>
           </div>
         </div>
         <p className="text-sm">{address}</p>
@@ -50,8 +51,8 @@ const Card: React.FC<CardData> = ({
           <span className="text-gray-600">AFN/month</span>
         </p>
       </div>
-    </div>
+    </Card>
   );
 };
 
-export default Card;
+export default PropertyCard;
