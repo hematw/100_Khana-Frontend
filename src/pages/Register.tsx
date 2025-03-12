@@ -1,15 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import axiosIns from "../axios";
-import { AxiosError } from "axios";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@heroui/button";
 import { Input } from "@heroui/input";
 import { Card, CardBody, CardFooter, CardHeader } from "@heroui/card";
+import PassInput from "@/components/pass-input";
+import { useAuth } from "@/contexts/auth-context";
 
-interface RegisterFormData {
+export interface IRegisterForm {
   username: string;
   email: string;
+  firstName: string;
+  lastName: string;
   password: string;
   confirmPassword: string;
 }
@@ -25,32 +27,27 @@ const Register = () => {
     message: "",
     duplicateField: "",
   });
-
+  
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<RegisterFormData>();
+  } = useForm<IRegisterForm>();
+  
+  const { isLoggedIn, signUp } = useAuth();
+  const location = useLocation();
 
-  const onSubmit: SubmitHandler<RegisterFormData> = async (values) => {
-    try {
-      const { data } = await axiosIns.post("/auth/register", values);
-      localStorage.setItem("token", data.token);
-      navigate("/");
-    } catch (error) {
-      console.error("Error", error);
-      if (error instanceof AxiosError) {
-        if (error.response) {
-          setServerError(error.response.data);
-          console.log(error.response.data);
-        } else if (error.request) {
-          setServerError({
-            message: "Something went wrong! please try again",
-            duplicateField: "",
-          });
-        }
-      }
+  useEffect(() => {
+    if (isLoggedIn) {
+      const previousPage = location.state?.from || "/";
+      navigate(previousPage, { replace: true });
     }
+  }, [isLoggedIn, navigate, location]);
+
+  if (isLoggedIn) return null;
+
+  const onSubmit: SubmitHandler<IRegisterForm> = async (values) => {
+    signUp(values);
   };
 
   return (
@@ -70,6 +67,24 @@ const Register = () => {
               errorMessage={errors.username?.message}
               {...register("username", { required: "Username is required!" })}
             />
+            <Input
+              isRequired
+              variant="faded"
+              label="First Name"
+              placeholder="eg. Ahmad"
+              isInvalid={!!errors.username}
+              errorMessage={errors.username?.message}
+              {...register("firstName", { required: "Username is required!" })}
+            />
+            <Input
+              isRequired
+              variant="faded"
+              label="Last Name"
+              placeholder="eg. Ahmadi"
+              isInvalid={!!errors.username}
+              errorMessage={errors.username?.message}
+              {...register("lastName", { required: "Username is required!" })}
+            />
 
             <Input
               isRequired
@@ -86,7 +101,7 @@ const Register = () => {
                 },
               })}
             />
-            <Input
+            <PassInput
               isRequired
               variant="faded"
               label="Password"
@@ -95,20 +110,28 @@ const Register = () => {
               errorMessage={errors.password?.message}
               {...register("password", { required: "Password is required!" })}
             />
-            <Input
+            <PassInput
               isRequired
               variant="faded"
               label="Confirm Password"
               placeholder="Enter your password confirm"
               isInvalid={!!errors.confirmPassword}
               errorMessage={errors.confirmPassword?.message}
-              {...register("confirmPassword", { required: "Confirm Password is required!" })}
+              {...register("confirmPassword", {
+                required: "Confirm Password is required!",
+              })}
             />
           </CardBody>
 
           <CardFooter className="flex flex-col space-y-4">
-            <Button variant="solid" color="danger" type="submit" fullWidth>Register</Button>
-            <Button variant="bordered" onPress={() => navigate("/login")} fullWidth>
+            <Button variant="solid" color="danger" type="submit" fullWidth>
+              Register
+            </Button>
+            <Button
+              variant="bordered"
+              onPress={() => navigate("/login")}
+              fullWidth
+            >
               Login
             </Button>
           </CardFooter>

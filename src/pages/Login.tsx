@@ -1,10 +1,11 @@
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@heroui/button";
 import { Input } from "@heroui/input";
 import { Card, CardBody, CardFooter, CardHeader } from "@heroui/card";
 import { useAuth } from "@/contexts/auth-context";
 import PassInput from "@/components/pass-input";
+import { useEffect } from "react";
 
 interface ILoginForm {
   email: string;
@@ -14,14 +15,22 @@ interface ILoginForm {
 const Login = () => {
   const navigate = useNavigate();
   const {
-    watch,
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<ILoginForm>();
 
-  console.log(watch())
-  const { login } = useAuth();
+  const { login, isLoggedIn } = useAuth();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      const previousPage = location.state?.from || "/";
+      navigate(previousPage, { replace: true });
+    }
+  }, [isLoggedIn, navigate, location]);
+
+  if (isLoggedIn) return null;
 
   const onSubmit: SubmitHandler<ILoginForm> = async (values) => {
     console.log(values);

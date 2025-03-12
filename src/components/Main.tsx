@@ -80,7 +80,7 @@ export default function Main() {
 
   return (
     <>
-      <section className="max-w-7xl xl:mx-auto md:mx-8 h-screen max-h-[686px] bg-[url(./landing-background.jpg)] bg-cover">
+      <section className="max-w-screen-2xl xl:mx-auto md:mx-8 h-screen md:max-h-[740px] xl:max-h-[800px] bg-[url(./landing-background.jpg)] bg-cover">
         <div className="relative h-full w-full flex items-center justify-center">
           <div className="h-full w-full bg-black/50 dark:block absolute top-0 left-0 hidden z-0"></div>
           <div className="space-y-4 z-10">
@@ -230,24 +230,25 @@ export default function Main() {
       </section>
 
       {searchQuery.data ? (
-        <div className="max-w-7xl xl:mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-10 place-items-center">
-          {searchQuery.data?.properties.map((property: IPropertyForm, index: number) => (
-            <PropertyCard
-              // title={property.title}
-              address={`${property.city.name}, ${property.district.name}, ${property.road}, ${property.street}`}
-              price={+property.price}
-              status={property.listingType.join(", ")}
-              // rating={property.rating}
-              images={property.images as string[]}
-              key={index}
-              className=" border-2"
-            />
-          ))}
+        <div className="max-w-screen-2xl xl:mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-10 place-items-center">
+          {searchQuery.data?.properties.map(
+            (property: IPropertyForm, index: number) => (
+              <PropertyCard
+                // title={property.title}
+                address={`${property.city.name}, ${property.district.name}, ${property.road}, ${property.street}`}
+                price={+property.price}
+                status={property.listingType.join(", ")}
+                // rating={property.rating}
+                images={property.images as string[]}
+                key={index}
+                className=" border-2"
+              />
+            )
+          )}
         </div>
       ) : (
         <>
-          {" "}
-          <section className="max-w-7xl mx-auto my-12 p-6">
+          <section className="max-w-screen-2xl mx-auto my-12 p-6">
             <h2 className="text-3xl text-center font-semibold py-6">
               How 100-Khana Helps You?
             </h2>
@@ -330,7 +331,7 @@ export default function Main() {
               </ShadowedCard>
             </div>
           </section>
-          <section className="max-w-7xl mx-auto my-12 p-6">
+          <section className="max-w-screen-2xl mx-auto my-12 p-6">
             <h2 className="text-3xl text-center font-semibold mb-12">
               What type of property are you looking for on 100-Khana?
             </h2>
@@ -365,7 +366,7 @@ export default function Main() {
               </Card>
             </div>
           </section>
-          <section className="max-w-7xl mx-auto my-12 p-6">
+          <section className="max-w-screen-2xl mx-auto my-12 p-6">
             <h2 className="text-3xl text-center font-semibold mb-12">
               Everyone gives you advice, but 100-Khana stays with you!
             </h2>

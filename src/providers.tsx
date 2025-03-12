@@ -12,7 +12,13 @@ function Providers({ children }: React.PropsWithChildren) {
     <ThemeProvider>
       <AuthProvider>
         <HeroUIProvider>
-          <ToastProvider placement="bottom-left" />
+          <ToastProvider
+            placement="top-center"
+            toastProps={{
+              variant: "solid",
+              timeout: 3000,
+            }}
+          />
           <QueryClientProvider client={queryClient}>
             {children}
           </QueryClientProvider>

@@ -1,4 +1,5 @@
 import axiosIns from "@/axios";
+import { IRegisterForm } from "@/pages/Register";
 import { addToast } from "@heroui/toast";
 import { isAxiosError } from "axios";
 import { createContext, ReactNode, useContext, useState } from "react";
@@ -37,11 +38,13 @@ const defaultUser: IUser = {
 
 const AuthContext = createContext<{
   login: (values: ILoginForm) => Promise<void>;
+  signUp: (values: IRegisterForm) => Promise<void>;
   logout: () => void;
   user: IUser;
   isLoggedIn: boolean;
 }>({
   login: () => Promise.resolve(),
+  signUp: () => Promise.resolve(),
   logout: () => {},
   user: defaultUser,
   isLoggedIn: false,
@@ -83,8 +86,25 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     }
   }
 
+  async function signUp(values: IRegisterForm) {
+    try {
+      const { data } = await axiosIns.post("/auth/register", values);
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.createdUser));
+      setUser(data.createdUser)
+      navigate("/");
+    } catch (error) {
+      console.error("Error", error);
+      addToast({
+        title: "Register Failed",
+        description: "Something went wrong, Please try again later.",
+        color: "danger"
+      })
+    }
+  }
+
   return (
-    <AuthContext.Provider value={{ login, logout, user, isLoggedIn }}>
+    <AuthContext.Provider value={{ login, logout, signUp, user, isLoggedIn }}>
       {children}
     </AuthContext.Provider>
   );

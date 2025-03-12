@@ -2,11 +2,11 @@ import { Button } from "@heroui/button";
 import { Input } from "@heroui/input";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 
-import { useState } from "react";
+import { memo, useState } from "react";
 
-export default function PassInput(props: React.PropsWithChildren) {
+function PassInput(props: any) {
   const [isVisible, setIsVisible] = useState(false);
-  console.log("isVisible changed", isVisible);
+
   return (
     <Input
       {...props}
@@ -27,3 +27,5 @@ export default function PassInput(props: React.PropsWithChildren) {
     />
   );
 }
+
+export default memo(PassInput);
