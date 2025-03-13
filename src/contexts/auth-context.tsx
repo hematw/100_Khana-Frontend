@@ -6,6 +6,7 @@ import { createContext, ReactNode, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export interface IUser {
+  _id: string;
   username: string;
   firstName: string;
   lastName: string;
@@ -24,6 +25,7 @@ interface ILoginForm {
 }
 
 const defaultUser: IUser = {
+  _id: "",
   username: "",
   firstName: "",
   lastName: "",

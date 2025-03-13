@@ -7,7 +7,7 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
     "components/**/*.{ts,tsx}",
-    "./node_modules/@heroui/theme/dist/components/(autocomplete|avatar|button|card|chip|divider|drawer|dropdown|form|input|select|slider|toast|ripple|spinner|listbox|popover|scroll-shadow|modal|menu).js"
+    "./node_modules/@heroui/theme/dist/components/(autocomplete|avatar|button|card|chip|divider|drawer|dropdown|form|input|listbox|select|skeleton|slider|toast|ripple|spinner|popover|scroll-shadow|modal|menu).js"
   ],
 	darkMode: ["class"],
 	theme: {

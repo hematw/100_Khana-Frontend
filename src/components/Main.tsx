@@ -18,6 +18,7 @@ import { useQuery } from "@tanstack/react-query";
 import axiosIns from "@/axios";
 import PropertyCard from "./Card";
 import { IPropertyForm } from "./property-form";
+import { saveOrRemoveToWishlist } from "@/lib/utils";
 
 // const images = [
 //   "/photos/1.jpg",
@@ -31,7 +32,7 @@ import { IPropertyForm } from "./property-form";
 //   title: "Luxury Apartment",
 //   address: "23 st, 12 district, Kabul",
 //   price: 5000,
-//   status: "Sell",
+//   listingType: "Sell",
 //   rating: 4.3,
 //   images,
 // };
@@ -52,6 +53,8 @@ const listingTypes: TListingType[] = [
   { label: "Sale", value: "sale" },
   { label: "Mortgage", value: "mortgage" },
 ];
+
+type PropertyWithID = IPropertyForm & Record<"_id", string>;
 
 export default function Main() {
   const form = useForm<ISearchForm>({
@@ -80,7 +83,7 @@ export default function Main() {
 
   return (
     <>
-      <section className="max-w-screen-2xl xl:mx-auto md:mx-8 h-screen md:max-h-[740px] xl:max-h-[800px] bg-[url(./landing-background.jpg)] bg-cover">
+      <section className="max-w-screen-2xl xl:mx-auto h-screen md:max-h-[740px] xl:max-h-[800px] bg-[url(./landing-background.jpg)] bg-cover">
         <div className="relative h-full w-full flex items-center justify-center">
           <div className="h-full w-full bg-black/50 dark:block absolute top-0 left-0 hidden z-0"></div>
           <div className="space-y-4 z-10">
@@ -89,7 +92,7 @@ export default function Main() {
                 Find Your Perfect Space with{" "}
                 <span className=" text-red-500">100-Khana </span>
               </h1>
-              <p className="w-full md:max-w-fit md:absolute -top-6 left-1/2 md:-translate-x-1/2 md:-rotate-3 border-3 border-gray-400/50 bg-gradient-to-b from-slate-500 to-gray-700 px-6 py-2 text-white rounded-full">
+              <p className="w-full md:max-w-fit md:absolute -top-12 left-1/2 md:-translate-x-1/2 md:-rotate-3 border-3 border-gray-400/50 bg-gradient-to-b from-slate-500 to-gray-700 px-6 py-2 text-white rounded-full">
                 Buy, Rent, or Mortgage—All in One Place!
               </p>
             </div>
@@ -230,22 +233,24 @@ export default function Main() {
       </section>
 
       {searchQuery.data ? (
-        <div className="max-w-screen-2xl xl:mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-10 place-items-center">
-          {searchQuery.data?.properties.map(
-            (property: IPropertyForm, index: number) => (
-              <PropertyCard
-                // title={property.title}
-                address={`${property.city.name}, ${property.district.name}, ${property.road}, ${property.street}`}
-                price={+property.price}
-                status={property.listingType.join(", ")}
-                // rating={property.rating}
-                images={property.images as string[]}
-                key={index}
-                className=" border-2"
-              />
-            )
-          )}
-        </div>
+        <section className="max-w-screen-2xl mx-auto my-12 p-6">
+          <div className="max-w-screen-2xl xl:mx-auto grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 gap-x-6 gap-y-10 place-items-center">
+            {searchQuery.data?.properties.map(
+              (property: PropertyWithID) => (
+                <PropertyCard
+                  key={property._id}
+                  // title={property.title}
+                  address={`${property.city.name}, ${property.district.name}, ${property.road}, ${property.street}`}
+                  price={+property.price}
+                  listingType={property.listingType.join(", ")}
+                  images={property.images as string[]}
+                  className="border border-gray-300 dark:border-gray-600"
+                  onAddWishlist={() => saveOrRemoveToWishlist<PropertyWithID>("wishlist", property)}
+                />
+              )
+            )}
+          </div>
+        </section>
       ) : (
         <>
           <section className="max-w-screen-2xl mx-auto my-12 p-6">

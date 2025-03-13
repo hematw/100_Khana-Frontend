@@ -27,7 +27,7 @@ export default function Header() {
   }, []);
 
   return (
-    <header className="fixed top-0 left-0 w-full z-50">
+    <header className={`fixed transition-all duration-150 top-0 left-0 w-full z-10`}>
       <nav
         className={`bg-white dark:bg-zinc-900 shadow-md rounded-lg  flex justify-between items-center w-full md:max-w-7xl md:my-4 px-6 py-4 lg:mx-auto md:mx-8 transition-all duration-200 ${
           isScrolled && "backdrop-blur-md bg-white/50 dark:bg-zinc-900/50"
@@ -40,7 +40,7 @@ export default function Header() {
           </a>
         </div>
         {/* Navigation Links */}
-        <div className="hidden md:flex justify-between space-x-2 rounded-full gap-4">
+        <div className="hidden md:flex justify-between items-center space-x-2 rounded-full gap-4">
           <NavLink
             to="/"
             className={`py-1 px-2 transition-all duration-200 hover:text-prime`}

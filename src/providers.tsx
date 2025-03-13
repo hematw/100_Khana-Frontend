@@ -13,9 +13,9 @@ function Providers({ children }: React.PropsWithChildren) {
       <AuthProvider>
         <HeroUIProvider>
           <ToastProvider
-            placement="top-center"
+            placement="bottom-left"
             toastProps={{
-              variant: "solid",
+              variant: "flat",
               timeout: 3000,
             }}
           />

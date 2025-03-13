@@ -1,43 +1,51 @@
 import { Card } from "@heroui/card";
 import Carousel from "./Carousel";
+import { Chip } from "@heroui/chip";
+import { Button } from "@heroui/button";
 
-interface CardData {
-  title: string;
+interface PropertyCardProps {
   address: string;
   price: number;
-  status: string;
+  listingType: string;
   // rating: number;
   images: string[];
-  className?: string
+  onAddWishlist?: () => void;
+  className?: string;
 }
 
-const PropertyCard: React.FC<CardData> = ({
-  title,
+const PropertyCard: React.FC<PropertyCardProps> = ({
   address,
   price,
-  status,
+  listingType,
   // rating,
   images,
-  className
+  className,
+  onAddWishlist,
 }) => {
   return (
-    <Card className={`flex items-center justify-center flex-col w-full rounded-lg max-w-96 ${className}`}>
+    <Card
+      className={`flex items-center justify-center flex-col w-full rounded-lg max-w-96 hover:shadow-xl hover:scale-105 ${className}`}
+    >
       <div className="relative">
         <Carousel images={images} />
         <div className="">
           <div className="absolute top-2 left-0 px-2 flex justify-between w-full">
-            <span className="bg-gray-100 px-2 py-1 rounded-3xl shadow-lg font-semibold">
-              {status}
-            </span>
-            <button className="rounded-full h-8 w-8 flex items-center justify-center">
+            <Chip className="px-2 py-1 rounded-3xl shadow-lg font-semibold">
+              {listingType}
+            </Chip>
+            <Button
+              isIconOnly
+              radius="full"
+              variant="light"
+              onPress={onAddWishlist}
+            >
               <img src="/icons/heart.svg" alt="" />
-            </button>
+            </Button>
           </div>
         </div>
       </div>
-      <div className="w-full">
+      <div className="w-full p-2">
         <div className="flex justify-between items-center">
-          <h2 className="text-lg font-semibold">{title}</h2>
           <div className="text-sm flex items-center justify-center">
             <span className="w-5 h-5">
               <img src="/icons/star.svg" alt="" />
@@ -48,7 +56,7 @@ const PropertyCard: React.FC<CardData> = ({
         <p className="text-sm">{address}</p>
         <p className="text-sm">
           <span className="font-semibold">{price} </span>
-          <span className="text-gray-600">AFN/month</span>
+          <span className="text-gray-600">AFN</span>
         </p>
       </div>
     </Card>

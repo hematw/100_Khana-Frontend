@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Button } from "@heroui/button";
 
 type carouselProps = {
-    images: string[],
-    className?: string
+  images: string[];
+  className?: string;
 };
 
-const Carousel = ({ className = '', images }: carouselProps) => {
+const Carousel = ({ className = "", images }: carouselProps) => {
   const [curr, setCurr] = useState(0);
 
   const goNext = () => {
@@ -24,22 +25,32 @@ const Carousel = ({ className = '', images }: carouselProps) => {
         style={{ transform: `translateX(-${curr * 100}%)` }}
       >
         {images.map((img, index) => (
-          <img key={index} src={img} className="min-w-full rounded-xl aspect-square object-cover" />
+          <img
+            key={index}
+            src={img}
+            className="min-w-full rounded-xl aspect-square object-cover"
+          />
         ))}
       </div>
       <div className="px-2 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-between opacity-0 w-full group-hover:opacity-100 duration-200">
-        <button
-          onClick={goPrev}
-          className="p-2 h-8 w-8 flex items-center bg-white rounded-full "
+        <Button
+          isIconOnly
+          size="sm"
+          radius="full"
+          variant="faded"
+          onPress={goPrev}
         >
           <ChevronLeft />
-        </button>
-        <button
-          onClick={goNext}
-          className="p-2 h-8 w-8 flex items-center bg-white rounded-full "
+        </Button>
+        <Button
+          isIconOnly
+          size="sm"
+          radius="full"
+          variant="faded"
+          onPress={goNext}
         >
           <ChevronRight />
-        </button>
+        </Button>
       </div>
       <div className="w-full ">
         <div className="m-auto flex justify-center absolute bottom-1 left-0 right-0 shadow-2xl">
