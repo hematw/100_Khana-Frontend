@@ -9,6 +9,7 @@ import { Button } from "@heroui/button";
 import { Menu } from "lucide-react";
 import { useAuth } from "@/contexts/auth-context";
 import { Avatar } from "@heroui/avatar";
+import { Tooltip } from "@heroui/tooltip";
 
 export default function Header() {
   const { theme, toggleTheme } = useContext(ThemeContext);
@@ -27,7 +28,9 @@ export default function Header() {
   }, []);
 
   return (
-    <header className={`fixed transition-all duration-150 top-0 left-0 w-full z-10`}>
+    <header
+      className={`fixed transition-all duration-150 top-0 left-0 w-full z-50`}
+    >
       <nav
         className={`bg-white dark:bg-zinc-900 shadow-md rounded-lg  flex justify-between items-center w-full md:max-w-7xl md:my-4 px-6 py-4 lg:mx-auto md:mx-8 transition-all duration-200 ${
           isScrolled && "backdrop-blur-md bg-white/50 dark:bg-zinc-900/50"
@@ -126,13 +129,15 @@ export default function Header() {
         <div className="flex items-center gap-4">
           <ThemeSwitch theme={theme} toggleTheme={toggleTheme} />
           {isLoggedIn ? (
-            <Link to="/account">
-              <Avatar
-                isBordered
-                color="danger"
-                src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=880&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-              />
-            </Link>
+            <Tooltip showArrow content="My Account">
+              <Link to="/account">
+                <Avatar
+                  isBordered
+                  color="danger"
+                  src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=880&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                />
+              </Link>
+            </Tooltip>
           ) : (
             <Link to="/login" className="text-danger-500">
               Login

@@ -1,5 +1,6 @@
 import React from "react";
 import { Camera } from "lucide-react";
+import {Image} from "@heroui/image"
 
 interface ProfileImageProps {
   image: string;
@@ -19,7 +20,7 @@ export default function ProfileImage({
   return (
     <div>
       <div className="w-44 h-44 relative">
-        <img
+        <Image
           src={image}
           alt={`${username}'s profile`}
           className="rounded-full overflow-hidden w-full h-full object-cover drop-shadow-2xl border-2 border-red-400"

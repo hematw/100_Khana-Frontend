@@ -1,6 +1,6 @@
 import axiosIns from "@/axios";
 import { useQuery } from "@tanstack/react-query";
-import PropertyCard from "../Card";
+import PropertyCard from "../house-card";
 import { IPropertyForm } from "../property-form";
 import { Link } from "react-router-dom";
 

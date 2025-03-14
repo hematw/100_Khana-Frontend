@@ -16,9 +16,10 @@ import {
 } from "@heroui/dropdown";
 import { useQuery } from "@tanstack/react-query";
 import axiosIns from "@/axios";
-import PropertyCard from "./Card";
+import PropertyCard from "./house-card";
 import { IPropertyForm } from "./property-form";
 import { saveOrRemoveToWishlist } from "@/lib/utils";
+import { Link } from "react-router-dom";
 
 // const images = [
 //   "/photos/1.jpg",
@@ -235,8 +236,8 @@ export default function Main() {
       {searchQuery.data ? (
         <section className="max-w-screen-2xl mx-auto my-12 p-6">
           <div className="max-w-screen-2xl xl:mx-auto grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 gap-x-6 gap-y-10 place-items-center">
-            {searchQuery.data?.properties.map(
-              (property: PropertyWithID) => (
+            {searchQuery.data?.properties.map((property: PropertyWithID) => (
+              <Link to={`./properties/${property._id}`}>
                 <PropertyCard
                   key={property._id}
                   // title={property.title}
@@ -245,10 +246,12 @@ export default function Main() {
                   listingType={property.listingType.join(", ")}
                   images={property.images as string[]}
                   className="border border-gray-300 dark:border-gray-600"
-                  onAddWishlist={() => saveOrRemoveToWishlist<PropertyWithID>("wishlist", property)}
+                  onAddWishlist={() =>
+                    saveOrRemoveToWishlist<PropertyWithID>("bookmarks", property)
+                  }
                 />
-              )
-            )}
+              </Link>
+            ))}
           </div>
         </section>
       ) : (

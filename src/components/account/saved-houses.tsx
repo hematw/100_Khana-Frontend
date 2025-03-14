@@ -1,4 +1,4 @@
-import PropertyCard from "../Card";
+import PropertyCard from "../house-card";
 import { IPropertyForm } from "../property-form";
 import { Link } from "react-router-dom";
 import { useState } from "react";
@@ -6,10 +6,10 @@ import { useState } from "react";
 type PropertyWithID = IPropertyForm & Record<"_id", string>;
 
 function SavedHouses() {
-const [houses, setHouses] = useState<PropertyWithID[]>(()=> {
-    const savedData = localStorage.getItem("wishlist");
-    return savedData ? JSON.parse(savedData) : [];
-});
+// const [houses, setHouses] = useState<PropertyWithID[]>(()=> {
+//     const savedData = localStorage.getItem("bookmarks");
+//     return savedData ? JSON.parse(savedData) : [];
+// });
 
 
   return (

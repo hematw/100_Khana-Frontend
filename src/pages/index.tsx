@@ -1,6 +1,6 @@
 import Register from "./Register";
 import Login from "./Login";
-import NotFound from "./NotFound";
+import NotFound from "./not-found";
 import Home from "./Home";
 import Dashboard from "./Dashboard";
 import Profile from "./Profile";
