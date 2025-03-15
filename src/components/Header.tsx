@@ -46,31 +46,31 @@ export default function Header() {
         <div className="hidden md:flex justify-between items-center space-x-2 rounded-full gap-4">
           <NavLink
             to="/"
-            className={`py-1 px-2 transition-all duration-200 hover:text-prime`}
+            className={`py-1 px-2 transition-all duration-200 hover:text-primary-500`}
           >
             Buy
           </NavLink>
           <NavLink
             to="/houses"
-            className={`py-1 px-2 transition-all duration-200 hover:text-prime `}
+            className={`py-1 px-2 transition-all duration-200 hover:text-primary-500 `}
           >
             Rent
           </NavLink>
           <NavLink
             to="/support"
-            className={`py-1 px-2 transition-all duration-200 hover:text-prime `}
+            className={`py-1 px-2 transition-all duration-200 hover:text-primary-500 `}
           >
             Mortgage
           </NavLink>
           <NavLink
             to="/support"
-            className={`py-1 px-2 transition-all duration-200 hover:text-prime `}
+            className={`py-1 px-2 transition-all duration-200 hover:text-primary-500 `}
           >
             Property Consultants
           </NavLink>
           <NavLink
             to="/support"
-            className={`py-1 px-2 transition-all duration-200 hover:text-prime `}
+            className={`py-1 px-2 transition-all duration-200 hover:text-primary-500 `}
           >
             Real Estate & Properties
           </NavLink>
@@ -133,13 +133,13 @@ export default function Header() {
               <Link to="/account">
                 <Avatar
                   isBordered
-                  color="danger"
+                  color="primary"
                   src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=880&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                 />
               </Link>
             </Tooltip>
           ) : (
-            <Link to="/login" className="text-danger-500">
+            <Link to="/login" className="text-primary-500">
               Login
             </Link>
           )}
@@ -147,7 +147,7 @@ export default function Header() {
           <Button
             onPress={() => navigate("/properties")}
             variant="bordered"
-            color="danger"
+            color="primary"
           >
             Add Property
           </Button>

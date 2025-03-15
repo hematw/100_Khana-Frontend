@@ -137,7 +137,7 @@ function FileUpload({ form }: { form: UseFormReturn<IPropertyForm> }) {
           </>
         )}
         <div className="col-span-3">
-          <span className="text-xs text-danger-400 mt-2">{form.formState.errors.images?.message}</span>
+          <span className="text-xs text-primary-400 mt-2">{form.formState.errors.images?.message}</span>
         </div>
 
       </div>

@@ -34,22 +34,20 @@ function HouseDetail() {
   return (
     <div className="max-w-screen-2xl md:px-8 mx-auto my-12 p-6">
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 relative">
-        <div className="md:col-span-2 md:row-span-2">
-          <Image
-            shadow="md"
+        <div className="md:col-span-2 md:row-span-2 min-w-full aspect-square">
+          <img
             src={data.images[0]}
             alt="Main"
-            className="w-full h-full object-cover rounded-lg"
+            className="w-full h-full shadow-md border object-cover rounded-lg aspect-square"
           />
         </div>
 
         {data.images.slice(1, 5).map((src, index) => (
-          <div key={index} className="hidden md:block">
-            <Image
-              shadow="md"
+          <div key={index} className="hidden md:block min-w-full aspect-square">
+            <img
               src={src}
               alt={`Gallery ${index + 1}`}
-              className="w-full h-full object-cover rounded-lg"
+              className="w-full h-full shadow-md border object-cover rounded-lg aspect-square"
             />
           </div>
         ))}
@@ -59,7 +57,7 @@ function HouseDetail() {
             startContent={<LayoutGrid />}
             variant="faded"
             radius="sm"
-            color="danger"
+            color="primary"
           >
             Show all photos
           </Button>
@@ -72,21 +70,21 @@ function HouseDetail() {
         <div className="grid grid-cols-2 gap-10">
           <div>
             <div className="flex gap-2 justify-around">
-              <Card className="flex-1 flex items-center justify-center gap-2 p-4">
+              <Card className="flex-1 flex items-center justify-center gap-2 p-4  border border-default-500">
                 <p className="flex items-center font-medium gap-2">
                   <Building />
                   <span>Floor</span>
                 </p>
                 <p className="text-default-500">{`${data?.floor} of ${data?.totalFloors}`}</p>
               </Card>
-              <Card className="flex-1 flex items-center justify-center gap-2 p-4">
+              <Card className="flex-1 flex items-center justify-center gap-2 p-4  border border-default-500">
                 <p className="flex items-center font-medium gap-2">
                   <Lamp />
                   <span>Bedrooms</span>
                 </p>
                 <p className="text-default-500">{`${data?.numOfBedRooms} rooms`}</p>
               </Card>
-              <Card className="flex-1 flex items-center justify-center gap-2 p-4">
+              <Card className="flex-1 flex items-center justify-center gap-2 p-4  border border-default-500">
                 <p className="flex items-center font-medium gap-2">
                   <Ruler />
                   <span>Area</span>
@@ -96,7 +94,7 @@ function HouseDetail() {
                 </p>
               </Card>
             </div>
-            <Card className="p-2 mt-2">
+            <Card className="p-2 mt-2 border border-default-500">
               <CardBody className="flex flex-row items-baseline gap-2">
                 <span className="font-semibold text-2xl">{`${data?.price}`} AFN </span>
                 <span className="text-default-500">
@@ -106,32 +104,32 @@ function HouseDetail() {
             </Card>
             <div className="mt-10">
               <h4 className="text-xl font-semibold mb-4">Facilities</h4>
-              <ul>
+              <ul className="space-y-2  text-default-500">
                 {data?.facilities.map((facility, index) => (
-                  <li key={facility._id} className="flex gap-2">
+                  <li key={facility._id} className="flex items-center gap-2">
                     {icons[facility.icon]}:<span>{facility.name}</span>
                   </li>
                 ))}
-                <li className="flex gap-2">
+                <li className="flex gap-2 items-center">
                   <Car />:<span>Free Parking</span>
                 </li>
-                <li className="flex gap-2">
+                <li className="flex gap-2 items-center">
                   <Car />:<span>Free Parking</span>
                 </li>
-                <li className="flex gap-2">
+                <li className="flex gap-2 items-center">
                   <Car />:<span>Free Parking</span>
                 </li>
-                <li className="flex gap-2">
+                <li className="flex gap-2 items-center">
                   <Car />:<span>Free Parking</span>
                 </li>
-                <li className="flex gap-2">
+                <li className="flex gap-2 items-center">
                   <Car />:<span>Free Parking</span>
                 </li>
               </ul>
             </div>
             <div className="mt-10">
               <h4 className="text-xl font-semibold mb-4">More Descriptions</h4>
-              <ul>
+              <ul className="space-y-2 text-default-500">
                 {data?.description.map((desc, index) => (
                   <li key={index} className="flex gap-2">
                     {desc}
@@ -146,7 +144,7 @@ function HouseDetail() {
             </div>
           </div>
           <div>
-            <Card className="flex flex-row items-center gap-2 p-4">
+            <Card className="flex flex-row items-center gap-2 p-4 border border-default-500">
               <div>
                 <Avatar
                   // size=""
@@ -157,7 +155,7 @@ function HouseDetail() {
               <div>
                 <h4>{`${data?.owner.firstName} ${data?.owner.lastName}`}</h4>
                 <p className="text-sm text-default-500">owner</p>
-                <Button variant="solid" color="danger" size="sm">
+                <Button variant="solid" color="primary" size="sm">
                   Contact Info
                 </Button>
               </div>

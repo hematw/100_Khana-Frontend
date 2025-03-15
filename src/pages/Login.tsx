@@ -76,7 +76,7 @@ const Login = () => {
           </CardBody>
 
           <CardFooter className="w-full flex flex-col items-stretch space-y-4">
-            <Button color="danger" type="submit">
+            <Button color="primary" type="submit">
               Login
             </Button>
             <Button variant="bordered" onPress={() => navigate("/register")}>

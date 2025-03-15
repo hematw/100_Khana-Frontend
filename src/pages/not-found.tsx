@@ -22,7 +22,7 @@ export default function NotFound() {
           <p className="mt-2">Requested page not found in our server</p>
           <Link
             to={previousPage}
-            className="bg-danger-400 w-full mt-6 px-4 py-2 text-white rounded-lg shadow-lg inline-block hover:drop-shadow-2xl duration-200"
+            className="bg-primary-400 w-full mt-6 px-4 py-2 text-white rounded-lg shadow-lg inline-block hover:drop-shadow-2xl duration-200"
           >
             Go to Home
           </Link>

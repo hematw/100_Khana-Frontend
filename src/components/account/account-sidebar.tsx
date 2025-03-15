@@ -17,8 +17,8 @@ export function AccountSidebar() {
           end
           to="/account"
           className={({ isActive }) =>
-            `flex items-center p-2 gap-4 hover:bg-danger-100 hover:text-danger-500 rounded-lg transition duration-250 ${
-              isActive ? "bg-danger-100 text-danger-500" : ""
+            `flex items-center p-2 gap-4 hover:bg-primary-100 hover:text-primary-500 rounded-lg transition duration-250 ${
+              isActive ? "bg-primary-100 text-primary-500" : ""
             }`
           }
         >
@@ -29,8 +29,8 @@ export function AccountSidebar() {
           end
           to="/properties"
           className={({ isActive }) =>
-            `flex items-center p-2 gap-4 hover:bg-danger-100 hover:text-danger-500 rounded-lg transition duration-250 ${
-              isActive ? "bg-danger-100 text-danger-500" : ""
+            `flex items-center p-2 gap-4 hover:bg-primary-100 hover:text-primary-500 rounded-lg transition duration-250 ${
+              isActive ? "bg-primary-100 text-primary-500" : ""
             }`
           }
         >
@@ -41,8 +41,8 @@ export function AccountSidebar() {
           end
           to="/account/my-houses"
           className={({ isActive }) =>
-            `flex items-center p-2 gap-4 hover:bg-danger-100 hover:text-danger-500 rounded-lg transition duration-250 ${
-              isActive ? "bg-danger-100 text-danger-500" : ""
+            `flex items-center p-2 gap-4 hover:bg-primary-100 hover:text-primary-500 rounded-lg transition duration-250 ${
+              isActive ? "bg-primary-100 text-primary-500" : ""
             }`
           }
         >
@@ -53,8 +53,8 @@ export function AccountSidebar() {
           end
           to="/account/saved-ads"
           className={({ isActive }) =>
-            `flex items-center p-2 gap-4 hover:bg-danger-100 hover:text-danger-500 rounded-lg transition duration-250 ${
-              isActive ? "bg-danger-100 text-danger-500" : ""
+            `flex items-center p-2 gap-4 hover:bg-primary-100 hover:text-primary-500 rounded-lg transition duration-250 ${
+              isActive ? "bg-primary-100 text-primary-500" : ""
             }`
           }
         >
@@ -65,8 +65,8 @@ export function AccountSidebar() {
           end
           to="/logout"
           className={({ isActive }) =>
-            `flex items-center p-2 gap-4 hover:bg-danger-100 hover:text-danger-500 rounded-lg transition duration-250 ${
-              isActive ? "bg-danger-100 text-danger-500" : ""
+            `flex items-center p-2 gap-4 hover:bg-primary-100 hover:text-primary-500 rounded-lg transition duration-250 ${
+              isActive ? "bg-primary-100 text-primary-500" : ""
             }`
           }
         >

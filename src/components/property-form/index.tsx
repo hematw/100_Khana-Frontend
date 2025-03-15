@@ -190,7 +190,7 @@ function AddHome() {
     } catch (error) {
       console.error("Error submitting form:", error);
       addToast({
-        color: "danger",
+        color: "primary",
         title: "Form is not valid!",
         timeout: 3000,
         description: "Please fill all the required fields",
@@ -217,7 +217,7 @@ function AddHome() {
               {/* Optional: Add confetti for celebration */}
               <div className="success-message w-full h-full text-center flex flex-col items-center justify-center">
                 <div className="flex flex-col items-center justify-center">
-                  <CircleCheck size={82} className="text-danger-400" />
+                  <CircleCheck size={82} className="text-primary-400" />
                   <h3 className="font-semibold text-2xl mb-4 mt-10">
                     Success!
                   </h3>
@@ -238,7 +238,7 @@ function AddHome() {
                   <div className="w-full h-1  absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gray-200">
                     <div>
                       <div
-                        className="h-1 bg-danger-500 transition-all duration-500"
+                        className="h-1 bg-primary-500 transition-all duration-500"
                         style={{
                           width: `${(100 / (TOTAL_STEPS - 1)) * (step - 1)}%`,
                         }}
@@ -261,8 +261,8 @@ function AddHome() {
                       }}
                       className={`z-10 step w-6 h-6 rounded-full flex items-center justify-center ${
                         step >= index + 1
-                          ? "bg-danger-500 text-white"
-                          : "bg-gray-200 text-danger-500"
+                          ? "bg-primary-500 text-white"
+                          : "bg-gray-200 text-primary-500"
                       }`}
                     >
                       {icons[index]}
@@ -315,7 +315,7 @@ function AddHome() {
                       Next
                     </Button>
                   ) : (
-                    <Button size="lg" type="submit" color="danger">
+                    <Button size="lg" type="submit" color="primary">
                       Submit
                     </Button>
                   )}

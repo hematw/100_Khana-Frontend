@@ -54,7 +54,7 @@ function Profile() {
     onError: (err) => {
       addToast({
         title: "Something went wrong",
-        color: "danger",
+        color: "primary",
         description: err.message,
       });
     },
@@ -222,10 +222,10 @@ function Profile() {
           />
         </div>
         <div className="flex justify-start space-x-4 mt-4">
-          <Button variant="bordered" color="danger">
+          <Button variant="bordered" color="primary">
             Cancel
           </Button>
-          <Button variant="solid" color="danger" type="submit">
+          <Button variant="solid" color="primary" type="submit">
             Save
           </Button>
         </div>

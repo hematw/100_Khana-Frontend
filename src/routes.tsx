@@ -9,6 +9,7 @@ import MyHouses from "./components/account/my-houses";
 import Profile from "./components/account/profile";
 import SavedHouses from "./components/account/saved-houses";
 import HouseDetail from "./pages/house-detail";
+import Properties from "./pages/properties";
 
 const routes: RouteObject[] = [
   { path: "/login", element: <Login /> },
@@ -21,7 +22,7 @@ const routes: RouteObject[] = [
       { index: true, element: <Home /> },
       {
         path: "properties",
-        element: <Home />,
+        element: <Properties />,
       },
       {
         path: "properties/:id",

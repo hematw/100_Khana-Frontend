@@ -82,7 +82,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     } catch (error) {
       if (isAxiosError(error) && error?.status == 401) {
         console.error("Unauthorized");
-        addToast({ title: "Invalid Credential", color: "danger" });
+        addToast({ title: "Invalid Credential", color: "primary" });
       }
       console.error(error);
     }
@@ -100,7 +100,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
       addToast({
         title: "Register Failed",
         description: "Something went wrong, Please try again later.",
-        color: "danger"
+        color: "primary"
       })
     }
   }

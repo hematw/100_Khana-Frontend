@@ -124,7 +124,7 @@ const Register = () => {
           </CardBody>
 
           <CardFooter className="flex flex-col space-y-4">
-            <Button variant="solid" color="danger" type="submit" fullWidth>
+            <Button variant="solid" color="primary" type="submit" fullWidth>
               Register
             </Button>
             <Button

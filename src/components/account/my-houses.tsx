@@ -57,7 +57,7 @@ function MyHouses() {
               <p className="text-gray-500">
                 You have not listed any houses yet.
               </p>
-              <Link to="/new-property" className="text-danger-400 underline hover:no-underline">
+              <Link to="/new-property" className="text-primary-400 underline hover:no-underline">
                 List now.
               </Link>
             </div>

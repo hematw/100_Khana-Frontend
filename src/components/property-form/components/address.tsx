@@ -15,7 +15,7 @@ type TDistrict = {
   _id: string;
 };
 
-type TCity = {
+export type TCity = {
   name: string;
   _id: string;
 };
@@ -67,7 +67,7 @@ function Address({ form }: { form: UseFormReturn<IPropertyForm> }) {
       } catch (error) {
         console.error(error);
         addToast({
-          color: "danger",
+          color: "primary",
           title: "Something went wrong!",
           description: "Couldn't get location info.",
         });
@@ -170,7 +170,7 @@ function Address({ form }: { form: UseFormReturn<IPropertyForm> }) {
         >
           Get current Location
         </Button>
-        <span className="text-xs text-danger-400 mt-2">
+        <span className="text-xs text-primary-400 mt-2">
           {!!form.formState.errors.lat?.message && "Give us your location info"}
         </span>
       </div>

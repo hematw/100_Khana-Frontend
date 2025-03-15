@@ -6,10 +6,10 @@ import { useState } from "react";
 type PropertyWithID = IPropertyForm & Record<"_id", string>;
 
 function SavedHouses() {
-// const [houses, setHouses] = useState<PropertyWithID[]>(()=> {
-//     const savedData = localStorage.getItem("bookmarks");
-//     return savedData ? JSON.parse(savedData) : [];
-// });
+const [houses, setHouses] = useState<PropertyWithID[]>(()=> {
+    const savedData = localStorage.getItem("bookmarks");
+    return savedData ? JSON.parse(savedData) : [];
+});
 
 
   return (
@@ -36,7 +36,7 @@ function SavedHouses() {
             </div>
             <div>
               <h3 className="text-2xl font-semibold">You didn't save any houses</h3>
-              <Link to="/new-property" className="text-danger-400 underline hover:no-underline">
+              <Link to="/new-property" className="text-primary-400 underline hover:no-underline">
                 Find a place
               </Link>
             </div>
