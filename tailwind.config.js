@@ -31,15 +31,7 @@ export default {
 			}
 		}
 	},
-	plugins: [plugin(function ({ matchUtilities, theme }) {
-		matchUtilities(
-			{
-				'text-shadow': (value) => ({
-					textShadow: value,
-				}),
-			}, { values: theme('textShadow') }
-		)
-	}), require("tailwindcss-animate"), heroui()],
+	plugins: [require("tailwindcss-animate"), heroui()],
 }
 
 // #EEEEEE #D84040 #8E1616 #1D1616
