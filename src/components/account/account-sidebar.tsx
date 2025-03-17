@@ -2,17 +2,16 @@ import { Avatar } from "@heroui/avatar";
 import { Card } from "@heroui/card";
 import { Bookmark, LogOut, UserPen, CirclePlus, House } from "lucide-react";
 import { NavLink } from "react-router-dom";
-import { Listbox, ListboxItem } from "@heroui/listbox";
 
 export function AccountSidebar() {
   return (
     <div className="w-72 rounded-lg space-y-4">
-      <Card className="p-4 text-center">
+      <Card className="p-4 text-center border border-default-300">
         <Avatar className="w-16 h-16 mx-auto" />
         <p className="text-lg font-semibold">Ahmad</p>
         <p className="text-sm text-gray-500">User</p>
       </Card>
-      <Card className="p-4 space-y-2">
+      <Card className="p-4 space-y-2 border border-default-300">
         <NavLink
           end
           to="/account"
@@ -27,7 +26,7 @@ export function AccountSidebar() {
         </NavLink>
         <NavLink
           end
-          to="/properties"
+          to="/new-property"
           className={({ isActive }) =>
             `flex items-center p-2 gap-4 hover:bg-primary-100 hover:text-primary-500 rounded-lg transition duration-250 ${
               isActive ? "bg-primary-100 text-primary-500" : ""

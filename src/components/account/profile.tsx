@@ -112,8 +112,8 @@ function Profile() {
   return isLoading ? (
     <EditInfoSkeleton />
   ) : (
-    <Card className="p-6 w-full max-w-3xl border rounded-lg shadow-md bg-white space-y-6">
-      <h2 className="text-xl font-bold text-gray-800">Edit Info</h2>
+    <Card className="p-6 w-full max-w-3xl border border-default-300 rounded-lg shadow-md space-y-6">
+      <h2 className="text-xl font-bold ">Edit Info</h2>
       <div className="relative w-24 h-24 mx-auto">
         <Avatar
           className="w-24 h-24"
