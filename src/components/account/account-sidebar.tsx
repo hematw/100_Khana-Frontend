@@ -1,9 +1,12 @@
+import { useAuth } from "@/contexts/auth-context";
 import { Avatar } from "@heroui/avatar";
+import { Button } from "@heroui/button";
 import { Card } from "@heroui/card";
 import { Bookmark, LogOut, UserPen, CirclePlus, House } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
 export function AccountSidebar() {
+  const { logout } = useAuth();
   return (
     <div className="w-72 rounded-lg space-y-4">
       <Card className="p-4 text-center border border-default-300">
@@ -60,18 +63,21 @@ export function AccountSidebar() {
           <Bookmark size={16} />
           <span>Saved Properties</span>
         </NavLink>
-        <NavLink
-          end
-          to="/logout"
-          className={({ isActive }) =>
-            `flex items-center p-2 gap-4 hover:bg-primary-100 hover:text-primary-500 rounded-lg transition duration-250 ${
-              isActive ? "bg-primary-100 text-primary-500" : ""
-            }`
-          }
+        <Button
+          onPress={logout}
+          // end
+          // to="/logout"
+          // className={({ isActive }) =>
+          //   `flex items-center p-2 gap-4 hover:bg-primary-100 hover:text-primary-500 rounded-lg transition duration-250 ${
+          //     isActive ? "bg-primary-100 text-primary-500" : ""
+          //   }`
+          // }
+          className={`flex items-center p-2 gap-4 hover:bg-primary-100 hover:text-primary-500 rounded-lg transition duration-250 bg-red-100 text-red-500
+            `}
         >
           <LogOut size={16} />
           <span>Logout</span>
-        </NavLink>
+        </Button>
       </Card>
     </div>
   );

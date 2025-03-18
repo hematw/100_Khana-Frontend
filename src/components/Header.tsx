@@ -45,19 +45,19 @@ export default function Header() {
         {/* Navigation Links */}
         <div className="hidden md:flex justify-between items-center space-x-2 rounded-full gap-4">
           <NavLink
-            to="/"
+            to="/properties?listingType=sale"
             className={`py-1 px-2 transition-all duration-200 hover:text-primary-500`}
           >
             Buy
           </NavLink>
           <NavLink
-            to="/houses"
+            to="/properties?listingType=rental"
             className={`py-1 px-2 transition-all duration-200 hover:text-primary-500 `}
           >
             Rent
           </NavLink>
           <NavLink
-            to="/support"
+            to="/properties?listingType=mortgage"
             className={`py-1 px-2 transition-all duration-200 hover:text-primary-500 `}
           >
             Mortgage

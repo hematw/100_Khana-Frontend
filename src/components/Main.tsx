@@ -37,22 +37,22 @@ import { TCity } from "./property-form/components/address";
 //   images,
 // };
 
-interface ISearchForm {
+export interface ISearchForm {
   listingType: string[];
   city: string;
-  min_price: number;
-  max_price: number;
+  min_price: string;
+  max_price: string;
 }
 
 type TListingType = { label: string; value: string };
 
-const listingTypes: TListingType[] = [
+export const listingTypes: TListingType[] = [
   { label: "Rental", value: "rental" },
   { label: "Sale", value: "sale" },
   { label: "Mortgage", value: "mortgage" },
 ];
 
-async function getCities(): Promise<TCity[]> {
+export async function getCities(): Promise<TCity[]> {
   const response = await axiosIns.get("/cities");
   return response.data.cities;
 }
@@ -62,8 +62,8 @@ export default function Main() {
     defaultValues: {
       listingType: [],
       city: "",
-      min_price: 1000,
-      max_price: 543210,
+      min_price: "",
+      max_price: "",
     },
   });
 
@@ -180,7 +180,7 @@ export default function Main() {
                   className="z-30 h-12 mx-1 dark:bg-gray-600"
                 />
                 <div className="flex-1">
-                  <Dropdown backdrop="blur" closeOnSelect={false}>
+                  {/* <Dropdown backdrop="blur" closeOnSelect={false}>
                     <DropdownTrigger className="w-full text-left block bg-gray-100 hover:bg-gray-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 rounded-md shadow-sm">
                       <Input
                         isReadOnly
@@ -235,7 +235,37 @@ export default function Main() {
                         />
                       </DropdownItem>
                     </DropdownMenu>
-                  </Dropdown>
+                  </Dropdown> */}
+                  <Select
+                    label="Price Range"
+                    placeholder="e.g. 5K - 10K..."
+                    size="lg"
+                    radius="sm"
+                    color="primary"
+                    variant="faded"
+                    items={[
+                      { label: "free - 1K", value: [0, 1000] },
+                      { label: "5K - 10K", value: [5000, 10000] },
+                      { label: "10K - 20K", value: [10000, 20000] },
+                      { label: "20K - 50K", value: [20000, 50000] },
+                      { label: "50K - 100K", value: [50000, 100000] },
+                      { label: "100K - 1M", value: [100000, 1000000] },
+                    ]}
+                    // value={[form.watch("min_price"), form.watch("max_price")]}
+                    onChange={({ target: { value } }) => {
+                      const [minPrice, maxPrice] = value.split(",");
+                      form.setValue("min_price", minPrice || "");
+                      form.setValue("max_price", maxPrice || "");
+                    }}
+                  >
+                    {(item) => (
+                      <SelectItem key={item.value} textValue={item.value}>
+                        <div className="flex gap-2 items-center">
+                          <div className="flex flex-col">{item.label}</div>
+                        </div>
+                      </SelectItem>
+                    )}
+                  </Select>
                 </div>
                 <Divider
                   orientation="vertical"

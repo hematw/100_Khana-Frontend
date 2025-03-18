@@ -19,7 +19,7 @@ const listingTypes: TListingType[] = [
   { label: "Mortgage", value: "mortgage" },
 ];
 
-async function getCategories(): Promise<TCategory[]> {
+export async function getCategories(): Promise<TCategory[]> {
   const { data } = await axiosIns.get("/categories");
   return data.categories;
 }

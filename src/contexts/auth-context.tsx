@@ -53,7 +53,7 @@ const AuthContext = createContext<{
 });
 
 export default function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<IUser>(() => {
+  const [user, setUser] = useState<IUser | null>(() => {
     const userData = localStorage.getItem("user");
     if (userData) {
       return JSON.parse(userData);
@@ -68,6 +68,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   async function logout() {
     localStorage.removeItem("user");
     localStorage.removeItem("token");
+    setUser(null);
   }
 
   async function login(values: ILoginForm) {

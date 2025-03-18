@@ -8,7 +8,7 @@ function PublicLayout() {
         <>
             <Header />
             {/* <Navbar /> */}
-            <main className="min-h-[540px] pt-40">
+            <main className="min-h-[540px] pt-32">
                 <Outlet />
             </main>
             <Footer />
