@@ -23,28 +23,7 @@ import {
   WavesLadder,
 } from "lucide-react";
 import { addToast } from "@heroui/toast";
-
-export interface IPropertyForm {
-  numOfLivingRooms: string;
-  numOfBedRooms: string;
-  numOfKitchens: string;
-  numOfBaths: string;
-  images: (string | File)[];
-  price: string;
-  area: string;
-  category: string[];
-  facilities: string[];
-  listingType: string[];
-  city: string;
-  district: string;
-  road: string;
-  street: string;
-  lng: string;
-  lat: string;
-  floor: string;
-  totalFloors: string;
-  description: string[];
-}
+import { IPropertyForm } from "@/types";
 
 const FormSchema = z.object({
   category: z

@@ -11,19 +11,9 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import axiosIns from "@/axios";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useAuth } from "@/contexts/auth-context";
+import { IProfile } from "@/types";
 
-interface IProfile {
-  firstName?: string;
-  lastName?: string;
-  email?: string;
-  phone?: string;
-  govId?: number;
-  profile?: string;
-  background?: string;
-  bio?: string;
-  userId?: string;
-  username?: string;
-}
+
 
 async function getProfile(id: string) {
   const res = await axiosIns.get(`/users/${id}`, { withCredentials: true });

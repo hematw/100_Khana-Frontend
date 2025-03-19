@@ -1,9 +1,5 @@
-interface HomeCardProps {
-  image: string;
-  title: string;
-  description: string;
-  className?: string;
-}
+import { HomeCardProps } from "@/types";
+
 
 const HomeCard = ({
   className = "",

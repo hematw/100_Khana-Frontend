@@ -1,28 +1,12 @@
 import axiosIns from "@/axios";
 import { IRegisterForm } from "@/pages/Register";
+import { ILoginForm, IUser } from "@/types";
 import { addToast } from "@heroui/toast";
 import { isAxiosError } from "axios";
 import { createContext, ReactNode, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export interface IUser {
-  _id: string;
-  username: string;
-  firstName: string;
-  lastName: string;
-  phone: string;
-  govId: string;
-  profile: string;
-  background: string;
-  email: string;
-  password: string;
-  bio: string;
-}
 
-interface ILoginForm {
-  email: string;
-  password: string;
-}
 
 const defaultUser: IUser = {
   _id: "",

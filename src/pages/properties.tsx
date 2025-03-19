@@ -1,19 +1,17 @@
 import axiosIns from "@/axios";
 import PropertyCard from "@/components/house-card";
-import { getCities, ISearchForm, listingTypes } from "@/components/Main";
-import { IPropertyForm } from "@/components/property-form";
-import { getCategories } from "@/components/property-form/components/type-and-price";
+import { listingTypes } from "@/components/Main";
+import { ISearchForm, IPropertyForm } from "@/types";
+import { getCities, getCategories } from "@/api";
 import { saveOrRemoveToWishlist } from "@/lib/utils";
 import { Autocomplete, AutocompleteItem } from "@heroui/autocomplete";
 import { Button } from "@heroui/button";
 import { Form } from "@heroui/form";
 import { Input } from "@heroui/input";
 import { Select, SelectItem } from "@heroui/select";
-import { Slider } from "@heroui/slider";
 import { useQuery } from "@tanstack/react-query";
 import { Controller, useForm } from "react-hook-form";
 import { Link, useLocation, useSearchParams } from "react-router-dom";
-import { number } from "zod";
 
 type PropertyWithID = IPropertyForm & Record<"_id", string>;
 type TAdvanceSearch = ISearchForm & {
@@ -73,7 +71,7 @@ function Properties() {
           })}
           className="mx-10"
         >
-          <div className="min-w-full items-center bg-white dark:bg-zinc-800 flex gap-2 rounded-sm p-2 ">
+          <div className="min-w-full items-center flex gap-2 rounded-sm p-2 ">
             <Controller
               control={form.control}
               name="city"
@@ -142,8 +140,8 @@ function Properties() {
               onChange={({ target: { value } }) => {
                 console.log(value);
                 const [minPrice, maxPrice] = value.split(",");
-                form.setValue("min_price", minPrice||"");
-                form.setValue("max_price", maxPrice||"");
+                form.setValue("min_price", minPrice || "");
+                form.setValue("max_price", maxPrice || "");
               }}
             >
               {(item) => (
@@ -219,16 +217,16 @@ function Properties() {
           </div>
         </Form>
       </div>
-      <div className="max-w-screen-2xl xl:mx-auto grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 gap-x-6 gap-y-10 place-items-center">
+      <div className="max-w-screen-2xl xl:mx-auto grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-6 gap-y-10 items-stretch place-items-center py-6">
         {data?.properties.length ? (
           data?.properties.map((property: PropertyWithID) => (
-            <Link to={`./properties/${property._id}`} key={property._id}>
+            <Link to={`/properties/${property._id}`} key={property._id}>
               <PropertyCard
                 address={`${property.city.name}, ${property.district.name}, ${property.road}, ${property.street}`}
                 price={+property.price}
                 listingType={property.listingType.join(", ")}
                 images={property.images as string[]}
-                className="border border-gray-300 dark:border-gray-600"
+                className="border border-gray-300 dark:border-gray-600 hover:shadow-xl hover:scale-[1.02] min-h-full justify-between"
                 onAddWishlist={() =>
                   saveOrRemoveToWishlist<PropertyWithID>("bookmarks", property)
                 }
@@ -243,7 +241,7 @@ function Properties() {
               className="mx-auto"
             />
             <p className="text-center font-semibold font-clash text-2xl">
-              No Properties for this search
+              We couldn't find any properties
             </p>
             <p className="text-center">Try a different search</p>
           </div>

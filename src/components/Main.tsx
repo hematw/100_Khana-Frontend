@@ -1,24 +1,19 @@
-import { ArrowDown } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { Controller, useForm } from "react-hook-form";
-import { Input } from "@heroui/input";
+// import { Input } from "@heroui/input";
 import { Divider } from "@heroui/divider";
 import ShadowedCard from "./cards/ShadowedCard";
 import { Card, CardBody, CardFooter, CardHeader } from "@heroui/card";
 import { Button } from "@heroui/button";
 import { Select, SelectItem } from "@heroui/select";
 import { Form } from "@heroui/form";
-import { Slider } from "@heroui/slider";
-import {
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownTrigger,
-} from "@heroui/dropdown";
 import { useQuery } from "@tanstack/react-query";
 import axiosIns from "@/axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Autocomplete, AutocompleteItem } from "@heroui/autocomplete";
 import { TCity } from "./property-form/components/address";
+import { getCities } from "@/api";
+import { TListingType } from "@/types";
 
 // const images = [
 //   "/photos/1.jpg",
@@ -37,14 +32,6 @@ import { TCity } from "./property-form/components/address";
 //   images,
 // };
 
-export interface ISearchForm {
-  listingType: string[];
-  city: string;
-  min_price: string;
-  max_price: string;
-}
-
-type TListingType = { label: string; value: string };
 
 export const listingTypes: TListingType[] = [
   { label: "Rental", value: "rental" },
@@ -52,10 +39,7 @@ export const listingTypes: TListingType[] = [
   { label: "Mortgage", value: "mortgage" },
 ];
 
-export async function getCities(): Promise<TCity[]> {
-  const response = await axiosIns.get("/cities");
-  return response.data.cities;
-}
+
 
 export default function Main() {
   const form = useForm<ISearchForm>({
@@ -80,7 +64,7 @@ export default function Main() {
 
   return (
     <>
-      <section className="max-w-screen-2xl xl:mx-auto -mt-40 h-screen md:max-h-[740px] xl:max-h-[800px] bg-[url(./landing-background.jpg)] bg-cover">
+      <section className="max-w-screen-2xl xl:mx-auto -mt-28 h-screen md:max-h-[740px] xl:max-h-[800px] bg-[url(./landing-background.jpg)] bg-cover">
         <div className="relative h-full w-full flex items-center justify-center">
           <div className="h-full w-full bg-black/50 dark:block absolute top-0 left-0 hidden z-0"></div>
           <div className="space-y-4 z-10">
@@ -293,12 +277,12 @@ export default function Main() {
             </Form>
           </div>
 
-          <a
-            href=""
+          <Link
+            to="./properties"
             className="flex items-center text-white shadow-md absolute bottom-6 hover:scale-95 transition-all duration-150 left-1/2 -translate-x-1/2"
           >
-            Explore More <ArrowDown />
-          </a>
+            Find Properties<ArrowUpRight />
+          </Link>
         </div>
         {/* {  <div className="w-full h-screen flex items-center justify-center bg-black/80 fixed top-0 left-0 z-50">} */}
 

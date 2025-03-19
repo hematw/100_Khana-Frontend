@@ -1,17 +1,13 @@
 import { Input } from "@heroui/input";
 import { IPropertyForm } from "..";
 import { Controller, UseFormReturn } from "react-hook-form";
-import axiosIns from "@/axios";
 import { Select, SelectedItems, SelectItem } from "@heroui/select";
 import { Chip } from "@heroui/chip";
 import { useQuery } from "@tanstack/react-query";
+import { getCategories } from "@/api";
+import { TListingType } from "@/types";
 
-type TCategory = {
-  name: string;
-  _id: string;
-};
 
-type TListingType = { label: string; value: string };
 
 const listingTypes: TListingType[] = [
   { label: "Rental", value: "rental" },
@@ -19,10 +15,7 @@ const listingTypes: TListingType[] = [
   { label: "Mortgage", value: "mortgage" },
 ];
 
-export async function getCategories(): Promise<TCategory[]> {
-  const { data } = await axiosIns.get("/categories");
-  return data.categories;
-}
+
 
 function AreaAndPrice({ form }: { form: UseFormReturn<IPropertyForm> }) {
   const {

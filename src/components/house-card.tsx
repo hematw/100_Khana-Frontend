@@ -2,16 +2,7 @@ import { Card } from "@heroui/card";
 import Carousel from "./Carousel";
 import { Chip } from "@heroui/chip";
 import { Button } from "@heroui/button";
-
-interface PropertyCardProps {
-  address: string;
-  price: number;
-  listingType: string;
-  // rating: number;
-  images: string[];
-  onAddWishlist?: () => void;
-  className?: string;
-}
+import { PropertyCardProps } from "@/types";
 
 const PropertyCard: React.FC<PropertyCardProps> = ({
   address,
@@ -24,7 +15,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
 }) => {
   return (
     <Card
-      className={`flex items-center justify-center flex-col w-full rounded-lg max-w-96 hover:shadow-xl hover:scale-105 ${className}`}
+      className={`flex items-center justify-center flex-col w-full rounded-lg max-w-96 p-2 ${className}`}
     >
       <div className="relative">
         <Carousel images={images} />

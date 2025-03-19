@@ -6,20 +6,7 @@ import { Input } from "@heroui/input";
 import { Card, CardBody, CardFooter, CardHeader } from "@heroui/card";
 import PassInput from "@/components/pass-input";
 import { useAuth } from "@/contexts/auth-context";
-
-export interface IRegisterForm {
-  username: string;
-  email: string;
-  firstName: string;
-  lastName: string;
-  password: string;
-  confirmPassword: string;
-}
-
-type ServerError = {
-  message: string;
-  duplicateField: string;
-};
+import { IRegisterForm, ServerError } from "@/types";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -27,13 +14,13 @@ const Register = () => {
     message: "",
     duplicateField: "",
   });
-  
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<IRegisterForm>();
-  
+
   const { isLoggedIn, signUp } = useAuth();
   const location = useLocation();
 

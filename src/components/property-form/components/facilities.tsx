@@ -1,24 +1,12 @@
-import { IPropertyForm } from "..";
 import { Controller, UseFormReturn } from "react-hook-form";
 import axiosIns from "@/axios";
 import { Select, SelectedItems, SelectItem } from "@heroui/select";
 import { Chip } from "@heroui/chip";
-import { Bath, GlassWater, Tv, WavesLadder } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
+import icons from "@/lib/icons";
+import { IPropertyForm, TFacility } from "@/types";
 
-type TFacility = {
-  _id: string;
-  name: string;
-  description: string;
-  icon: string;
-};
 
-const icons = {
-  Tv: <Tv />,
-  WavesLadder: <WavesLadder />,
-  GlassWater: <GlassWater />,
-  Bath: <Bath />,
-};
 
 async function getFacilities(): Promise<TFacility[]> {
   const { data } = await axiosIns.get("/facilities");

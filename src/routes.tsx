@@ -1,15 +1,15 @@
-import Logout from "./components/Logout";
-import DashboardLayout from "./pages/Dashboard";
-import { Register, Login, NotFound, AccountLayout, Home } from "./pages/index";
-
 import { RouteObject } from "react-router-dom";
+
+import Logout from "./components/Logout";
+import Properties from "./pages/properties";
+import HouseDetail from "./pages/house-detail";
+import DashboardLayout from "./pages/Dashboard";
 import PublicLayout from "./pages/PublicLayout";
 import AddHome from "./components/property-form";
-import MyHouses from "./components/account/my-houses";
 import Profile from "./components/account/profile";
+import MyHouses from "./components/account/my-houses";
 import SavedHouses from "./components/account/saved-houses";
-import HouseDetail from "./pages/house-detail";
-import Properties from "./pages/properties";
+import { Register, Login, NotFound, AccountLayout, Home } from "./pages/index";
 
 const routes: RouteObject[] = [
   { path: "/login", element: <Login /> },
