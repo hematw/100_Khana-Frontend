@@ -10,8 +10,8 @@ function AccountLayout() {
 
   useEffect(() => {
     if (!isLoggedIn) {
-      const previousPage = location.state?.from || "/";
-      navigate(previousPage, { replace: true });
+      // const previousPage = location.state?.from || "/";
+      navigate("/login");
     }
   }, [isLoggedIn, navigate, location]);
 

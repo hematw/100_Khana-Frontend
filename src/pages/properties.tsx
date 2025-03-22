@@ -12,6 +12,8 @@ import { Select, SelectItem } from "@heroui/select";
 import { useQuery } from "@tanstack/react-query";
 import { Controller, useForm } from "react-hook-form";
 import { Link, useLocation, useSearchParams } from "react-router-dom";
+import { CircleX, SearchIcon } from "lucide-react";
+import { Tooltip } from "@heroui/tooltip";
 
 type PropertyWithID = IPropertyForm & Record<"_id", string>;
 type TAdvanceSearch = ISearchForm & {
@@ -21,7 +23,7 @@ type TAdvanceSearch = ISearchForm & {
 
 function Properties() {
   const location = useLocation();
-  console.log(location);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const form = useForm<TAdvanceSearch>({
     defaultValues: {
@@ -43,7 +45,7 @@ function Properties() {
     // enabled: false,
   });
 
-  const { data: cities = [], isLoading: isLoadingCities } = useQuery({
+  const { data: cities = [] } = useQuery({
     queryKey: ["locations"],
     queryFn: getCities,
     // enabled: false,
@@ -55,16 +57,12 @@ function Properties() {
     queryFn: getCategories,
   });
 
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  console.log(searchParams, "🆗🆗🆗");
-  console.log(form.watch());
-
   if (isLoading) return <p>Loading...</p>;
-  if (isError) console.log(error);
+  if (isError) console.error(error);
+
   return (
-    <section className="max-w-screen-2xl mx-auto my-12 p-6">
-      <div>
+    <section className="max-w-screen-2xl mx-auto p-6">
+      <div className="px-12">
         <Form
           onSubmit={form.handleSubmit(() => {
             refetch();
@@ -107,6 +105,7 @@ function Properties() {
               radius="sm"
               color="primary"
               variant="faded"
+              defaultSelectedKeys={form.getValues("listingType")}
               onSelectionChange={(keys) => {
                 const selectedValues = Array.from(keys).map((key) =>
                   String(key)
@@ -131,21 +130,32 @@ function Properties() {
               variant="faded"
               items={[
                 { label: "free - 1K", value: [0, 1000] },
+                { label: "1K - 5K", value: [1000, 5000] },
                 { label: "5K - 10K", value: [5000, 10000] },
                 { label: "10K - 20K", value: [10000, 20000] },
                 { label: "20K - 50K", value: [20000, 50000] },
                 { label: "50K - 100K", value: [50000, 100000] },
                 { label: "100K - 1M", value: [100000, 1000000] },
               ]}
+              defaultSelectedKeys={
+                form.getValues("max_price")
+                  ? [
+                      form.getValues("min_price"),
+                      form.getValues("max_price"),
+                    ].join()
+                  : []
+              }
               onChange={({ target: { value } }) => {
-                console.log(value);
                 const [minPrice, maxPrice] = value.split(",");
                 form.setValue("min_price", minPrice || "");
                 form.setValue("max_price", maxPrice || "");
               }}
             >
               {(item) => (
-                <SelectItem key={item.value} textValue={item.label}>
+                <SelectItem
+                  key={`${item.value[0]},${item.value[1]}`}
+                  textValue={item.label}
+                >
                   <div className="flex gap-2 items-center">
                     <div className="flex flex-col">{item.label}</div>
                   </div>
@@ -161,7 +171,7 @@ function Properties() {
               color="primary"
               // isMultiline={true}
               items={categories}
-              // defaultSelectedKeys={field.value}
+              defaultSelectedKeys={form.getValues("category")}
               isInvalid={!!form.formState.errors.category}
               errorMessage={form.formState.errors.category?.message}
               onSelectionChange={(keys) => {
@@ -189,35 +199,57 @@ function Properties() {
               color="primary"
               radius="sm"
               min={0}
+              defaultValue={form.getValues("area")}
               classNames={{
                 inputWrapper: "w-24",
                 base: "w-24",
               }}
               {...form.register("area")}
             />
-            <div className="content-center">
-              <Button
-                // type="submit"
-                className="py-4"
-                radius="sm"
-                variant="solid"
-                color="primary"
-                onPress={() => {
-                  const queryStrings = new URLSearchParams(
-                    form.getValues()
-                  ).toString();
-                  console.log(queryStrings);
-                  setSearchParams(queryStrings);
-                  // refetch();
-                }}
-              >
-                Search
-              </Button>
+            <div className="flex items-center gap-2">
+              <Tooltip content="Search" showArrow>
+                <Button
+                  // type="submit"
+                  isIconOnly
+                  startContent={<SearchIcon />}
+                  className="py-4"
+                  radius="sm"
+                  size="lg"
+                  variant="solid"
+                  color="primary"
+                  onPress={() => {
+                    const formValues = form.getValues();
+                    const truthyValues = Object.fromEntries(
+                      Object.entries(formValues).filter(([_, value]) =>
+                        Boolean(value?.length)
+                      )
+                    );
+                    const queryStrings = new URLSearchParams(
+                      truthyValues
+                    ).toString();
+                    setSearchParams(queryStrings);
+                    // refetch();
+                  }}
+                />
+              </Tooltip>
+              <Tooltip content="Clear search" showArrow>
+                <Button
+                  isIconOnly
+                  radius="sm"
+                  size="lg"
+                  variant="solid"
+                  color="primary"
+                  startContent={<CircleX />}
+                  onPress={() => {
+                    form.reset();
+                  }}
+                />
+              </Tooltip>
             </div>
           </div>
         </Form>
       </div>
-      <div className="max-w-screen-2xl xl:mx-auto grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-6 gap-y-10 items-stretch place-items-center py-6">
+      <div className="px-16 xl:mx-auto grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-6 gap-y-10 items-stretch place-items-center py-6">
         {data?.properties.length ? (
           data?.properties.map((property: PropertyWithID) => (
             <Link to={`/properties/${property._id}`} key={property._id}>
@@ -235,15 +267,15 @@ function Properties() {
           ))
         ) : (
           <div className="col-span-full w-96">
+            <p className="text-center font-semibold font-clash text-2xl">
+              We couldn't find any properties
+            </p>
+            <p className="text-center">Try a different search</p>
             <img
               src="/House searching-amico.svg"
               alt="No Properties for this search"
               className="mx-auto"
             />
-            <p className="text-center font-semibold font-clash text-2xl">
-              We couldn't find any properties
-            </p>
-            <p className="text-center">Try a different search</p>
           </div>
         )}
       </div>

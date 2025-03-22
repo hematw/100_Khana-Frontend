@@ -164,62 +164,6 @@ export default function Main() {
                   className="z-30 h-12 mx-1 dark:bg-gray-600"
                 />
                 <div className="flex-1">
-                  {/* <Dropdown backdrop="blur" closeOnSelect={false}>
-                    <DropdownTrigger className="w-full text-left block bg-gray-100 hover:bg-gray-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 rounded-md shadow-sm">
-                      <Input
-                        isReadOnly
-                        label="Price Range"
-                        placeholder="5K - 10K..."
-                        size="lg"
-                        radius="sm"
-                        color="primary"
-                        variant="faded"
-                        classNames={{ input: "text-left" }}
-                        value={`${form.getValues(
-                          "min_price"
-                        )} - ${form.getValues("max_price")} AFN`}
-                      />
-                    </DropdownTrigger>
-                    <DropdownMenu classNames={{ base: "hover:bg-none" }}>
-                      <DropdownItem
-                        textValue="price"
-                        key={"price"}
-                        className="grid gap-4 hover:bg-transparent"
-                        classNames={{
-                          base: "hover:!bg-transparent",
-                        }}
-                      >
-                        <div className="space-y-2">
-                          <h4 className="font-medium leading-none">
-                            Price ranges
-                          </h4>
-                          <p className="text-sm text-muted-foreground">
-                            Choose max and min price for your House.
-                          </p>
-                        </div>
-                        <Slider
-                          defaultValue={[300000, 500000]}
-                          value={[
-                            form.watch("min_price"),
-                            form.watch("max_price"),
-                          ]}
-                          minValue={0}
-                          maxValue={1000000}
-                          step={1000}
-                          label="Price Range"
-                          className="mt-4"
-                          formatOptions={{ style: "currency", currency: "AFN" }}
-                          onChange={(value: number | number[]) => {
-                            // min: Array.isArray(value) ? value[0] : 0,
-                            if (Array.isArray(value)) {
-                              form.setValue("min_price", value[0]);
-                              form.setValue("min_price", value[1]);
-                            }
-                          }}
-                        />
-                      </DropdownItem>
-                    </DropdownMenu>
-                  </Dropdown> */}
                   <Select
                     label="Price Range"
                     placeholder="e.g. 5K - 10K..."
@@ -263,8 +207,14 @@ export default function Main() {
                     variant="solid"
                     color="primary"
                     onPress={() => {
+                      const formValues = form.getValues();
+                      const truthyValues = Object.fromEntries(
+                        Object.entries(formValues).filter(([_, value]) =>
+                          Boolean(value?.length)
+                        )
+                      );
                       const queryStrings = new URLSearchParams(
-                        form.getValues()
+                        truthyValues
                       ).toString();
                       console.log(queryStrings);
                       navigate(`/properties?${queryStrings}`);

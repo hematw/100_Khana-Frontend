@@ -3,11 +3,14 @@ import { Avatar } from "@heroui/avatar";
 import { Button } from "@heroui/button";
 import { Card, CardBody } from "@heroui/card";
 import { useQuery } from "@tanstack/react-query";
-import { Building, Car, Lamp, LayoutGrid, Ruler } from "lucide-react";
+import { Building, Calendar, Car, Eye, Forward, Heart, Lamp, LayoutGrid, Ruler } from "lucide-react";
 import { useParams } from "react-router-dom";
 import icons from "@/lib/icons";
 import { IPropertyForm } from "@/types";
 import MapComponent from "@/components/map";
+import { Divider } from "@heroui/divider";
+import { saveOrRemoveToWishlist } from "@/lib/utils";
+import { addToast } from "@heroui/toast";
 
 type IPropertyWithOwnerProps = IPropertyForm & {
   owner: {
@@ -34,12 +37,12 @@ function HouseDetail() {
 
   return (
     <div className="max-w-screen-2xl md:px-8 mx-auto my-12 p-6">
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 relative">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 relative p-12">
         <div className="md:col-span-2 md:row-span-2 min-w-full">
           <img
             src={data?.images[0] as string}
             alt="Main"
-            className="w-full h-full shadow-md border object-cover rounded-lg "
+            className="w-full h-full shadow-md border object-cover rounded-lg aspect-[9/6]"
           />
         </div>
 
@@ -48,7 +51,7 @@ function HouseDetail() {
             <img
               src={src as string}
               alt={`Gallery ${index + 1}`}
-              className="w-full h-full shadow-md border object-cover rounded-lg "
+              className="w-full h-full shadow-md border object-cover rounded-lg aspect-[9/6]"
             />
           </div>
         ))}
@@ -66,6 +69,23 @@ function HouseDetail() {
       </div>
       <div>
         <div className="mt-10 py-4">
+          <div className="flex gap-2 justify-center">
+            <Button variant="solid" color="primary" size="sm" radius="sm" isIconOnly startContent={<Heart />} onPress={() => { saveOrRemoveToWishlist("bookmarks", data) }} />
+            <Button variant="solid" color="primary" size="sm" radius="sm" isIconOnly startContent={<Forward />} onPress={() => {
+              
+              const shareUrl = window.location.href;
+              if (navigator.share) {
+                navigator.share({
+                  title: `Property in ${data?.city.name} `,
+                  text: `Check out this ${data?.listingType} property in ${data?.city.name}`,
+                  url: shareUrl
+                }).catch(err => console.log('Error sharing:', err));
+              } else {
+                navigator.clipboard.writeText(shareUrl);
+                addToast({ title: 'Link copied to clipboard!', color: 'success' });
+              }
+            }} />
+          </div>
           <h3 className="text-2xl font-bold">{`${data?.city.name}, ${data?.district.name}, ${data?.road}, ${data?.street}`}</h3>
         </div>
         <div className="grid grid-cols-2 gap-10 ">
@@ -130,6 +150,13 @@ function HouseDetail() {
               <div>
                 <MapComponent coordinates={[+data?.lat, +data?.lng]} />
               </div>
+            </div>
+            <div className="mt-10 text-xs flex items-center gap-2 justify-between h-5">
+              <p className="flex items-center gap-1"><Calendar size={16} /> Posted on: {new Date(data?.createdAt).toDateString()}</p>
+              <Divider orientation="vertical" />
+              <p className="flex items-center gap-1"><Eye size={16} />{1023} Viewes</p>
+              <Divider orientation="vertical" />
+              <p className="flex items-center gap-1"><Heart size={16} />{103} times Saved</p>
             </div>
           </div>
           <div>

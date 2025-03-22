@@ -127,6 +127,7 @@ const MapComponent = ({
 
   return (
     <MapContainer
+      className="-z-10"
       center={[lat, lon]}
       zoom={13}
       style={{ height: "350px", width: "100%" }}

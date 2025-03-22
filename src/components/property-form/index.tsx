@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Facilities from "./components/facilities";
 import { z } from "zod";
@@ -24,6 +24,8 @@ import {
 } from "lucide-react";
 import { addToast } from "@heroui/toast";
 import { IPropertyForm } from "@/types";
+import { useAuth } from "@/contexts/auth-context";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const FormSchema = z.object({
   category: z
@@ -103,6 +105,19 @@ function AddHome() {
   const [step, setStep] = useState(1);
   const [showConfetti, setShowConfetti] = useState(false);
 
+  const navigate = useNavigate();
+  const { isLoggedIn } = useAuth();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      // const previousPage = location.state?.from || "/";
+      navigate("/login");
+    }
+  }, [isLoggedIn, navigate, location]);
+
+  if (!isLoggedIn) return null;
+
   const TOTAL_STEPS = 6;
   const form = useForm<IPropertyForm>({
     resolver: zodResolver(FormSchema),
@@ -130,8 +145,6 @@ function AddHome() {
     },
   });
 
-  console.log("Errors", form.formState.errors);
-  console.log("data", form.watch());
 
   const onSubmit: SubmitHandler<IPropertyForm> = async (
     data: IPropertyForm
