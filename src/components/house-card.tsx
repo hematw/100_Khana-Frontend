@@ -20,8 +20,16 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
       <div className="relative">
         <Carousel images={images} />
         <div className="">
-          <div className="absolute top-2 left-0 px-2 flex justify-between w-full">
-            <Chip className="px-2 py-1 rounded-3xl shadow-lg font-semibold">
+          <div className="top-2 left-0 absolute flex justify-between px-2 w-full">
+            <Chip
+              className={`shadow-lg px-2 py-1 rounded-3xl font-semibold text-xs ${
+                listingType.toLowerCase().includes("sale")
+                  ? "bg-yellow-400"
+                  : listingType.toLowerCase().includes("rental")
+                  ? " bg-emerald-400"
+                  : "bg-sky-400"
+              }`}
+            >
               {listingType}
             </Chip>
             <Button
@@ -35,9 +43,9 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
           </div>
         </div>
       </div>
-      <div className="w-full p-2">
+      <div className="p-2 w-full">
         <div className="flex justify-between items-center">
-          <div className="text-sm flex items-center justify-center">
+          <div className="flex justify-center items-center text-sm">
             <span className="w-5 h-5">
               <img src="/icons/star.svg" alt="" />
             </span>
