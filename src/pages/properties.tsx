@@ -249,7 +249,7 @@ function Properties() {
           </div>
         </Form>
       </div>
-      <div className="px-16 xl:mx-auto grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-6 gap-y-10 items-stretch place-items-center py-6">
+      <div className="px-4 lg:px-16 xl:mx-auto grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-6 gap-y-10 items-stretch place-items-center py-6">
         {data?.properties.length ? (
           data?.properties.map((property: PropertyWithID) => (
             <Link to={`/properties/${property._id}`} key={property._id}>

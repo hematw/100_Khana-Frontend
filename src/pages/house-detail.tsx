@@ -4,15 +4,19 @@ import { Button } from "@heroui/button";
 import { Card, CardBody } from "@heroui/card";
 import { useQuery } from "@tanstack/react-query";
 import {
+  Bath,
   Building,
   Calendar,
-  Car,
+  ChefHat,
   Eye,
   Forward,
   Heart,
   Lamp,
   LayoutGrid,
+  MessageCircle,
+  Phone,
   Ruler,
+  Sofa,
 } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
 import icons from "@/lib/icons";
@@ -23,12 +27,21 @@ import { saveOrRemoveToWishlist } from "@/lib/utils";
 import { addToast } from "@heroui/toast";
 import PropertyCard from "@/components/house-card";
 import { useEffect } from "react";
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  useDisclosure,
+  ModalFooter,
+} from "@heroui/modal";
 
 type IPropertyWithOwnerAndSimilars = IPropertyForm & {
   owner: {
     firstName: string;
     lastName: string;
     profile: string;
+    numberOfListedProperties: number;
   };
   similarProperties: IPropertyForm[];
 };
@@ -45,6 +58,8 @@ function HouseDetail() {
     staleTime: 1000 * 60 * 3,
   });
 
+  const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
+
   useEffect(() => {
     const timeoutID = setTimeout(async () => {
       await axiosIns.put(`/properties/${id}/views`);
@@ -53,11 +68,12 @@ function HouseDetail() {
   }, [data]);
 
   if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>{error.message}</div>;
 
   return (
-    <div className="mx-auto md:px-8 max-w-screen-2xl zp-6">
-      <div className="relative gap-4 grid grid-cols-2 md:grid-cols-4 grid-rows-2 p-12 h-[580px]">
-        <div className="md:col-span-2 md:row-span-2 min-w-full">
+    <div className="mx-auto px-4 md:px-8 max-w-screen-2xl zp-6">
+      <div className="relative gap-4 grid grid-cols-1 md:grid-cols-4 grid-rows-2 md:p-12 md:h-[580px]">
+        <div className="md:col-span-2 row-span-2 min-w-full ">
           <img
             src={data?.images[0] as string}
             alt="Main"
@@ -87,10 +103,10 @@ function HouseDetail() {
         </div>
       </div>
       <div>
-        <div className="mt-10 py-4">
-          <div className="flex justify-center gap-2">
+        <div className="mt-10  py-4">
+          <div className="flex justify-center gap-2 mb-6">
             <Button
-              variant="solid"
+              variant="flat"
               color="primary"
               size="sm"
               radius="sm"
@@ -101,7 +117,7 @@ function HouseDetail() {
               }}
             />
             <Button
-              variant="solid"
+              variant="flat"
               color="primary"
               size="sm"
               radius="sm"
@@ -127,10 +143,10 @@ function HouseDetail() {
               }}
             />
           </div>
-          <h3 className="font-bold text-2xl">{`${data?.city.name}, ${data?.district.name}, ${data?.road}, ${data?.street}`}</h3>
+          <h3 className="font-bold text-2xl">{`${data?.city.name}, ${data?.district.name}, ${data?.road} road, street ${data?.street}`}</h3>
         </div>
-        <div className="gap-10 grid grid-cols-2">
-          <div>
+        <div className="gap-10 grid md:grid-cols-2">
+          <div className="">
             <div className="flex justify-around gap-2">
               <Card className="flex flex-1 justify-center items-center gap-2 p-4 border border-default-300">
                 <p className="flex items-center gap-2 font-medium">
@@ -166,6 +182,26 @@ function HouseDetail() {
                 </span>
               </CardBody>
             </Card>
+            <Card className="space-y-2 mt-2 p-4 text-sm  border border-default-300">
+              <p className="flex flex-row items-center gap-2">
+                <span>
+                  <Sofa size={18} />
+                </span>
+                <span>{data?.numOfLivingRooms} Living rooms</span>
+              </p>
+              <p className="flex flex-row items-center gap-2">
+                <span>
+                  <ChefHat size={18} />
+                </span>
+                <span>{data?.numOfKitchens} Kitchens</span>
+              </p>
+              <p className="flex flex-row items-cente gap-2">
+                <span>
+                  <Bath size={18} />
+                </span>
+                <span>{data?.numOfBaths} Bathrooms</span>
+              </p>
+            </Card>
             <div className="mt-10">
               <h4 className="mb-4 font-semibold text-xl">Facilities</h4>
               <ul className="space-y-2 text-default-500">
@@ -189,9 +225,7 @@ function HouseDetail() {
             <div className="mt-10">
               <h4 className="mb-4 font-semibold text-xl">Location</h4>
               <div>
-                <MapComponent
-                  coordinates={[+data?.lat, +data?.lng]}
-                />
+                <MapComponent coordinates={[+data?.lat, +data?.lng]} />
               </div>
             </div>
             <div className="flex justify-between items-center gap-2 mt-10 h-5 text-xs">
@@ -204,7 +238,8 @@ function HouseDetail() {
                 <Eye size={16} />
                 {data?.views > 1000
                   ? `${(data?.views / 1000).toFixed(1)}k`
-                  : data?.views}{"  "}
+                  : data?.views}
+                {"  "}
                 Viewes
               </p>
               <Divider orientation="vertical" />
@@ -215,21 +250,26 @@ function HouseDetail() {
             </div>
           </div>
           <div>
-            <Card className="top-28 left-0 sticky flex flex-row gap-2 p-4 border border-default-300 max-w-72">
+            <Card className="top-28 left-0 sticky flex flex-row gap-4 p-4 border border-default-300 md:max-w-72">
               <div>
                 <Avatar
                   // size=""
                   className="w-16 h-16"
-                  src="https://images.unsplash.com/photo-1499714608240-22fc6ad53fb2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=256&q=80"
+                  src={data.owner.profile}
                 />
               </div>
               <div>
                 <h4>{`${data?.owner.firstName} ${data?.owner.lastName}`}</h4>
                 <div className="mb-2 text-default-500 text-sm">
-                  <p>owner</p>
-                  <p>46 listed properties</p>
+                  <p>@{data?.owner.username}</p>
+                  <p>{data.owner.numberOfListedProperties} listed properties</p>
                 </div>
-                <Button variant="solid" color="primary" size="sm">
+                <Button
+                  variant="solid"
+                  color="primary"
+                  size="sm"
+                  onPress={onOpen}
+                >
                   Contact Info
                 </Button>
               </div>
@@ -237,24 +277,51 @@ function HouseDetail() {
           </div>
         </div>
         <Divider className="my-10" />
-        <div>
+        <div className="overflow-auto">
           <h4 className="font-semibold text-2xl">Similar Properties</h4>
-          <div className="justify-start items-stretch gap-x-6 gap-y-10 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 xl:mx-auto py-6">
+          <div className="justify-start items-stretch gap-4 md:gap-x-6 gap-y-10 overflow-auto flex flex-nowrap py-6">
             {data?.similarProperties.map((property) => (
-              <Link to={`/properties/${property._id}`} key={property._id}>
+              <Link to={`/properties/${property._id}`} key={property._id} className="w-64">
                 <PropertyCard
                   key={property._id}
                   address={`${property.city.name}, ${property.district.name}, ${property.road}, ${property.street}`}
                   price={+property.price}
                   listingType={property.listingType.join(", ")}
                   images={property.images as string[]}
-                  className="justify-between hover:shadow-xl border border-gray-300 dark:border-gray-600 min-h-full hover:scale-[1.02]"
+                  className="justify-between hover:shadow-xl border border-gray-300 dark:border-gray-600 min-h-full w-60 hover:scale-[1.02]"
                 />
               </Link>
             ))}
           </div>
         </div>
       </div>
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+        <ModalContent>
+          {(onClose) => (
+            <ModalBody className="flex justify-center items-center p-4">
+              <ModalHeader className="flex-col gap-4">
+              <img  className="w-40 h-40 rounded-full" src={data?.owner.profile} />
+              <p className="font-semibold text-2xl">{`${data?.owner.firstName} ${data?.owner.lastName}`}</p>
+              </ModalHeader>
+
+              <ModalBody>
+                <p className="flex items-center gap-2">
+                  <Phone  size={18}/>
+                  {data?.owner.phone}
+                </p>
+                <p className="flex items-center gap-2">
+                  <MessageCircle size={18} />
+                  {data?.owner.email}
+                </p>
+              </ModalBody>
+              <ModalFooter>
+              <Button onPress={onClose}>Close</Button>
+              <Button onPress={onClose} color="primary" >Message</Button>
+              </ModalFooter>
+            </ModalBody>
+          )}
+        </ModalContent>
+      </Modal>
     </div>
   );
 }

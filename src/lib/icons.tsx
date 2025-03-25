@@ -5,10 +5,10 @@ type IconType = {
 };
 
 const icons: IconType = {
-  GlassWater: <GlassWater />,
-  Bath: <Bath />,
-  WavesLadder: <WavesLadder />,
-  Tv: <Tv />,
+  GlassWater: <GlassWater  size={18}/>,
+  Bath: <Bath size={18} />,
+  WavesLadder: <WavesLadder size={18} />,
+  Tv: <Tv size={18} />,
 };
 
 export default icons;
